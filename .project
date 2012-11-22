@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>jbehaviour-tools</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.m2e.core.maven2Builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.m2e.core.maven2Nature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>json-antlr</name>
+			<type>2</type>
+			<location>D:/Workspace/eclipse/kepler-64/git/json-antlr</location>
+		</link>
+	</linkedResources>
+</projectDescription>

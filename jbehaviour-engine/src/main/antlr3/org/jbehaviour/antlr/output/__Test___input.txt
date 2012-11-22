@@ -1,0 +1,1 @@
+some json with {'data':'data',myObject:{'anotherData':'some string'}}
