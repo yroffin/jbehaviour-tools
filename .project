@@ -14,11 +14,4 @@
 	<natures>
 		<nature>org.eclipse.m2e.core.maven2Nature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>json-antlr</name>
-			<type>2</type>
-			<location>D:/Workspace/eclipse/kepler-64/git/json-antlr</location>
-		</link>
-	</linkedResources>
 </projectDescription>
