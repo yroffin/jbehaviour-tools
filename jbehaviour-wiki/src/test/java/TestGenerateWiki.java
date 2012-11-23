@@ -14,6 +14,7 @@ public class TestGenerateWiki {
 		String htmlText = WikiModel.toHtml("This is a simple [[Hello World]] wiki tag");
 		FileWriter fw = new FileWriter(new File("wiki/index.html"));
 		fw.write(htmlText);
+		fw.close();
 		
 	}
 
