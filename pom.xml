@@ -9,6 +9,7 @@
 		<module>jbehaviour-engine</module>
 		<module>jbehaviour-selenium</module>
 		<module>jbehaviour-console</module>
+		<module>jbehaviour-jdbc</module>
 	</modules>
 	<build>
 		<plugins>
