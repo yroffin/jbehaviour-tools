@@ -8,7 +8,6 @@
 	</parent>
 	<artifactId>jbehaviour-engine</artifactId>
 	<build>
-		<defaultGoal>generate-sources</defaultGoal>
 		<plugins>
 			<plugin>
 				<groupId>org.antlr</groupId>
@@ -17,10 +16,10 @@
 				<executions>
 					<execution>
 						<phase>generate-sources</phase>
+                        <goals>
+                            <goal>antlr</goal>
+                        </goals>
 						<configuration>
-							<goals>
-								<goal>antlr</goal>
-							</goals>
 							<outputDirectory>target/generated-sources/antlr3</outputDirectory>
 							<sourceDirectory>src/main/antlr3</sourceDirectory>
 							<trace>true</trace>
