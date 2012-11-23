@@ -1,4 +1,4 @@
-package org.jbehaviour.plugins;
+package org.jbehaviour.plugins.system;
 
 import java.io.FileWriter;
 import java.io.IOException;

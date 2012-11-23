@@ -37,11 +37,6 @@ public class JBehaviourReflexion implements IBehaviourReflexion {
 	}
 
 	public JBehaviourReflexion() throws JBehaviourPasingError {
-		/**
-		 * default object to handle
-		 * store system
-		 */
-		register("storeBean","org.jbehaviour.plugins.StoreSteps");
 	}
 
 	public void register(String reference, String klass) throws JBehaviourPasingError {
