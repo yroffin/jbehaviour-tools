@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="http://kevinburke.bitbucket.org/markdowncss/markdown.css" rel="stylesheet"></link>
+<title></title>
+</head>
+
+<h1>Header 1</h1>
+
+<h2>Header 2</h2>
+
+<h3>Header 3 ###             (Hashes on right are optional)</h3>
+
+<h4>Header 4</h4>
+
+<h5>Header 5</h5>
+
+<h2>Markdown plus h2 with a custom ID ##         {#id-goes-here}</h2>
+
+<p><a href="#id-goes-here">Link back to H2</a></p>
+
+<p>This is a paragraph, which is text surrounded by whitespace. Paragraphs can be on one 
+line (or many), and can drone on for hours.  </p>
+
+<p>Here is a Markdown link to <a href="http://warpedvisions.org">Warped</a>, and a literal . 
+Now some SimpleLinks, like one to [google] (automagically links to are-you-
+feeling-lucky), a [wiki: test] link to a Wikipedia page, and a link to 
+[foldoc: CPU]s at foldoc.  </p>
+
+<p>Now some inline markup like <em>italics</em>,  <strong>bold</strong>, and <code>code()</code>. Note that underscores in 
+words are ignored in Markdown Extra.</p>
+
+<p><img src="/images/photo.jpeg" alt="picture alt" title="Title is optional" />     </p>
+
+<blockquote>
+  <p>Blockquotes are like quoted text in email replies</p>
+  
+  <blockquote>
+    <p>And, they can be nested</p>
+  </blockquote>
+</blockquote>
+
+<ul>
+<li>Bullet lists are easy too</li>
+<li>Another one</li>
+<li><p>Another one</p></li>
+<li><p>A numbered list</p></li>
+<li>Which is numbered</li>
+<li>With periods and a space</li>
+</ul>
+
+<p>And now some code:</p>
+
+<pre><code>// Code is just text indented a bit
+which(is_easy) to_remember();
+</code></pre>
+
+<p>~~~</p>
+
+<p>// Markdown extra adds un-indented code blocks too</p>
+
+<p>if (this<em>is</em>more_code == true &amp;&amp; !indented) {
+    // tild wrapped code blocks, also not indented
+}</p>
+
+<p>~~~</p>
+
+<p>Text with <br />
+two trailing spaces <br />
+(on the right) <br />
+can be used <br />
+for things like poems  </p>
+
+<h3>Horizontal rules</h3>
+
+<hr />
+
+<h2>****</h2>
+
+<div class="custom-class" markdown="1">
+This is a div wrapping some Markdown plus.  Without the DIV attribute, it ignores the 
+block. 
+</div>
+
+<h2>Markdown plus tables</h2>
+
+<p>| Header | Header | Right  |
+| ------ | ------ | -----: |
+|  Cell  |  Cell  |   $10  |
+|  Cell  |  Cell  |   $20  |</p>
+
+<ul>
+<li>Outer pipes on tables are optional</li>
+<li>Colon used for alignment (right versus left)</li>
+</ul>
+
+<h2>Markdown plus definition lists</h2>
+
+<p>Bottled water
+: $ 1.25
+: $ 1.55 (Large)</p>
+
+<p>Milk
+Pop
+: $ 1.75</p>
+
+<ul>
+<li>Multiple definitions and terms are possible</li>
+<li>Definitions can include multiple paragraphs too</li>
+</ul>
+
+<p>*[ABBR]: Markdown plus abbreviations (produces an <abbr> tag)</p>

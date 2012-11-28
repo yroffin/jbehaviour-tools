@@ -16,6 +16,7 @@
 				<executions>
 					<execution>
 						<phase>generate-sources</phase>
+						<goals><goal>antlr</goal></goals>
 						<configuration>
 							<outputDirectory>target/generated-sources/antlr3</outputDirectory>
 							<sourceDirectory>src/main/antlr3</sourceDirectory>
