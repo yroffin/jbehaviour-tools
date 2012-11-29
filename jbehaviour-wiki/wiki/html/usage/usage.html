@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="markdown.css" rel="stylesheet"></link>
+<title></title>
+</head>
+
+<h1>Usage</h1>
+
+<h2>1. General</h2>
+
+<p>A story look like this kind of presentation :</p>
+
+<blockquote>
+  <p>#<br />
+  # some comment ...<br />
+  #<br /></p>
+  
+  <p>Feature: <a href="#" title="some feature to implement with this story">some feature</a><br />
+  In order to <a href="#" title="objectives of this story">test purpose</a><br />
+  As an <a href="#" title="actor for this story">actor description</a><br />
+  I want to <a href="#" title="purpose of this story">story purpose</a><br />
+  Register <a href="#" title="reference of this class during story running">reference</a> with <a href="#" title="class path, class path must be enclose by cote">classpath</a> plugin<br />
+  Declare  <a href="#" title="reference of this object during story running">reference</a> as   <a href="#" title="type of this object">String|Json</a> <a href="#" title="class path, class path must be enclose by cote">classpath</a> <a href="#" title="object declaration or value">json declaration</a><br />
+  Include  <a href="#" title="path where we can find this story, path must be enclose by cote">story path</a><br /></p>
+  
+  <p>  #<br />
+    # some comment ...<br />
+    #<br />
+    Scenario: <a href="#" title="some scenario description">scenario purpose</a><br />
+    Given <a href="#" title="some precondition">some precondition</a><br />
+    And   <a href="#" title="some other precondition to initialize">some other condition</a><br />
+    When  <a href="#" title="declare an event reaction">something hapen</a><br />
+    And   <a href="#" title="another declaration">some other event</a><br />
+    Then  <a href="#" title="some feature to implement with this story">some action</a><br />
+    And   <a href="#" title="some feature to implement with this story">some other action</a><br /></p>
+</blockquote>
+
+<h3>Feature</h3>
+
+<p>A feature implement the story declaration, this feature can have a description to identify
+the purpose of this story.</p>
+
+<blockquote>
+  <p>Feature: Launch a story sample<br />
+    In order to test this feature<br />
+    As an explicit system actor<br />
+    I want to verify this behaviour<br />
+    ...<br /></p>
+</blockquote>
+
+<h3>Register</h3>
+
+<p>Each scenario will implement some steps, each step must be recognized by a declared class.
+Class register consist to declare a class path associated to one global unique id, this global id will be use to correct ambiguity if necessary.</p>
+
+<blockquote>
+  <p>  ...<br />
+  Register sample with 'org.jbehaviour.plugins.SampleSteps' plugin<br />
+    ...<br /></p>
+</blockquote>
+
+<p>This declaration declare an internal global id 'sample' for the class <a href="https://github.com/yroffin/jbehaviour-tools/blob/v1.1a/jbehaviour-engine/src/test/java/org/jbehaviour/plugins/SampleSteps.java">org.jbehaviour.plugins.SampleSteps</a>
+this class must be in classpath.</p>
+
+<h3>Declare</h3>
+
+<p>Each scenario will implement some steps, each step can use local object (String, Class ...) ...</p>
+
+<p>For a json declaration :</p>
+
+<blockquote>
+  <p>  ...<br />
+  Declare ref001 as Json 'org.jbehaviour.plugins.ComplexJsonBean'<br />
+  {<br />
+    "field1":"value1",<br />
+    "field2":"value2",<br />
+    "field3":1000<br />
+  }<br />
+    ...<br /></p>
+</blockquote>
+
+<p>And for a String declaration :</p>
+
+<blockquote>
+  <p>  ...<br />
+  Declare ref002 as String "some string 002"<br />
+    ...<br /></p>
+</blockquote>
+
+<h3>Include</h3>
+
+<p>A story can include an external story for :</p>
+
+<ul>
+<li>All Registered Class inclusion of this external story</li>
+<li>All Declared Object inclusion of this external story</li>
+<li>All Scenario inclusion of this external story</li>
+</ul>
+
+<p>A sample code could be :</p>
+
+<blockquote>
+  <p>  ...<br />
+  Include 'src/test/resources/files/sample.story'<br />
+    ...<br /></p>
+</blockquote>
+
+<h2>2. Extention</h2>
