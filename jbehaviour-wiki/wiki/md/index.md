@@ -2,12 +2,12 @@ Introduction
 ============
 
 Main purpose of jbehaviour-tools is to simplify common developpment tools for
-common users.
+simple users in "natural" langage.
 
 behaviour-tools is not a fork, but it's based on the great idea of dan north : [http://dannorth.net/introducing-bdd](http://dannorth.net/introducing-bdd)
 all is rewritten, and based on a antlr grammar.
 
-This framework permit to parse and execute story with a jbehave approach but with some extention :
+This framework permit to parse and execute story with a [jbehave](http://jbehave.org)/[cumcumber](http://cukes.info/) approach but with some extention :
 
 * json object on the fly creation and manipulation in the story (with jackson)
 * velocity templating integration to manipulating all object created on the fly in the story
@@ -17,9 +17,12 @@ This framework permit to parse and execute story with a jbehave approach but wit
 
 the purpose of this framework is to simplify, and make readable all story manipulated by a business analyst
 and avoid to consider so much technical method for using testing tools :
+
 - soapui
 - ssh/scp/sftp/svn/git manipulation
 - remote host manipulation (unix system)
 - selenium suite
 - and so on ...
+
+[Usage](usage/usage.html)
 

@@ -50,6 +50,19 @@ public class WikiCompiler {
 	}
 
 	/**
+	 * file filter class
+	 */
+	private class OnlyJava implements FilenameFilter {
+
+		@Override
+		public boolean accept(File dir, String name) {
+			if(dir.isDirectory()) return true;
+			return name.endsWith(".java");
+		}
+		
+	}
+
+	/**
 	 * scan files
 	 * @param file
 	 * @param list
@@ -73,18 +86,54 @@ public class WikiCompiler {
 	 * compile dir
 	 * @param indir
 	 * @param outdir
+	 * @param  
 	 * @throws IOException
 	 */
-	public void compile(File head, File indir, File outdir) throws IOException {
+	public void compile(File css, File head, File indir, File outdir) throws IOException {
+		compileMd(css,head,indir,outdir);
+		compileJava(css,head,indir,outdir);
+	}
+
+	/**
+	 * compile dir
+	 * @param indir
+	 * @param outdir
+	 * @param  
+	 * @throws IOException
+	 */
+	public void compileMd(File css, File head, File indir, File outdir) throws IOException {
 		MarkdownProcessor markup = new MarkdownProcessor();
 		String header = slurp(head);
 		for(File file : scanDirectory(indir,new ArrayList<File>(),new OnlyMd())) {
 			String outputfile = file.getAbsolutePath().replace(indir.getAbsolutePath(), outdir.getAbsolutePath()).replace(".md", ".html");
+			String cssfile = file.getAbsolutePath().replace(indir.getAbsolutePath(), outdir.getAbsolutePath()).replace(file.getName(), "markdown.css");
 			File dir = new File(new File(outputfile).getParent());
 			dir.mkdirs();
 			FileWriter fw = new FileWriter(outputfile);
 			fw.write(header);
 			fw.write(markup.markdown(slurp(file)));
+			fw.close();
+			fw = new FileWriter(cssfile);
+			fw.write(slurp(css));
+			fw.close();
+			logger.info("Render " + outputfile + " ok");
+		}
+	}
+
+	/**
+	 * compile dir
+	 * @param indir
+	 * @param outdir
+	 * @param  
+	 * @throws IOException
+	 */
+	public void compileJava(File css, File head, File indir, File outdir) throws IOException {
+		for(File file : scanDirectory(indir,new ArrayList<File>(),new OnlyJava())) {
+			String outputfile = file.getAbsolutePath().replace(indir.getAbsolutePath(), outdir.getAbsolutePath()).replace(".java", ".html");
+			File dir = new File(new File(outputfile).getParent());
+			dir.mkdirs();
+			FileWriter fw = new FileWriter(outputfile);
+			fw.write(slurp(file));
 			fw.close();
 			logger.info("Render " + outputfile + " ok");
 		}
