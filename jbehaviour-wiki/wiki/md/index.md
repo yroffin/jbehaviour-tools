@@ -24,5 +24,5 @@ and avoid to consider so much technical method for using testing tools :
 - selenium suite
 - and so on ...
 
-[Usage](usage/usage.html)
+[Usage](usage/usage.md)
 
