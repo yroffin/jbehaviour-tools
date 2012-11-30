@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
-import org.jbehaviour.exception.JBehaviourPasingError;
+import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
 import org.jbehaviour.parser.model.IKeywordStatement;
 import org.jbehaviour.reflexion.impl.JBehaviourReflexion;
@@ -29,7 +29,7 @@ public class JBehaviourReflexionTest {
 	}
 
 	@Test
-	public void testSampleSteps() throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException, IOException, JBehaviourPasingError, JBehaviourRuntimeError {
+	public void testSampleSteps() throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException, IOException, JBehaviourParsingError, JBehaviourRuntimeError {
 		IBehaviourReflexion registry = new JBehaviourReflexion();
 		registry.register("klass","org.jbehaviour.plugins.SampleSteps");
 		
@@ -55,7 +55,7 @@ public class JBehaviourReflexionTest {
 	}
 
 	@Test
-	public void testComplexSteps() throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException, IOException, JBehaviourPasingError, JBehaviourRuntimeError {
+	public void testComplexSteps() throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException, IOException, JBehaviourParsingError, JBehaviourRuntimeError {
 		IBehaviourReflexion registry = new JBehaviourReflexion();
 		registry.register("klass","org.jbehaviour.plugins.ComplexSteps");
 		
@@ -75,7 +75,7 @@ public class JBehaviourReflexionTest {
 	}
 
 	@Test
-	public void testLocalSystem() throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException, IOException, JBehaviourPasingError, JBehaviourRuntimeError {
+	public void testLocalSystem() throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException, IOException, JBehaviourParsingError, JBehaviourRuntimeError {
 		IBehaviourReflexion registry = new JBehaviourReflexion();
 		registry.register("klass","org.jbehaviour.plugins.system.SystemSteps");
 		

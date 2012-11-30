@@ -3,7 +3,7 @@ package org.jbehaviour.parser.model.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jbehaviour.exception.JBehaviourPasingError;
+import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.parser.model.IKeywordStatement;
 
 public class KeywordScenario extends KeywordStatement {
@@ -48,7 +48,7 @@ public class KeywordScenario extends KeywordStatement {
 					+ keywordThens + ", keywordStores=" + keywordStores
 					+ ", keywords=" + keywords + ", getStatement()="
 					+ getStatement() + ", getReference()=" + getReference() + "]";
-		} catch (JBehaviourPasingError e) {
+		} catch (JBehaviourParsingError e) {
 			e.printStackTrace();
 		}
 		return null;

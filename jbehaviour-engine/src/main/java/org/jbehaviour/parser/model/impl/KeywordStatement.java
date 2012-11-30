@@ -3,7 +3,7 @@ package org.jbehaviour.parser.model.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jbehaviour.exception.JBehaviourPasingError;
+import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.parser.model.IKeywordStatement;
 import org.jbehaviour.parser.model.IKeywordStatementElement;
 
@@ -77,31 +77,31 @@ public class KeywordStatement implements IKeywordStatement {
 	}
 
 	@Override
-	public Integer extractLiteralAsInteger(int index) throws JBehaviourPasingError {
+	public Integer extractLiteralAsInteger(int index) throws JBehaviourParsingError {
 		if(elements.get(index).getType() == org.jbehaviour.parser.model.IKeywordStatement.declareType.Integer) {
 			return new Integer(elements.get(index).getValue());
 		}
-		throw new JBehaviourPasingError("Type is not valid: " + elements.get(index).getType());
+		throw new JBehaviourParsingError("Type is not valid: " + elements.get(index).getType());
 	}
 
 	@Override
-	public String extractLiteralAsString(int index) throws JBehaviourPasingError {
+	public String extractLiteralAsString(int index) throws JBehaviourParsingError {
 		if(elements.get(index).getType() == org.jbehaviour.parser.model.IKeywordStatement.declareType.String) {
 			return elements.get(index).extractLiteralAsString();
 		}
 		if(elements.get(index).getType() == org.jbehaviour.parser.model.IKeywordStatement.declareType.Identifier) {
 			return elements.get(index).getValue();
 		}
-		throw new JBehaviourPasingError("Type is not valid: " + elements.get(index).getType());
+		throw new JBehaviourParsingError("Type is not valid: " + elements.get(index).getType());
 	}
 
 	@Override
-	public String getReference() throws JBehaviourPasingError {
+	public String getReference() throws JBehaviourParsingError {
 		return null;
 	}
 	
 	@Override
-	public String getKlass() throws JBehaviourPasingError {
+	public String getKlass() throws JBehaviourParsingError {
 		return null;
 	}
 

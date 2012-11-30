@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
-import org.jbehaviour.exception.JBehaviourPasingError;
+import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
 import org.jbehaviour.parser.model.IKeywordStatement;
 import org.jbehaviour.reflexion.IBehaviourReflexion;
@@ -31,7 +31,7 @@ public class FluentleniumStepsTest {
 	}
 
 	@Test
-	public void test() throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException, IOException, JBehaviourPasingError, JBehaviourRuntimeError {
+	public void test() throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException, IOException, JBehaviourParsingError, JBehaviourRuntimeError {
 		IBehaviourReflexion registry = new JBehaviourReflexion();
 		registry.register("selenium","org.jbehaviour.plugins.selenium.FluentleniumSteps");
 		registry.register("system","org.jbehaviour.plugins.system.SystemSteps");

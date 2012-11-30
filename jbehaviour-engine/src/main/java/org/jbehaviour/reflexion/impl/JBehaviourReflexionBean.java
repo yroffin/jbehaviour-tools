@@ -9,7 +9,7 @@ import org.jbehaviour.annotation.Given;
 import org.jbehaviour.annotation.Store;
 import org.jbehaviour.annotation.Then;
 import org.jbehaviour.annotation.When;
-import org.jbehaviour.exception.JBehaviourPasingError;
+import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.parser.model.IKeywordStatement;
 import org.jbehaviour.reflexion.IBehaviourEnv;
 import org.jbehaviour.reflexion.IBehaviourReflexionBean;
@@ -34,19 +34,19 @@ public class JBehaviourReflexionBean implements IBehaviourReflexionBean {
 		myKlass = _myKlass;
 	}
 	
-	public void addGiven(Given annotation, Method method) throws IOException, JBehaviourPasingError {
+	public void addGiven(Given annotation, Method method) throws IOException, JBehaviourParsingError {
 		JBehaviourReflexionMethod local = new JBehaviourReflexionMethod(annotation,method);
 		givens.add(local);
 		anys.add(local);
 	}
 	
-	public void addWhen(When annotation, Method method) throws IOException, JBehaviourPasingError {
+	public void addWhen(When annotation, Method method) throws IOException, JBehaviourParsingError {
 		JBehaviourReflexionMethod local = new JBehaviourReflexionMethod(annotation,method);
 		whens.add(local);
 		anys.add(local);
 	}
 	
-	public void addThen(Then annotation, Method method) throws IOException, JBehaviourPasingError {
+	public void addThen(Then annotation, Method method) throws IOException, JBehaviourParsingError {
 		JBehaviourReflexionMethod local = new JBehaviourReflexionMethod(annotation,method);
 		thens.add(local);
 		anys.add(local);
@@ -54,7 +54,7 @@ public class JBehaviourReflexionBean implements IBehaviourReflexionBean {
 
 	@Override
 	public void addStore(Store annotation, Method method) throws IOException,
-			JBehaviourPasingError {
+			JBehaviourParsingError {
 		JBehaviourReflexionMethod local = new JBehaviourReflexionMethod(annotation,method);
 		stores.add(local);
 		anys.add(local);
@@ -93,7 +93,7 @@ public class JBehaviourReflexionBean implements IBehaviourReflexionBean {
 		return null;
 	}
 
-	public Object getInstance(IBehaviourEnv env) throws InstantiationException, IllegalAccessException, ClassNotFoundException, JBehaviourPasingError {
+	public Object getInstance(IBehaviourEnv env) throws InstantiationException, IllegalAccessException, ClassNotFoundException, JBehaviourParsingError {
 		return env.getInstance(klass);
 	}
 }

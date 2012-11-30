@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 
-import org.jbehaviour.exception.JBehaviourPasingError;
+import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.parser.model.IKeywordStatement;
 import org.junit.After;
 import org.junit.Before;
@@ -26,7 +26,7 @@ public class JBehaviourParserJson {
 	}
 
 	@Test
-	public void testJson1() throws IOException, JBehaviourPasingError {
+	public void testJson1() throws IOException, JBehaviourParsingError {
 		IKeywordStatement parser = (new JBehaviourStatementParser("some json with {'data':'data'}")).parse();
 		System.err.println(parser.toString());
 		assertEquals(parser.get(0).getValue(),"some");
@@ -36,7 +36,7 @@ public class JBehaviourParserJson {
 	}
 
 	@Test
-	public void testJson2() throws IOException, JBehaviourPasingError {
+	public void testJson2() throws IOException, JBehaviourParsingError {
 		IKeywordStatement parser = (new JBehaviourStatementParser("some json with {'data':'data','myObject':{'anotherData':'some string'}}")).parse();
 		System.err.println(parser.toString());
 		assertEquals(parser.get(0).getValue(),"some");
@@ -46,7 +46,7 @@ public class JBehaviourParserJson {
 	}
 	@Test
 
-	public void testJson3() throws IOException, JBehaviourPasingError {
+	public void testJson3() throws IOException, JBehaviourParsingError {
 		IKeywordStatement parser = (new JBehaviourStatementParser("some json with {'data':'data'\n,'myObject':\n{'anotherData':'some string'}\n}\n")).parse();
 		System.err.println(parser.toString());
 		assertEquals(parser.get(0).getValue(),"some");

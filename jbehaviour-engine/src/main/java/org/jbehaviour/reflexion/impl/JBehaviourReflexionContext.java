@@ -1,6 +1,6 @@
 package org.jbehaviour.reflexion.impl;
 
-import org.jbehaviour.exception.JBehaviourPasingError;
+import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
 import org.jbehaviour.parser.model.IKeywordStatement;
 import org.jbehaviour.reflexion.IBehaviourEnv;
@@ -36,7 +36,7 @@ public class JBehaviourReflexionContext implements IBehaviourReflexionContext {
 		env = _env;
 	}
 
-	public Object execute() throws JBehaviourPasingError, JBehaviourRuntimeError {
+	public Object execute() throws JBehaviourParsingError, JBehaviourRuntimeError {
 		Object result;
 		try {
 			result = method.invoke(env,bean.getInstance(env), parsedStatement);
@@ -54,5 +54,4 @@ public class JBehaviourReflexionContext implements IBehaviourReflexionContext {
 		logger.info("Store result: " + env.getObject("result"));
 		return result;
 	}
-
 }

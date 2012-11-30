@@ -7,7 +7,7 @@ import org.jbehaviour.annotation.Given;
 import org.jbehaviour.annotation.Store;
 import org.jbehaviour.annotation.Then;
 import org.jbehaviour.annotation.When;
-import org.jbehaviour.exception.JBehaviourPasingError;
+import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.parser.model.IKeywordStatement;
 
 public interface IBehaviourReflexionBean {
@@ -16,32 +16,32 @@ public interface IBehaviourReflexionBean {
 	 * @param annotation
 	 * @param method
 	 * @throws IOException 
-	 * @throws JBehaviourPasingError 
+	 * @throws JBehaviourParsingError 
 	 */
-	void addGiven(Given annotation, Method method) throws IOException, JBehaviourPasingError;
+	void addGiven(Given annotation, Method method) throws IOException, JBehaviourParsingError;
 	/**
 	 * add a new when step
 	 * @param annotation
 	 * @param method
 	 * @throws IOException 
 	 */
-	void addWhen(When annotation, Method method) throws IOException, JBehaviourPasingError;
+	void addWhen(When annotation, Method method) throws IOException, JBehaviourParsingError;
 	/**
 	 * add a new then step
 	 * @param annotation
 	 * @param method
 	 * @throws IOException 
-	 * @throws JBehaviourPasingError 
+	 * @throws JBehaviourParsingError 
 	 */
-	void addThen(Then annotation, Method method) throws IOException, JBehaviourPasingError;
+	void addThen(Then annotation, Method method) throws IOException, JBehaviourParsingError;
 	/**
 	 * a a new store method
 	 * @param annotation
 	 * @param method
 	 * @throws IOException
-	 * @throws JBehaviourPasingError
+	 * @throws JBehaviourParsingError
 	 */
-	void addStore(Store annotation, Method method) throws IOException, JBehaviourPasingError;
+	void addStore(Store annotation, Method method) throws IOException, JBehaviourParsingError;
 	/**
 	 * is this statement match this text
 	 * @param text
@@ -72,7 +72,7 @@ public interface IBehaviourReflexionBean {
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
 	 * @throws ClassNotFoundException 
-	 * @throws JBehaviourPasingError 
+	 * @throws JBehaviourParsingError 
 	 */
-	Object getInstance(IBehaviourEnv env) throws InstantiationException, IllegalAccessException, ClassNotFoundException, JBehaviourPasingError;
+	Object getInstance(IBehaviourEnv env) throws InstantiationException, IllegalAccessException, ClassNotFoundException, JBehaviourParsingError;
 }

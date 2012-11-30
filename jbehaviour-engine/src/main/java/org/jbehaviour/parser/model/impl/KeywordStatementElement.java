@@ -1,6 +1,6 @@
 package org.jbehaviour.parser.model.impl;
 
-import org.jbehaviour.exception.JBehaviourPasingError;
+import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.parser.model.IKeywordStatementElement;
 import org.jbehaviour.parser.model.IKeywordStatement.declareType;
 
@@ -51,11 +51,11 @@ class KeywordStatementElement implements IKeywordStatementElement {
 	}
 
 	@Override
-	public String extractLiteralAsString() throws JBehaviourPasingError {
+	public String extractLiteralAsString() throws JBehaviourParsingError {
 		if(getType() == org.jbehaviour.parser.model.IKeywordStatement.declareType.String) {
 			return extractLiteralAsString(getValue());
 		}
-		throw new JBehaviourPasingError("Type is not valid: " + getType());
+		throw new JBehaviourParsingError("Type is not valid: " + getType());
 	}
 
 	@Override

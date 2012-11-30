@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import org.jbehaviour.JBehaviourLauncher;
-import org.jbehaviour.exception.JBehaviourPasingError;
+import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -40,7 +40,7 @@ public class H2InMemoryDatabaseTest extends TestCase {
 	}
 
 	@Test
-	public void test() throws SQLException, InterruptedException, ClassNotFoundException, IOException, JBehaviourPasingError, JBehaviourRuntimeError {
+	public void test() throws SQLException, InterruptedException, ClassNotFoundException, IOException, JBehaviourParsingError, JBehaviourRuntimeError {
 		H2MemoryDriver server = new H2MemoryDriver();
 		server.start();
 		server.load(new File("src/test/resources/datadump.sql"));

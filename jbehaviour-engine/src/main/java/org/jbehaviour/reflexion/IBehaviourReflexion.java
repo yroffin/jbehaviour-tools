@@ -2,9 +2,10 @@ package org.jbehaviour.reflexion;
 
 import java.io.IOException;
 
-import org.jbehaviour.exception.JBehaviourPasingError;
+import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
 import org.jbehaviour.parser.model.IKeywordStatement;
+import org.jbehaviour.xref.IBehaviourXRef;
 
 public interface IBehaviourReflexion {
 
@@ -20,21 +21,21 @@ public interface IBehaviourReflexion {
 	 * @param class1 
 	 * @throws ClassNotFoundException
 	 * @throws IOException 
-	 * @throws JBehaviourPasingError 
+	 * @throws JBehaviourParsingError 
 	 */
-	public abstract void register(String reference, String klass) throws JBehaviourPasingError;
+	public abstract void register(String reference, String klass) throws JBehaviourParsingError;
 
 	/**
 	 * retrieve one method to invoke with its context
 	 * @param text
 	 * @return
 	 * @throws IOException 
-	 * @throws JBehaviourPasingError 
+	 * @throws JBehaviourParsingError 
 	 * @throws JBehaviourRuntimeError 
 	 */
 	public abstract IBehaviourReflexionContext retrieve(
 			IKeywordStatement.statement klass, 
-			String text) throws JBehaviourPasingError, JBehaviourRuntimeError;
+			String text) throws JBehaviourParsingError, JBehaviourRuntimeError;
 
 	/**
 	 * declare a string variable
@@ -51,4 +52,10 @@ public interface IBehaviourReflexion {
 	 * @throws JBehaviourRuntimeError 
 	 */
 	public void declareJson(String reference, String klass, String json) throws JBehaviourRuntimeError;
+	
+	/**
+	 * retrieve XRef
+	 * @return
+	 */
+	public IBehaviourXRef getXRef();
 }

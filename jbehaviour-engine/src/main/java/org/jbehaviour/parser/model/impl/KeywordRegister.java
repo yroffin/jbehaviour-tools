@@ -1,6 +1,6 @@
 package org.jbehaviour.parser.model.impl;
 
-import org.jbehaviour.exception.JBehaviourPasingError;
+import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.parser.model.IKeywordStatement;
 
 public class KeywordRegister extends KeywordStatement {
@@ -15,7 +15,7 @@ public class KeywordRegister extends KeywordStatement {
 	}
 
 	@Override
-	public String getKlass() throws JBehaviourPasingError {
+	public String getKlass() throws JBehaviourParsingError {
 		return elements.get(2).extractLiteralAsString();
 	}
 

@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import org.antlr.runtime.RecognitionException;
 import org.jbehaviour.antlr.AnotherStoryGrammerParser;
-import org.jbehaviour.exception.JBehaviourPasingError;
+import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.parser.model.IKeywordStatement;
 import org.jbehaviour.parser.model.impl.KeywordAny;
 
@@ -14,7 +14,7 @@ public class JBehaviourStatementParser extends AnotherStoryGrammerParser {
 
 	JBehahiourLexer lexer;
 	
-	public JBehaviourStatementParser(String data) throws JBehaviourPasingError {
+	public JBehaviourStatementParser(String data) throws JBehaviourParsingError {
 		super(JBehahiourLexer.getTokensFromString(data));
 		lexer = (JBehahiourLexer) input.getTokenSource();
 	}
@@ -78,13 +78,13 @@ public class JBehaviourStatementParser extends AnotherStoryGrammerParser {
 		}
 	}
 
-	public IKeywordStatement parse() throws JBehaviourPasingError {
+	public IKeywordStatement parse() throws JBehaviourParsingError {
 		try {
 			error = 0;
 			lexer.setError(0);
 			anyDecl();
-			if(lexer.getError()>0) throw new JBehaviourPasingError("This story has lexer errors");
-			if(error>0) throw new JBehaviourPasingError("This statement has errors");
+			if(lexer.getError()>0) throw new JBehaviourParsingError("This story has lexer errors");
+			if(error>0) throw new JBehaviourParsingError("This statement has errors");
 			return current;
 		} catch (RecognitionException e) {
 			e.printStackTrace();

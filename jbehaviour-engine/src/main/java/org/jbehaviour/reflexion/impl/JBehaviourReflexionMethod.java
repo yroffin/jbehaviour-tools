@@ -10,7 +10,7 @@ import org.jbehaviour.annotation.Given;
 import org.jbehaviour.annotation.Store;
 import org.jbehaviour.annotation.Then;
 import org.jbehaviour.annotation.When;
-import org.jbehaviour.exception.JBehaviourPasingError;
+import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
 import org.jbehaviour.parser.JBehaviourStatementParser;
 import org.jbehaviour.parser.model.IKeywordStatement;
@@ -44,9 +44,9 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 	 * analyze this method and prepare it
 	 * @param _method
 	 * @throws IOException
-	 * @throws JBehaviourPasingError 
+	 * @throws JBehaviourParsingError 
 	 */
-	private void parse(String _text, Method _method) throws IOException, JBehaviourPasingError {
+	private void parse(String _text, Method _method) throws IOException, JBehaviourParsingError {
 		methodToInvoke = _method;
 		text = _text;
 		/**
@@ -86,16 +86,16 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 		}
 	}
 
-	public JBehaviourReflexionMethod(Given _annotation, Method _method) throws IOException, JBehaviourPasingError {
+	public JBehaviourReflexionMethod(Given _annotation, Method _method) throws IOException, JBehaviourParsingError {
 		parse(_annotation.value(),_method);
 	}
-	public JBehaviourReflexionMethod(When _annotation, Method _method) throws IOException, JBehaviourPasingError {
+	public JBehaviourReflexionMethod(When _annotation, Method _method) throws IOException, JBehaviourParsingError {
 		parse(_annotation.value(),_method);
 	}
-	public JBehaviourReflexionMethod(Then _annotation, Method _method) throws IOException, JBehaviourPasingError {
+	public JBehaviourReflexionMethod(Then _annotation, Method _method) throws IOException, JBehaviourParsingError {
 		parse(_annotation.value(),_method);
 	}
-	public JBehaviourReflexionMethod(Store _annotation, Method _method) throws IOException, JBehaviourPasingError {
+	public JBehaviourReflexionMethod(Store _annotation, Method _method) throws IOException, JBehaviourParsingError {
 		parse(_annotation.value(),_method);
 	}
 
@@ -113,7 +113,7 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 			throw new JBehaviourRuntimeError(e);
 		}
 	}
-	public Object invoke(IBehaviourEnv env, Object object,IKeywordStatement parsedStatement) throws JBehaviourPasingError, JBehaviourRuntimeError {
+	public Object invoke(IBehaviourEnv env, Object object,IKeywordStatement parsedStatement) throws JBehaviourParsingError, JBehaviourRuntimeError {
 		logger.info("Invoke with: " + methodToInvoke.getName() + " parsed: " + parsedStatement);
 		/**
 		 * build parameters
@@ -185,6 +185,21 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 			}
 			index++;
 		}
-		return invokeLocaly(object,args);
+		
+		/**
+		 * start chrono
+		 */
+		Long begin = env.getXRef().start();
+		Object result = invokeLocaly(object,args);
+		/**
+		 * stop chrono
+		 */
+		env.getXRef().stop(
+				begin, 
+				object.getClass().toString(),
+				methodToInvoke.getName(),
+				object,args,
+				text);
+		return result;
 	}
 }

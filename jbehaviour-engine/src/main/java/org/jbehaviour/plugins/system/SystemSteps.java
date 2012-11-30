@@ -9,14 +9,27 @@ public class SystemSteps {
 	
 	@Given("set property $property to $value")
 	public void setProperty(String property, String value) {
-		logger.debug("System set property " + property + " to " + value);
+		logger.info("System set property [" + property + "] to [" + value + "]");
 		System.setProperty(property, value);
 	}
 
 	@Given("print object $value")
 	public Object print(Object value) {
-		logger.info("Print " + value.toString());
+		logger.info("Print [" + value.toString() +"]");
 		return value;
 	}
 
+	@Given("wait for $value second")
+	public Integer waitInSecond(Integer value) throws InterruptedException {
+		logger.info("Waiting for [" + value.toString() +"] second");
+		Thread.sleep(value * 1000);
+		return value;
+	}
+
+	@Given("wait for $value millisecond")
+	public Integer waitInMilisecond(Integer value) throws InterruptedException {
+		logger.info("Waiting for [" + value.toString() +"] millisecond");
+		Thread.sleep(value);
+		return value;
+	}
 }

@@ -1,6 +1,6 @@
 package org.jbehaviour.parser.model;
 
-import org.jbehaviour.exception.JBehaviourPasingError;
+import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.parser.model.IKeywordStatement.declareType;
 
 public interface IKeywordStatementElement {
@@ -18,8 +18,8 @@ public interface IKeywordStatementElement {
 	/**
 	 * value manipulation
 	 * @return
-	 * @throws JBehaviourPasingError
+	 * @throws JBehaviourParsingError
 	 */
-	public abstract String extractLiteralAsString() throws JBehaviourPasingError;
+	public abstract String extractLiteralAsString() throws JBehaviourParsingError;
 	public String extractLiteralAsString(String value);
 }

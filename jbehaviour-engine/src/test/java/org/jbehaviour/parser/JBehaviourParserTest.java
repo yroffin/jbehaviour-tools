@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 
-import org.jbehaviour.exception.JBehaviourPasingError;
+import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.parser.model.IKeywordStatement;
 import org.junit.After;
 import org.junit.Before;
@@ -26,7 +26,7 @@ public class JBehaviourParserTest {
 	}
 
 	@Test
-	public void testSampleGivenSomePrecondition() throws IOException, JBehaviourPasingError {
+	public void testSampleGivenSomePrecondition() throws IOException, JBehaviourParsingError {
 		IKeywordStatement parser = (new JBehaviourStatementParser("some precondition")).parse();
 		System.err.println(parser.toString());
 		assertEquals(parser.get(0).getValue(),"some");
@@ -34,7 +34,7 @@ public class JBehaviourParserTest {
 	}
 
 	@Test
-	public void testSampleParameter() throws IOException, JBehaviourPasingError {
+	public void testSampleParameter() throws IOException, JBehaviourParsingError {
 		IKeywordStatement parser = (new JBehaviourStatementParser("some $z $b $a to be ordered")).parse();
 		System.err.println(parser.toString());
 		assertEquals(parser.get(0).getValue(),"some");
@@ -44,7 +44,7 @@ public class JBehaviourParserTest {
 	}
 
 	@Test
-	public void testSampleGivenSomePreconditionWithArgument() throws IOException, JBehaviourPasingError {
+	public void testSampleGivenSomePreconditionWithArgument() throws IOException, JBehaviourParsingError {
 		IKeywordStatement parser = (new JBehaviourStatementParser("some precondition with $argument")).parse();
 		System.err.println(parser.toString());
 		assertEquals(parser.get(0).getValue(),"some");
@@ -54,7 +54,7 @@ public class JBehaviourParserTest {
 	}
 
 	@Test
-	public void testSampleGivenSomePreconditionWithString() throws IOException, JBehaviourPasingError {
+	public void testSampleGivenSomePreconditionWithString() throws IOException, JBehaviourParsingError {
 		IKeywordStatement parser = (new JBehaviourStatementParser("some precondition          with 'argument  with  blank'")).parse();
 		System.err.println(parser.toString());
 		assertEquals(parser.get(0).getValue(),"some");
@@ -88,9 +88,9 @@ public class JBehaviourParserTest {
 	 * @param sb
 	 * @param target
 	 * @throws IOException
-	 * @throws JBehaviourPasingError 
+	 * @throws JBehaviourParsingError 
 	 */
-	public void compare(String sa, String sb, boolean target) throws IOException, JBehaviourPasingError {
+	public void compare(String sa, String sb, boolean target) throws IOException, JBehaviourParsingError {
 		IKeywordStatement a = (new JBehaviourStatementParser(sa)).parse();
 		IKeywordStatement b = (new JBehaviourStatementParser(sb)).parse();
 		System.err.println(a.toString());
@@ -99,7 +99,7 @@ public class JBehaviourParserTest {
 	}
 
 	@Test
-	public void testSampleCompareParsedItems() throws IOException, JBehaviourPasingError {
+	public void testSampleCompareParsedItems() throws IOException, JBehaviourParsingError {
 		compare("some precondition          with 'argument  with  blank' after",
 				"some precondition with $argument after", true);
 		compare("some precondition          with \"argument  with  blank\" after 'some other'",

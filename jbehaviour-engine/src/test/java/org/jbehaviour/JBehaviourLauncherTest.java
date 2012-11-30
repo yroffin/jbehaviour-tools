@@ -2,7 +2,7 @@ package org.jbehaviour;
 
 import junit.framework.TestCase;
 
-import org.jbehaviour.exception.JBehaviourPasingError;
+import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
 import org.junit.After;
 import org.junit.Before;
@@ -24,22 +24,27 @@ public class JBehaviourLauncherTest extends TestCase {
 	}
 
 	@Test
-	public void testExecuteSample() throws JBehaviourPasingError, JBehaviourRuntimeError {
+	public void testExecuteSample() throws JBehaviourParsingError, JBehaviourRuntimeError {
 		assertEquals(true,JBehaviourLauncher.registerAndExecute("src/test/resources/files/sample.story"));
 	}
 
 	@Test
-	public void testExecuteExtended() throws JBehaviourPasingError, JBehaviourRuntimeError {
+	public void testExecuteExtended() throws JBehaviourParsingError, JBehaviourRuntimeError {
 		assertEquals(true,JBehaviourLauncher.registerAndExecute("src/test/resources/files/extended.story"));
 	}
 
 	@Test
-	public void testJsonExtended() throws JBehaviourPasingError, JBehaviourRuntimeError {
+	public void testJsonExtended() throws JBehaviourParsingError, JBehaviourRuntimeError {
 		assertEquals(true,JBehaviourLauncher.registerAndExecute("src/test/resources/files/json.story"));
 	}
 
 	@Test
-	public void testExecuteInclude() throws JBehaviourPasingError, JBehaviourRuntimeError {
+	public void testExecuteReport() throws JBehaviourParsingError, JBehaviourRuntimeError {
+		assertEquals(true,JBehaviourLauncher.registerAndExecute("src/test/resources/files/report.story"));
+	}
+
+	@Test
+	public void testExecuteInclude() throws JBehaviourParsingError, JBehaviourRuntimeError {
 		assertEquals(true,JBehaviourLauncher.registerAndExecute("src/test/resources/files/include.story"));
 	}
 }

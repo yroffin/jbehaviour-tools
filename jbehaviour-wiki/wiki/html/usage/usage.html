@@ -64,6 +64,8 @@ Class register consist to declare a class path associated to one global unique i
 <p>This declaration declare an internal global id 'sample' for the class <a href="https://github.com/yroffin/jbehaviour-tools/blob/v1.1a/jbehaviour-engine/src/test/java/org/jbehaviour/plugins/SampleSteps.java">org.jbehaviour.plugins.SampleSteps</a>
 this class must be in classpath.</p>
 
+<p><strong>Notice that</strong> override is working, so default extention can be overriden (StoreSteps, SystemSteps etc ...).</p>
+
 <h3>Declare</h3>
 
 <p>Each scenario will implement some steps, each step can use local object (String, Class ...) ...</p>
@@ -108,3 +110,59 @@ this class must be in classpath.</p>
 </blockquote>
 
 <h2>2. Extention</h2>
+
+<h3>StoreSteps</h3>
+
+<p>This extention permit to store object in session :</p>
+
+<blockquote>
+  <p>Store last action result in reference $reference<br /></p>
+  
+  <blockquote>
+    <p>result as $reference
+    Example: result as 'myReference'</p>
+  </blockquote>
+  
+  <p>Store last action result in file $filename<br /></p>
+  
+  <blockquote>
+    <p>in file $filename
+    Example: in file 'C:\output\file.txt'</p>
+  </blockquote>
+</blockquote>
+
+<p>Extention declaration :</p>
+
+<blockquote>
+  <p>  ...<br />
+  Register sample with 'org.jbehaviour.plugins.system.StoreSteps' plugin<br />
+    ...<br /></p>
+</blockquote>
+
+<h3>SystemSteps</h3>
+
+<p>This extention permit to store object in session :</p>
+
+<blockquote>
+  <p>Set environement property to a defined value<br /></p>
+  
+  <blockquote>
+    <p>set property $property to $value
+    Example: set property 'PATH' to 'C:\temp'</p>
+  </blockquote>
+  
+  <p>Print object (object is a reference to a defined reference) as string in default output<br /></p>
+  
+  <blockquote>
+    <p>print object $value
+    Example: print object 'ID'</p>
+  </blockquote>
+</blockquote>
+
+<p>Extention declaration :</p>
+
+<blockquote>
+  <p>  ...<br />
+  Register sample with 'org.jbehaviour.plugins.system.StoreSteps' plugin<br />
+    ...<br /></p>
+</blockquote>

@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
-import org.jbehaviour.exception.JBehaviourPasingError;
+import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
 import org.jbehaviour.parser.model.IKeywordStatement;
 import org.jbehaviour.reflexion.impl.JBehaviourReflexion;
@@ -29,7 +29,7 @@ public class JBehaviourVelocityTest {
 	}
 
 	@Test
-	public void testVelocitySteps() throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException, IOException, JBehaviourPasingError, JBehaviourRuntimeError {
+	public void testVelocitySteps() throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException, IOException, JBehaviourParsingError, JBehaviourRuntimeError {
 		IBehaviourReflexion registry = new JBehaviourReflexion();
 		registry.register("complex","org.jbehaviour.plugins.ComplexSteps");
 		registry.register("velocity","org.jbehaviour.plugins.VelocitySteps");

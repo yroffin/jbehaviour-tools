@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 
-import org.jbehaviour.exception.JBehaviourPasingError;
+import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.parser.model.IKeywordStatement;
 import org.junit.After;
 import org.junit.Before;
@@ -26,7 +26,7 @@ public class JBehaviourParserTemplate {
 	}
 
 	@Test
-	public void testTemplateDeclaration() throws IOException, JBehaviourPasingError {
+	public void testTemplateDeclaration() throws IOException, JBehaviourParsingError {
 		IKeywordStatement parser = (new JBehaviourStatementParser("some template with $argument.get(0).member.get(\"another\").text")).parse();
 		System.err.println(parser.toString());
 		assertEquals(parser.get(0).getValue(),"some");

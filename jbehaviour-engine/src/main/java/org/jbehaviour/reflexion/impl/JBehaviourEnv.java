@@ -11,9 +11,10 @@ import java.util.Map;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.jbehaviour.annotation.EnvReference;
-import org.jbehaviour.exception.JBehaviourPasingError;
+import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
 import org.jbehaviour.reflexion.IBehaviourEnv;
+import org.jbehaviour.xref.IBehaviourXRef;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,10 +29,13 @@ public class JBehaviourEnv implements IBehaviourEnv {
 	private Map<String,Object> declare  = new HashMap<String,Object>();
 	private VelocityContext context = null;
 	private Writer writer = new StringWriter();
+
+	private IBehaviourXRef xref;
 	
-	public JBehaviourEnv() {
+	public JBehaviourEnv(IBehaviourXRef _xref) {
 		Velocity.init();
 		context = new VelocityContext();
+		xref = _xref;
 		
 	}
 	
@@ -65,7 +69,7 @@ public class JBehaviourEnv implements IBehaviourEnv {
 	}
 
 	@Override
-	public Object getInstance(String key) throws InstantiationException, IllegalAccessException, ClassNotFoundException, JBehaviourPasingError {
+	public Object getInstance(String key) throws InstantiationException, IllegalAccessException, ClassNotFoundException, JBehaviourParsingError {
 		if(declare.containsKey(key)) {
 			return declare.get(key);
 		}
@@ -81,7 +85,7 @@ public class JBehaviourEnv implements IBehaviourEnv {
 				if(a.annotationType() == EnvReference.class) {
 					logger.debug("Field env detected: " + field);
 					if(field.getType() != IBehaviourEnv.class) {
-						throw new JBehaviourPasingError("Bad annotation on field " + field.getName());
+						throw new JBehaviourParsingError("Bad annotation on field " + field.getName());
 					}
 					field.set(declare.get(key), this);
 				}
@@ -117,5 +121,10 @@ public class JBehaviourEnv implements IBehaviourEnv {
 		} catch (IOException e) {
 			throw new JBehaviourRuntimeError(e);
 		}
+	}
+
+	@Override
+	public IBehaviourXRef getXRef() {
+		return xref;
 	}
 }

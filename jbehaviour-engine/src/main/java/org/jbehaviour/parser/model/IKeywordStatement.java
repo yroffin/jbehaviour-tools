@@ -2,7 +2,7 @@ package org.jbehaviour.parser.model;
 
 import java.util.List;
 
-import org.jbehaviour.exception.JBehaviourPasingError;
+import org.jbehaviour.exception.JBehaviourParsingError;
 
 public interface IKeywordStatement {
 
@@ -28,7 +28,8 @@ public interface IKeywordStatement {
 		Register, 
 		Store, 
 		Declare,
-		Include
+		Include,
+		Report
 	}
 
 	public void someWord(String value);
@@ -41,20 +42,20 @@ public interface IKeywordStatement {
 	 * extract as litteral
 	 * @param index
 	 * @return
-	 * @throws JBehaviourPasingError 
+	 * @throws JBehaviourParsingError 
 	 */
-	public Integer extractLiteralAsInteger(int index) throws JBehaviourPasingError;
-	public String  extractLiteralAsString(int index) throws JBehaviourPasingError;
+	public Integer extractLiteralAsInteger(int index) throws JBehaviourParsingError;
+	public String  extractLiteralAsString(int index) throws JBehaviourParsingError;
 
 	public String getStatement();
 	public statement getType();
 
 	/**
 	 * Register statement
-	 * @throws JBehaviourPasingError 
+	 * @throws JBehaviourParsingError 
 	 */
-	public String getReference() throws JBehaviourPasingError;
-	public String getKlass() throws JBehaviourPasingError;
+	public String getReference() throws JBehaviourParsingError;
+	public String getKlass() throws JBehaviourParsingError;
 
 	/**
 	 * Specific to Declare

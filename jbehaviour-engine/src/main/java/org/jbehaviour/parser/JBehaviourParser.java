@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import org.antlr.runtime.RecognitionException;
 import org.jbehaviour.antlr.AnotherStoryGrammerParser;
-import org.jbehaviour.exception.JBehaviourPasingError;
+import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.parser.model.FormalStory;
 import org.jbehaviour.parser.model.IKeywordStatement;
 import org.jbehaviour.parser.model.impl.KeywordScenario;
@@ -14,7 +14,7 @@ public class JBehaviourParser extends AnotherStoryGrammerParser {
 	Logger logger = LoggerFactory.getLogger(JBehaviourParser.class);
 
 	JBehahiourLexer lexer;
-	public JBehaviourParser(String filename) throws JBehaviourPasingError {
+	public JBehaviourParser(String filename) throws JBehaviourParsingError {
 		super(JBehahiourLexer.getTokens(filename));
 		lexer = (JBehahiourLexer) input.getTokenSource();
 	}
@@ -118,6 +118,13 @@ public class JBehaviourParser extends AnotherStoryGrammerParser {
 	}
 
 	@Override
+	public void onFeatureReportKeyword() {
+		super.onFeatureReportKeyword();
+		logger.debug("on feature/report");
+		current = story.getFeature().addReportStatement();
+	}
+
+	@Override
 	public void onFeatureDeclareKeyword() {
 		super.onFeatureDeclareKeyword();
 		logger.debug("on feature/declare");
@@ -163,19 +170,19 @@ public class JBehaviourParser extends AnotherStoryGrammerParser {
 	/**
 	 * parse this story
 	 * @return
-	 * @throws JBehaviourPasingError 
+	 * @throws JBehaviourParsingError 
 	 */
-	public FormalStory parse() throws JBehaviourPasingError {
+	public FormalStory parse() throws JBehaviourParsingError {
 		try {
 			error = 0;
 			lexer.setError(0);
 			story = new FormalStory();
 			story();
-			if(lexer.getError()>0) throw new JBehaviourPasingError("This story has lexer errors");
-			if(error>0) throw new JBehaviourPasingError("This story has parsing errors");
+			if(lexer.getError()>0) throw new JBehaviourParsingError("This story has lexer errors");
+			if(error>0) throw new JBehaviourParsingError("This story has parsing errors");
 			return story;
 		} catch (RecognitionException e) {
-			throw new JBehaviourPasingError(e);
+			throw new JBehaviourParsingError(e);
 		}
 	}
 }

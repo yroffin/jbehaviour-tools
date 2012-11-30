@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import junit.framework.TestCase;
 
-import org.jbehaviour.exception.JBehaviourPasingError;
+import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
 import org.jbehaviour.parser.model.IKeywordStatement;
 import org.jbehaviour.plugins.ComplexJsonBean;
@@ -30,7 +30,7 @@ public class JBehaviourJsonReflexionTest extends TestCase {
 	}
 
 	@Test
-	public void testJsonSteps() throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException, IOException, JBehaviourPasingError, JBehaviourRuntimeError {
+	public void testJsonSteps() throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException, IOException, JBehaviourParsingError, JBehaviourRuntimeError {
 		IBehaviourReflexion registry = new JBehaviourReflexion();
 		registry.register("complex","org.jbehaviour.plugins.ComplexSteps");
 		registry.register("json","org.jbehaviour.plugins.JsonSteps");

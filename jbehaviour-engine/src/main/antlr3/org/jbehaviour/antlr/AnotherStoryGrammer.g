@@ -35,6 +35,7 @@ tokens {
 	IWANTTO='I want to';
 	REGISTER='Register';
 	INCLUDE='Include';
+	REPORT='Report';
 	DECLARE='Declare';
 	PLUGIN='plugin';
 	SCENARIO='Scenario:';
@@ -50,6 +51,7 @@ tokens {
 	TOK_IWANTTO;
 	TOK_REGISTER;
 	TOK_INCLUDE;
+	TOK_REPORT;
 	TOK_DECLARE;
 
 	TOK_SCENARIO;
@@ -100,6 +102,13 @@ tokens {
 	 */
     	public void onFeatureKeyword() {
     		onDebug("onFeatureKeyword","");
+    	}
+	/**
+	 * feature
+	 * Declare reference as String 'string'
+	 */
+    	public void onFeatureReportKeyword() {
+    		onDebug("onFeatureReportKeyword","");
     	}
 	/**
 	 * feature
@@ -224,7 +233,7 @@ feature: FEATURE {onFeatureKeyword();} anyDecl featureDecl
 	;
 
 featureDecl
-	: inOrderToDecl asAnDecl iWantToDecl (includeDecl|registerDecl|declareDecl)*
+	: inOrderToDecl asAnDecl iWantToDecl (includeDecl|registerDecl|reportDecl|declareDecl)*
 	;
 
 inOrderToDecl: INORDERTO anyDecl
@@ -241,6 +250,9 @@ includeDecl: INCLUDE {onFeatureIncludeKeyword();} anyStringDecl
 	;
 registerDecl: REGISTER {onFeatureRegisterKeyword();} anyDeclEndedByPlugin
 	  -> ^(TOK_REGISTER REGISTER anyDeclEndedByPlugin)
+	;
+reportDecl: REPORT {onFeatureReportKeyword();} anyDecl
+	  -> ^(TOK_REPORT DECLARE anyDecl)
 	;
 declareDecl: DECLARE {onFeatureDeclareKeyword();} anyDecl
 	  -> ^(TOK_DECLARE DECLARE anyDecl)

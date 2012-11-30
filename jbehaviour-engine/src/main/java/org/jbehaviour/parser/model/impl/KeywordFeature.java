@@ -3,7 +3,7 @@ package org.jbehaviour.parser.model.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jbehaviour.exception.JBehaviourPasingError;
+import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.parser.model.IKeywordStatement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,11 +19,16 @@ public class KeywordFeature extends KeywordStatement {
 	List<IKeywordStatement> keywordAss = new ArrayList<IKeywordStatement>();
 	List<IKeywordStatement> keywordIs = new ArrayList<IKeywordStatement>();
 	List<IKeywordStatement> keywordRegisters = new ArrayList<IKeywordStatement>();
+	List<IKeywordStatement> keywordReports = new ArrayList<IKeywordStatement>();
 	List<IKeywordStatement> keywordDeclares = new ArrayList<IKeywordStatement>();
 	List<IKeywordStatement> keywordIncludes = new ArrayList<IKeywordStatement>();
 	
 	public List<IKeywordStatement> getKeywordInclude() {
 		return keywordIncludes;
+	}
+
+	public List<IKeywordStatement> getKeywordReports() {
+		return keywordReports;
 	}
 
 	public List<IKeywordStatement> getKeywordInOrders() {
@@ -95,7 +100,7 @@ public class KeywordFeature extends KeywordStatement {
 		return element;
 	}
 
-	public void includeRegister(List<IKeywordStatement> registers) throws JBehaviourPasingError {
+	public void includeRegister(List<IKeywordStatement> registers) throws JBehaviourParsingError {
 		for(IKeywordStatement item:registers) {
 			KeywordRegister register = (KeywordRegister) item;
 			logger.info("Include register: " + register.getReference() + " with " + register.getKlass());
@@ -109,5 +114,11 @@ public class KeywordFeature extends KeywordStatement {
 			logger.info("Include declare: " + declare.getReference());
 			keywordDeclares.add(item);
 		}
+	}
+
+	public IKeywordStatement addReportStatement() {
+		IKeywordStatement element = new KeywordReport();
+		keywordReports.add(element);
+		return element;
 	}
 }

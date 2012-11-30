@@ -10,7 +10,7 @@ import org.jbehaviour.annotation.Given;
 import org.jbehaviour.annotation.Store;
 import org.jbehaviour.annotation.Then;
 import org.jbehaviour.annotation.When;
-import org.jbehaviour.exception.JBehaviourPasingError;
+import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
 import org.jbehaviour.parser.JBehaviourStatementParser;
 import org.jbehaviour.parser.model.IKeywordStatement;
@@ -20,6 +20,8 @@ import org.jbehaviour.reflexion.IBehaviourReflexion;
 import org.jbehaviour.reflexion.IBehaviourReflexionBean;
 import org.jbehaviour.reflexion.IBehaviourReflexionContext;
 import org.jbehaviour.reflexion.IBehaviourReflexionMethodBean;
+import org.jbehaviour.xref.IBehaviourXRef;
+import org.jbehaviour.xref.JBehaviourXRef;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,22 +31,22 @@ import org.slf4j.LoggerFactory;
 public class JBehaviourReflexion implements IBehaviourReflexion {
 	Logger logger = LoggerFactory.getLogger(JBehaviourReflexion.class);
 
-	IBehaviourEnv env = new JBehaviourEnv();
+	IBehaviourEnv env = new JBehaviourEnv(new JBehaviourXRef());
 	Map<String,IBehaviourReflexionBean> beans = new HashMap<String,IBehaviourReflexionBean>();
 
 	public IBehaviourEnv getEnv() {
 		return env;
 	}
 
-	public JBehaviourReflexion() throws JBehaviourPasingError {
+	public JBehaviourReflexion() throws JBehaviourParsingError {
 	}
 
-	public void register(String reference, String klass) throws JBehaviourPasingError {
+	public void register(String reference, String klass) throws JBehaviourParsingError {
 		Class<?> myKlass = null;
 		try {
 			myKlass = Class.forName(klass);
 		} catch (ClassNotFoundException e) {
-			throw new JBehaviourPasingError(e);
+			throw new JBehaviourParsingError(e);
 		}
 		logger.debug("Class reflexion: " + klass + "/" + myKlass);
 
@@ -67,7 +69,7 @@ public class JBehaviourReflexion implements IBehaviourReflexion {
 					try {
 						bean.addGiven((Given)a,method);
 					} catch (IOException e) {
-						throw new JBehaviourPasingError(e);
+						throw new JBehaviourParsingError(e);
 					}
 				}
 				if(a.annotationType() == When.class) {
@@ -75,7 +77,7 @@ public class JBehaviourReflexion implements IBehaviourReflexion {
 					try {
 						bean.addWhen((When)a,method);
 					} catch (IOException e) {
-						throw new JBehaviourPasingError(e);
+						throw new JBehaviourParsingError(e);
 					}
 				}
 				if(a.annotationType() == Then.class) {
@@ -83,7 +85,7 @@ public class JBehaviourReflexion implements IBehaviourReflexion {
 					try {
 						bean.addThen((Then)a,method);
 					} catch (IOException e) {
-						throw new JBehaviourPasingError(e);
+						throw new JBehaviourParsingError(e);
 					}
 				}
 				if(a.annotationType() == Store.class) {
@@ -91,14 +93,14 @@ public class JBehaviourReflexion implements IBehaviourReflexion {
 					try {
 						bean.addStore((Store)a,method);
 					} catch (IOException e) {
-						throw new JBehaviourPasingError(e);
+						throw new JBehaviourParsingError(e);
 					}
 				}
 			}
 		}
 	}
 
-	public IBehaviourReflexionContext retrieve(IKeywordStatement.statement klass, String text) throws JBehaviourPasingError, JBehaviourRuntimeError {
+	public IBehaviourReflexionContext retrieve(IKeywordStatement.statement klass, String text) throws JBehaviourParsingError, JBehaviourRuntimeError {
 		/**
 		 * first, parse this text
 		 */
@@ -174,5 +176,10 @@ public class JBehaviourReflexion implements IBehaviourReflexion {
 	@Override
 	public void declareJson(String reference, String klass, String json) throws JBehaviourRuntimeError {
 		env.store(reference, env.jsonToObject(klass, json));
+	}
+
+	@Override
+	public IBehaviourXRef getXRef() {
+		return env.getXRef();
 	}
 }

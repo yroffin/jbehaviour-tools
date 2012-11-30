@@ -3,7 +3,7 @@ package org.jbehaviour;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
-import org.jbehaviour.exception.JBehaviourPasingError;
+import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
 import org.junit.After;
 import org.junit.Before;
@@ -25,7 +25,7 @@ public class StoryLauncherTest {
 	}
 
 	@Test
-	public void testExecuteSample() throws IOException, JBehaviourPasingError, ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException, JBehaviourRuntimeError {
+	public void testExecuteSample() throws IOException, JBehaviourParsingError, ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException, JBehaviourRuntimeError {
 		JBehaviourLauncher.registerAndExecute("story/binq.story");
 	}
 }
