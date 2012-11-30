@@ -197,7 +197,7 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 		env.getXRef().stop(
 				pck,
 				begin, 
-				object.getClass().toString(),
+				object.getClass().getPackage().getName(),
 				methodToInvoke.getName(),
 				object,args,
 				text);

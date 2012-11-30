@@ -16,7 +16,7 @@
 #foreach ($testcase in $testsuite)
 <!-- testcase $testcase -->
 #set($timeInTestCase = ($testcase.getDuration()/1000.))
-        <testcase assertions="" classname="$testcase.getKlass()" name="$testcase.getTextLikeMethod()" status="" time="$timeInTestCase">
+        <testcase assertions="" classname="$key" name="$testcase.getTextLikeMethod()" status="" time="$timeInTestCase">
 #if ( $testcase.isSkipped() )
             <skipped/>
 #end
