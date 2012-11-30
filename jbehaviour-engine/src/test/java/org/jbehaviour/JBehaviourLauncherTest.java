@@ -40,7 +40,17 @@ public class JBehaviourLauncherTest extends TestCase {
 
 	@Test
 	public void testExecuteReport() throws JBehaviourParsingError, JBehaviourRuntimeError {
-		assertEquals(true,JBehaviourLauncher.registerAndExecute("src/test/resources/files/report.story"));
+		assertEquals(false,JBehaviourLauncher.registerAndExecute("src/test/resources/report/report.story"));
+	}
+
+	@Test
+	public void testExecuteReportError() throws JBehaviourParsingError, JBehaviourRuntimeError {
+		assertEquals(false,JBehaviourLauncher.registerAndExecute("src/test/resources/report/report_error.story"));
+	}
+
+	@Test
+	public void testExecuteReportFailure() throws JBehaviourParsingError, JBehaviourRuntimeError {
+		assertEquals(false,JBehaviourLauncher.registerAndExecute("src/test/resources/report/report_failure.story"));
 	}
 
 	@Test

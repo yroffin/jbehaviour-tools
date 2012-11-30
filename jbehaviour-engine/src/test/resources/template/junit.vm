@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites disabled="" errors="" failures="" name="" tests="" time="">
+<!-- xref $context.getXRef() -->
+<testsuites disabled="$context.getXRef().getDisabled()" errors="$context.getXRef().getErrors()" failures="$context.getXRef().getFailures()" name="$context.getXRef().getName()" tests="$context.getXRef().getTests()" time="$context.getXRef().getTime()">
 #foreach ($key in $context.getXRef().getRunsByScenario().keySet())
 #set($testsuite = $context.getXRef().getRunsByScenario().get($key))
 <!-- testsuite $testsuite -->
-#set($timeInSuite = 0.)
-#foreach ($testcase in $testsuite)
-#set($timeInSuite = $timeInSuite+($testcase.getDuration()/1000.))
-#end
-    <testsuite disabled="" errors="" failures="" hostname="" id=""
-        name="" package="$key" skipped="" tests="" time="$timeInSuite" timestamp="">
+    <testsuite disabled="$testsuite.getDisabled()" errors="$testsuite.getErrors()" failures="$testsuite.getFailures()"
+        package="$key" skipped="$testsuite.getSkipped()" tests="$testsuite.getTests()" time="$testsuite.getTime()" timestamp="">
         <properties>
-            <property name="" value=""/>
-            <property name="" value=""/>
+#foreach ($property in $context.getEnv().getProperties())
+            <property name="$property.getKey()" value="$property.getValue()"/>
+#end
         </properties>
-#foreach ($testcase in $testsuite)
+#foreach ($testcase in $testsuite.getRuns())
 <!-- testcase $testcase -->
 #set($timeInTestCase = ($testcase.getDuration()/1000.))
         <testcase assertions="" classname="$key" name="$testcase.getTextLikeMethod()" status="" time="$timeInTestCase">
@@ -21,16 +19,21 @@
             <skipped/>
 #end
 #if ( $testcase.hasErrors() )
-            <error message="" type=""/>
+            <error message="$testcase.getExcp()" type="$testcase.getExcp().getClass().getName()"/>
 #end
 #if ( $testcase.hasFailures() )
-            <failure message="" type=""/>
+            <failure message="$testcase.getExcp().getMessage()" type="$testcase.getExcp().getClass().getName()">
+#foreach ($stack in $testcase.getExcp().getStackTrace())$stack
+#end
+            </failure>
 #end
 #if ( $testcase.hasStdout() )
-            <system-out/>
+            <system-out>$testcase.getStdoutAsString()
+</system-out>
 #end
 #if ( $testcase.hasStderr() )
-            <system-err/>
+            <system-err>$testcase.getStderrAsString()
+</system-err>
 #end
         </testcase>
 #end

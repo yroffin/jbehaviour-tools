@@ -6,6 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
 import org.jbehaviour.parser.model.IKeywordStatement;
+import org.jbehaviour.parser.model.IKeywordStatement.statement;
 
 public interface IBehaviourReflexionMethodBean {
 	public boolean match(IKeywordStatement parsedStatement);
@@ -23,4 +24,5 @@ public interface IBehaviourReflexionMethodBean {
 	 * @throws IOException 
 	 */
 	public Object invoke(String scenarioMethodName, IBehaviourEnv env, Object object, IKeywordStatement parsedStatement) throws JBehaviourParsingError, JBehaviourRuntimeError;
+	statement getType();
 }

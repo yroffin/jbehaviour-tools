@@ -119,7 +119,7 @@ public class JBehaviourReflexion implements IBehaviourReflexion {
 			if(klass == IKeywordStatement.statement.Store) {
 				IBehaviourReflexionMethodBean method = bean.matchStore(parsedStatement);
 				if(method != null) {
-					search = new JBehaviourReflexionContext(scenarioMethodName, env,bean,method,parsedStatement);
+					search = new JBehaviourReflexionContext(scenarioMethodName, env, bean, method, parsedStatement);
 				}
 			}
 			/**
@@ -128,7 +128,7 @@ public class JBehaviourReflexion implements IBehaviourReflexion {
 			if(klass == IKeywordStatement.statement.Given) {
 				IBehaviourReflexionMethodBean method = bean.matchGiven(parsedStatement);
 				if(method != null) {
-					search = new JBehaviourReflexionContext(scenarioMethodName, env,bean,method,parsedStatement);
+					search = new JBehaviourReflexionContext(scenarioMethodName, env, bean, method, parsedStatement);
 				}
 			}
 			/**
@@ -146,7 +146,7 @@ public class JBehaviourReflexion implements IBehaviourReflexion {
 			if(klass == IKeywordStatement.statement.Then) {
 				IBehaviourReflexionMethodBean method = bean.matchThen(parsedStatement);
 				if(method != null) {
-					search = new JBehaviourReflexionContext(scenarioMethodName, env,bean,method,parsedStatement);
+					search = new JBehaviourReflexionContext(scenarioMethodName, env, bean, method, parsedStatement);
 				}
 			}
 		}

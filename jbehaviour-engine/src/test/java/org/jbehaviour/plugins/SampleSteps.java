@@ -33,12 +33,14 @@ public class SampleSteps {
 		logger.debug("action003");
 	}
 	@Then("some testable outcome is achieved")
-	public void test001() {
+	public boolean test001() {
 		logger.debug("test001");
+		return true;
 	}
 	@Then("something else we can check happens too")
-	public void test002() {
+	public boolean test002() {
 		logger.debug("test002");
+		return true;
 	}
 	/**
 	 * parametrable steps

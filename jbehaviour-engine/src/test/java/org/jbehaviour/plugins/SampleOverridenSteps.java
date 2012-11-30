@@ -18,8 +18,8 @@ public class SampleOverridenSteps extends SampleSteps {
 	}
 	@Override
 	@Then("something else we can check happens too")
-	public void test002() {
+	public boolean test002() {
 		logger.debug("test002 overriden ...");
-		super.test002();
+		return super.test002();
 	}
 }

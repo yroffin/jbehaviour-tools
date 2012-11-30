@@ -3,6 +3,7 @@ package org.jbehaviour.reflexion.impl;
 import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
 import org.jbehaviour.parser.model.IKeywordStatement;
+import org.jbehaviour.parser.model.IKeywordStatement.statement;
 import org.jbehaviour.reflexion.IBehaviourEnv;
 import org.jbehaviour.reflexion.IBehaviourReflexionBean;
 import org.jbehaviour.reflexion.IBehaviourReflexionContext;
@@ -61,5 +62,10 @@ public class JBehaviourReflexionContext implements IBehaviourReflexionContext {
 		env.store("result", result);
 		logger.info("Store result: " + env.getObject("result"));
 		return result;
+	}
+
+	@Override
+	public statement getType() {
+		return method.getType();
 	}
 }

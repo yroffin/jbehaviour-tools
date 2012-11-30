@@ -1,6 +1,8 @@
 package org.jbehaviour.reflexion.impl;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -14,6 +16,7 @@ import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
 import org.jbehaviour.parser.JBehaviourStatementParser;
 import org.jbehaviour.parser.model.IKeywordStatement;
+import org.jbehaviour.parser.model.IKeywordStatement.statement;
 import org.jbehaviour.parser.model.IKeywordStatementElement;
 import org.jbehaviour.reflexion.IBehaviourEnv;
 import org.jbehaviour.reflexion.IBehaviourReflexionMethodBean;
@@ -40,13 +43,22 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 
 	private String[] parameterNames;
 
+	private statement type;
+
+	@Override
+	public statement getType() {
+		return type;
+	}
+
 	/**
 	 * analyze this method and prepare it
+	 * @param type 
 	 * @param _method
 	 * @throws IOException
 	 * @throws JBehaviourParsingError 
 	 */
-	private void parse(String _text, Method _method) throws IOException, JBehaviourParsingError {
+	private void parse(statement _type, String _text, Method _method) throws IOException, JBehaviourParsingError {
+		type = _type;
 		methodToInvoke = _method;
 		text = _text;
 		/**
@@ -87,22 +99,22 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 	}
 
 	public JBehaviourReflexionMethod(Given _annotation, Method _method) throws IOException, JBehaviourParsingError {
-		parse(_annotation.value(),_method);
+		parse(IKeywordStatement.statement.Given, _annotation.value(), _method);
 	}
 	public JBehaviourReflexionMethod(When _annotation, Method _method) throws IOException, JBehaviourParsingError {
-		parse(_annotation.value(),_method);
+		parse(IKeywordStatement.statement.When, _annotation.value(),_method);
 	}
 	public JBehaviourReflexionMethod(Then _annotation, Method _method) throws IOException, JBehaviourParsingError {
-		parse(_annotation.value(),_method);
+		parse(IKeywordStatement.statement.Then, _annotation.value(),_method);
 	}
 	public JBehaviourReflexionMethod(Store _annotation, Method _method) throws IOException, JBehaviourParsingError {
-		parse(_annotation.value(),_method);
+		parse(IKeywordStatement.statement.Store, _annotation.value(),_method);
 	}
 
 	public boolean match(IKeywordStatement _parsedStatement) {
 		return parsedStatement.compareTo(_parsedStatement);
 	}
-	private Object invokeLocaly(Object object, Object[] args) throws JBehaviourRuntimeError {
+	private Object invokeLocaly(Object object, Object[] args) throws Exception {
 		try {
 			return methodToInvoke.invoke(object,args);
 		} catch (IllegalAccessException e) {
@@ -111,6 +123,66 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 			throw new JBehaviourRuntimeError(e);
 		} catch (InvocationTargetException e) {
 			throw new JBehaviourRuntimeError(e);
+		} catch (Exception e) {
+			throw new Exception(e);
+		}
+	}
+
+	/**
+	 * class to catch all output
+	 */
+	private class SystemOut {
+		private PrintStream stderr = null;
+		private PrintStream stdout = null;
+		private File ferr = null;
+		private File fout = null;
+		private PrintStream err = null;
+		private PrintStream out = null;
+
+		/**
+		 * constructor
+		 * @throws IOException
+		 */
+		public SystemOut() throws IOException {
+			/**
+			 * backup stream
+			 */
+			stdout = System.out;
+			stderr = System.err;
+			/**
+			 * dump to file all stdout
+			 */
+			fout = File.createTempFile("outputStream", ".out");
+			fout.deleteOnExit();
+			logger.info("Output stdout to " + fout.getAbsolutePath());
+			out = new PrintStream(fout);
+			System.setOut(out);
+			/**
+			 * dump to file all stderr
+			 */
+			ferr = File.createTempFile("outputStream", ".err");
+			ferr.deleteOnExit();
+			logger.info("Output stderr to " + ferr.getAbsolutePath());
+			err = new PrintStream(ferr);
+			System.setErr(err);
+		}
+		
+		/**
+		 * restore output
+		 */
+		public void release() {
+			System.setOut(stdout);
+			System.setErr(stderr);
+			err.close();
+			out.close();
+		}
+
+		public File getFerr() {
+			return ferr;
+		}
+
+		public File getFout() {
+			return fout;
 		}
 	}
 	public Object invoke(String pck, IBehaviourEnv env, Object object,IKeywordStatement parsedStatement) throws JBehaviourParsingError, JBehaviourRuntimeError {
@@ -190,17 +262,46 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 		 * start chrono
 		 */
 		Long begin = env.getXRef().start();
-		Object result = invokeLocaly(object,args);
+		Object result = null;
+		Exception excp = null;
+
+		SystemOut output = null;
+
+		try {
+			try {
+				output = new SystemOut();
+				result = invokeLocaly(object,args);
+			} catch(Exception e) {
+				e.printStackTrace();
+				logger.warn(e.getMessage());
+				excp = e;
+			}
+		} finally {
+			/**
+			 * stop chrono
+			 */
+			env.getXRef().stop(
+					pck,
+					begin, 
+					object.getClass().getPackage().getName(),
+					methodToInvoke.getName(),
+					object,args,
+					text,
+					output.getFout(),
+					output.getFerr(),
+					result,
+					excp);
+			output.release();
+		}
+		
 		/**
-		 * stop chrono
+		 * any exception must be thrown to
+		 * the caller as an exception throw
 		 */
-		env.getXRef().stop(
-				pck,
-				begin, 
-				object.getClass().getPackage().getName(),
-				methodToInvoke.getName(),
-				object,args,
-				text);
+		if(excp != null) {
+			throw new JBehaviourRuntimeError(excp);
+		}
+
 		return result;
 	}
 }

@@ -6,7 +6,6 @@ package org.jbehaviour;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 
 import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
@@ -20,6 +19,7 @@ import org.jbehaviour.reflexion.IBehaviourReflexionContext;
 import org.jbehaviour.reflexion.impl.JBehaviourReflexion;
 import org.jbehaviour.report.IBehaviourReport;
 import org.jbehaviour.report.IBehaviourReportRun;
+import org.jbehaviour.xref.IBehaviourXRefSuite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,18 +60,6 @@ public class JBehaviourLauncher {
 		}
 	}
 
-	/**
-	 * @param args
-	 * @return 
-	 * @throws IOException 
-	 * @throws JBehaviourParsingError 
-	 * @throws ClassNotFoundException 
-	 * @throws JBehaviourRuntimeError 
-	 * @throws InstantiationException 
-	 * @throws InvocationTargetException 
-	 * @throws IllegalAccessException 
-	 * @throws IllegalArgumentException 
-	 */
 	public static boolean registerAndExecute(String story) throws JBehaviourParsingError, JBehaviourRuntimeError {
 		/**
 		 * story parser
@@ -83,11 +71,58 @@ public class JBehaviourLauncher {
 			e.printStackTrace();
 			return false;
 		}
+
+		IBehaviourReflexion registry = new JBehaviourReflexion();
+		boolean result = registerAndExecuteStory(story, parsedStory, registry);
 		
+		/**
+		 * dump xref
+		 */
+		registry.getXRef().setName(new File(story).getName());
+		for(IKeywordStatement item : parsedStory.getFeature().getKeywordReports()) {
+			KeywordReport report = (KeywordReport) item;
+			logger.info("Report: " + report.getKlass());
+			logger.info("Template: " + report.getTemplate());
+			logger.info("Output: " + report.getOutputFile());
+			try {
+				IBehaviourReport myReport = (IBehaviourReport) Class.forName(report.getKlass()).newInstance();
+				myReport.init();
+				myReport.render(registry, new File(report.getTemplate()), new File(report.getOutputFile()));
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+				return false;
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+				return false;
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+				return false;
+			} catch (IOException e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+
+		for(String key : registry.getXRef().getRunsByScenario().keySet()) {
+			IBehaviourXRefSuite suite = registry.getXRef().getRunsByScenario().get(key);
+			for(IBehaviourReportRun run : suite.getRuns()) {
+				logger.info("name: " + run.getName());
+				logger.info("duration: " + run.getDuration());
+				logger.info("object: " + run.getObject());
+				logger.info("args: " + run.getArgs());
+				logger.info("text: " + run.getText());
+				logger.info("klass: " + run.getKlass());
+				logger.info("text like: " + run.getTextLikeMethod());
+			}
+		}
+
+		return result;
+	}
+	
+	public static boolean registerAndExecuteStory(String story, FormalStory parsedStory, IBehaviourReflexion registry) throws JBehaviourParsingError, JBehaviourRuntimeError {
 		/**
 		 * reflexion manager
 		 */
-		IBehaviourReflexion registry = new JBehaviourReflexion();
 		for(IKeywordStatement include : parsedStory.getFeature().getKeywordInclude()) {
 			/**
 			 * include all this object in current
@@ -158,6 +193,10 @@ public class JBehaviourLauncher {
 				if(stepToExecute != null) {
 					Object ret;
 					try {
+						/**
+						 * we have found this step, no we can execute
+						 * it
+						 */
 						ret = stepToExecute.execute();
 					} catch (JBehaviourParsingError e) {
 						e.printStackTrace();
@@ -167,52 +206,39 @@ public class JBehaviourLauncher {
 						return false;
 					}
 					logger.info("Result is " + ret);
+					switch(stepToExecute.getType()) {
+						case Given:
+						case Store:
+						case When:
+							/**
+							 * Given, Store and When return value have
+							 * no action on the execution
+							 */
+							break;
+						case Then:
+							/**
+							 * Then statement are special statement, because
+							 * return must be analyzed and checked to continue
+							 * false break the scenario/story execution
+							 */
+							if(ret == null) {
+								throw new JBehaviourRuntimeError("Return on Then keyword cannot be null !!!");
+							}
+							if((Boolean) ret == false) return (Boolean) ret;
+						default:
+							break;
+					}
 				} else {
+					/**
+					 * fatal error
+					 * step is not found in registry
+					 */
 					logger.error("Unable to find step " + step.getStatement());
 					return false;
 				}
 			}
 		}
 		
-		/**
-		 * dump xref
-		 */
-		for(IKeywordStatement item : parsedStory.getFeature().getKeywordReports()) {
-			KeywordReport report = (KeywordReport) item;
-			logger.info("Report: " + report.getKlass());
-			logger.info("Template: " + report.getTemplate());
-			logger.info("Output: " + report.getOutputFile());
-			try {
-				IBehaviourReport myReport = (IBehaviourReport) Class.forName(report.getKlass()).newInstance();
-				myReport.init();
-				myReport.render(registry, new File(report.getTemplate()), new File(report.getOutputFile()));
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-				return false;
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-				return false;
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-				return false;
-			} catch (IOException e) {
-				e.printStackTrace();
-				return false;
-			}
-		}
-
-		for(String key : registry.getXRef().getRunsByScenario().keySet()) {
-			List<IBehaviourReportRun> l = registry.getXRef().getRunsByScenario().get(key);
-			for(IBehaviourReportRun run : l) {
-				logger.info("name: " + run.getName());
-				logger.info("duration: " + run.getDuration());
-				logger.info("object: " + run.getObject());
-				logger.info("args: " + run.getArgs());
-				logger.info("text: " + run.getText());
-				logger.info("klass: " + run.getKlass());
-				logger.info("text like: " + run.getTextLikeMethod());
-			}
-		}
 		return true;
 	}
 }

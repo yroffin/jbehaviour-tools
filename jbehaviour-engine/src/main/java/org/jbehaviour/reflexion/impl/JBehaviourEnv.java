@@ -5,8 +5,11 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
@@ -38,7 +41,25 @@ public class JBehaviourEnv implements IBehaviourEnv {
 		xref = _xref;
 		
 	}
-	
+
+	@Override
+	public List<JBehaviourEnvProperty> getProperties() {
+		List<JBehaviourEnvProperty> properties = new ArrayList<JBehaviourEnvProperty>();
+		for(Entry<Object, Object> key : System.getProperties().entrySet()) {
+			properties.add(
+					new JBehaviourEnvProperty(
+							key.getKey().toString(),
+							key.getValue().toString().toString().replace("\"", "'")));
+		}
+		for(String key : registry.keySet()) {
+			properties.add(new JBehaviourEnvProperty(key,registry.get(key).toString().replace("\"", "'")));
+		}
+		for(String key : declare.keySet()) {
+			properties.add(new JBehaviourEnvProperty(key,declare.get(key).toString().replace("\"", "'")));
+		}
+		return properties;
+	}
+
 	@Override
 	public Object getObject(String key) {
 		return registry.get(key);
