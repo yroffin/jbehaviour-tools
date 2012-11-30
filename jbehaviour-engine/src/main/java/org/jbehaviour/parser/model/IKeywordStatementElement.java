@@ -22,4 +22,10 @@ public interface IKeywordStatementElement {
 	 */
 	public abstract String extractLiteralAsString() throws JBehaviourParsingError;
 	public String extractLiteralAsString(String value);
+
+	/**
+	 * retrieve a value in camel case mode
+	 * @return
+	 */
+	public abstract String getCamelCaseValue();
 }

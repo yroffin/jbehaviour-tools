@@ -40,13 +40,13 @@ public class FluentleniumStepsTest {
 		 * retrieve and execute on context
 		 */
 		IBehaviourReflexionContext search = null;
-		search = registry.retrieve(IKeywordStatement.statement.Given,"launch the html navigator");
+		search = registry.retrieve("noname",IKeywordStatement.statement.Given,"launch the html navigator");
 		assertNotNull(search);
 		search.execute();
-		search = registry.retrieve(IKeywordStatement.statement.When,"i goto to 'http://www.google.com'");
+		search = registry.retrieve("noname",IKeywordStatement.statement.When,"i goto to 'http://www.google.com'");
 		assertNotNull(search);
 		search.execute();
-		search = registry.retrieve(IKeywordStatement.statement.Then,"close internet browser");
+		search = registry.retrieve("noname",IKeywordStatement.statement.Then,"close internet browser");
 		assertNotNull(search);
 		search.execute();
 	}

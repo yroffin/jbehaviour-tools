@@ -27,6 +27,7 @@ public interface IBehaviourReflexion {
 
 	/**
 	 * retrieve one method to invoke with its context
+	 * @param scenarioNameLikeMethod 
 	 * @param text
 	 * @return
 	 * @throws IOException 
@@ -34,7 +35,7 @@ public interface IBehaviourReflexion {
 	 * @throws JBehaviourRuntimeError 
 	 */
 	public abstract IBehaviourReflexionContext retrieve(
-			IKeywordStatement.statement klass, 
+			String scenarioNameLikeMethod, IKeywordStatement.statement klass, 
 			String text) throws JBehaviourParsingError, JBehaviourRuntimeError;
 
 	/**

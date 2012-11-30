@@ -2,7 +2,7 @@ Feature: Launch a story sample for testing json object
   In order to test this feature
   As an explicit system actor
   I want to verify this behaviour
-  Report 'org.jbehaviour.report.impl.JBehaviourVelocityReport' 'src/test/resources/template/junit.vm' 'target/output.xml'
+  Report 'org.jbehaviour.report.impl.JBehaviourVelocityReport' 'src/test/resources/template/junit.vm' 'target/surefire-reports/TEST-report.xml'
   Register system with 'org.jbehaviour.plugins.system.SystemSteps' plugin
   Declare ref001 as Json 'org.jbehaviour.plugins.ComplexJsonBean'
 {

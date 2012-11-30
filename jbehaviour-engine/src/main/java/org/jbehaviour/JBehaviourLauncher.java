@@ -144,7 +144,7 @@ public class JBehaviourLauncher {
 			for(IKeywordStatement step : scenario.getKeywords()) {
 				logger.info("step: " + step.getStatement());
 				try {
-					stepToExecute = registry.retrieve(step.getType(),step.getStatement());
+					stepToExecute = registry.retrieve(scenario.getTextLikeMethod(),step.getType(),step.getStatement());
 				} catch (JBehaviourParsingError e) {
 					e.printStackTrace();
 					return false;
@@ -177,36 +177,41 @@ public class JBehaviourLauncher {
 		/**
 		 * dump xref
 		 */
-		for(IBehaviourReportRun run : registry.getXRef().getRuns()) {
-			for(IKeywordStatement item : parsedStory.getFeature().getKeywordReports()) {
-				KeywordReport report = (KeywordReport) item;
-				logger.info("Report: " + report.getKlass());
-				logger.info("Template: " + report.getTemplate());
-				logger.info("Output: " + report.getOutputFile());
-				try {
-					IBehaviourReport myReport = (IBehaviourReport) Class.forName(report.getKlass()).newInstance();
-					myReport.render(run, new File(report.getTemplate()), new File(report.getOutputFile()));
-				} catch (InstantiationException e) {
-					e.printStackTrace();
-					return false;
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
-					return false;
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-					return false;
-				} catch (IOException e) {
-					e.printStackTrace();
-					return false;
-				}
+		for(IKeywordStatement item : parsedStory.getFeature().getKeywordReports()) {
+			KeywordReport report = (KeywordReport) item;
+			logger.info("Report: " + report.getKlass());
+			logger.info("Template: " + report.getTemplate());
+			logger.info("Output: " + report.getOutputFile());
+			try {
+				IBehaviourReport myReport = (IBehaviourReport) Class.forName(report.getKlass()).newInstance();
+				myReport.init();
+				myReport.render(registry, new File(report.getTemplate()), new File(report.getOutputFile()));
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+				return false;
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+				return false;
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+				return false;
+			} catch (IOException e) {
+				e.printStackTrace();
+				return false;
 			}
-			logger.info("name: " + run.getName());
-			logger.info("duration: " + run.getDuration());
-			logger.info("object: " + run.getObject());
-			logger.info("args: " + run.getArgs());
-			logger.info("text: " + run.getText());
-			logger.info("klass: " + run.getKlass());
-			logger.info("text like: " + run.getTextLikeMethod());
+		}
+
+		for(String key : registry.getXRef().getRunsByScenario().keySet()) {
+			List<IBehaviourReportRun> l = registry.getXRef().getRunsByScenario().get(key);
+			for(IBehaviourReportRun run : l) {
+				logger.info("name: " + run.getName());
+				logger.info("duration: " + run.getDuration());
+				logger.info("object: " + run.getObject());
+				logger.info("args: " + run.getArgs());
+				logger.info("text: " + run.getText());
+				logger.info("klass: " + run.getKlass());
+				logger.info("text like: " + run.getTextLikeMethod());
+			}
 		}
 		return true;
 	}

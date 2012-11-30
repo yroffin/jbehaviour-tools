@@ -13,8 +13,20 @@ public class JBehaviourReportRun implements IBehaviourReportRun {
 	private String textLikeMethod;
 	private Object object;
 	private Object[] args;
+	private String pck;
 
-	public JBehaviourReportRun(String _klass, Long _duration, String _name, Object _object, Object[] _args, String _text) {
+	/**
+	 * create this run report
+	 * @param _pck
+	 * @param _klass
+	 * @param _duration
+	 * @param _name
+	 * @param _object
+	 * @param _args
+	 * @param _text
+	 */
+	public JBehaviourReportRun(String _pck, String _klass, Long _duration, String _name, Object _object, Object[] _args, String _text) {
+		pck = _pck;
 		klass = _klass;
 		duration = _duration;
 		name = _name;
@@ -32,6 +44,11 @@ public class JBehaviourReportRun implements IBehaviourReportRun {
 			sb.append(value.substring(1));
 		}
 		textLikeMethod = sb.toString();
+	}
+
+	@Override
+	public String getPck() {
+		return pck;
 	}
 
 	@Override
@@ -70,10 +87,35 @@ public class JBehaviourReportRun implements IBehaviourReportRun {
 	}
 
 	@Override
-	public String toString() {
-		return "JBehaviourReportRun [duration=" + duration + ", name=" + name
-				+ ", object=" + object + ", args=" + Arrays.toString(args)
-				+ "]";
+	public boolean isSkipped() {
+		return false;
 	}
 
+	@Override
+	public boolean hasErrors() {
+		return false;
+	}
+
+	@Override
+	public boolean hasFailures() {
+		return false;
+	}
+
+	@Override
+	public boolean hasStdout() {
+		return false;
+	}
+
+	@Override
+	public boolean hasStderr() {
+		return false;
+	}
+
+	@Override
+	public String toString() {
+		return "JBehaviourReportRun [duration=" + duration + ", klass=" + klass
+				+ ", name=" + name + ", text=" + text + ", textLikeMethod="
+				+ textLikeMethod + ", object=" + object + ", args="
+				+ Arrays.toString(args) + "]";
+	}
 }

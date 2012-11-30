@@ -9,10 +9,14 @@ import java.io.Writer;
 
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
+import org.jbehaviour.reflexion.IBehaviourReflexion;
 import org.jbehaviour.report.IBehaviourReport;
-import org.jbehaviour.report.IBehaviourReportRun;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JBehaviourVelocityReport implements IBehaviourReport {
+	Logger logger = LoggerFactory.getLogger(JBehaviourVelocityReport.class);
+
 	private VelocityContext context = null;
 	private Writer writer = null;
 
@@ -28,10 +32,10 @@ public class JBehaviourVelocityReport implements IBehaviourReport {
 	 * @param template
 	 * @return
 	 */
-	public String render(IBehaviourReportRun ctx, String template) {
+	public String render(IBehaviourReflexion ctx, String template) {
 		context.put("context", ctx);
 		writer  = new StringWriter();
-		Velocity.evaluate( context, writer, "", template);
+		Velocity.evaluate(context, writer, "", template);
 		return writer.toString();
 	}
 
@@ -53,7 +57,8 @@ public class JBehaviourVelocityReport implements IBehaviourReport {
     }
 
 	@Override
-	public void render(IBehaviourReportRun ctx, File template, File output) throws IOException {
+	public void render(IBehaviourReflexion ctx, File template, File output) throws IOException {
+		logger.info("Render [" + template.getAbsolutePath() + "] to [" + output.getAbsolutePath() + "]");
 		FileWriter fw = new FileWriter(output);
 		fw.write(render(ctx,slurp(template)));
 		fw.close();

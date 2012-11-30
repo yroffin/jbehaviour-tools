@@ -20,6 +20,22 @@ public class KeywordStatement implements IKeywordStatement {
 		return sb.toString();
 	}
 
+	@Override
+	public String getTextLikeMethod() {
+		StringBuilder sb = new StringBuilder();
+		for(IKeywordStatementElement item : elements) {
+			String value = item.getCamelCaseValue();
+			if(sb.length() > 0) {
+				sb.append(value.substring(0, 1).toUpperCase());
+			} else {
+				sb.append(value.substring(0, 1).toLowerCase());
+			}
+			sb.append(value.substring(1));
+		}
+		return sb.toString();
+	}
+
+	@Override
 	public IKeywordStatementElement get(int index) {
 		if(index>=elements.size()) return null;
 		return elements.get(index);

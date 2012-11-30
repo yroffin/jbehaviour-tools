@@ -70,4 +70,9 @@ class KeywordStatementElement implements IKeywordStatementElement {
 		return "KeywordStatementElement [type=" + type + ", value=" + value
 				+ "]";
 	}
+
+	@Override
+	public String getCamelCaseValue() {
+		return getValue().replace("$", "").toLowerCase();
+	}
 }

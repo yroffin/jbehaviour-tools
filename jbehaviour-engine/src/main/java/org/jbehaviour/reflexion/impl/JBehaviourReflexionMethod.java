@@ -113,7 +113,7 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 			throw new JBehaviourRuntimeError(e);
 		}
 	}
-	public Object invoke(IBehaviourEnv env, Object object,IKeywordStatement parsedStatement) throws JBehaviourParsingError, JBehaviourRuntimeError {
+	public Object invoke(String pck, IBehaviourEnv env, Object object,IKeywordStatement parsedStatement) throws JBehaviourParsingError, JBehaviourRuntimeError {
 		logger.info("Invoke with: " + methodToInvoke.getName() + " parsed: " + parsedStatement);
 		/**
 		 * build parameters
@@ -195,6 +195,7 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 		 * stop chrono
 		 */
 		env.getXRef().stop(
+				pck,
 				begin, 
 				object.getClass().toString(),
 				methodToInvoke.getName(),

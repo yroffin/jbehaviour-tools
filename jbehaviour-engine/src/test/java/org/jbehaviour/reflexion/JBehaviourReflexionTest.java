@@ -37,19 +37,19 @@ public class JBehaviourReflexionTest {
 		 * retrieve and execute on context
 		 */
 		IBehaviourReflexionContext search = null;
-		search = registry.retrieve(IKeywordStatement.statement.Given,"some precondition");
+		search = registry.retrieve("noname",IKeywordStatement.statement.Given,"some precondition");
 		assertNotNull(search);
 		search.execute();
-		search = registry.retrieve(IKeywordStatement.statement.Given,"some precondition with one 'parameter'");
+		search = registry.retrieve("noname",IKeywordStatement.statement.Given,"some precondition with one 'parameter'");
 		assertNotNull(search);
 		search.execute();
-		search = registry.retrieve(IKeywordStatement.statement.Given,"some precondition with one '10'");
+		search = registry.retrieve("noname",IKeywordStatement.statement.Given,"some precondition with one '10'");
 		assertNotNull(search);
 		search.execute();
-		search = registry.retrieve(IKeywordStatement.statement.Given,"some precondition with int 10");
+		search = registry.retrieve("noname",IKeywordStatement.statement.Given,"some precondition with int 10");
 		assertNotNull(search);
 		search.execute();
-		search = registry.retrieve(IKeywordStatement.statement.Given,"multiply 100 by 50");
+		search = registry.retrieve("noname",IKeywordStatement.statement.Given,"multiply 100 by 50");
 		int result = (Integer) search.execute();
 		assertEquals(result,5000);
 	}
@@ -57,19 +57,20 @@ public class JBehaviourReflexionTest {
 	@Test
 	public void testComplexSteps() throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException, IOException, JBehaviourParsingError, JBehaviourRuntimeError {
 		IBehaviourReflexion registry = new JBehaviourReflexion();
+		registry.register("klass","org.jbehaviour.plugins.system.StoreSteps");
 		registry.register("klass","org.jbehaviour.plugins.ComplexSteps");
 		
 		/**
 		 * retrieve and execute on context
 		 */
 		IBehaviourReflexionContext search = null;
-		search = registry.retrieve(IKeywordStatement.statement.Given,"some precondition with complex object return");
+		search = registry.retrieve("noname",IKeywordStatement.statement.Given,"some precondition with complex object return");
 		assertNotNull(search);
 		search.execute();
-		search = registry.retrieve(IKeywordStatement.statement.Store,"result as 'anotherRef'");
+		search = registry.retrieve("noname",IKeywordStatement.statement.Store,"result as 'anotherRef'");
 		assertNotNull(search);
 		search.execute();
-		search = registry.retrieve(IKeywordStatement.statement.Then,"some condition with my bean $anotherRef");
+		search = registry.retrieve("noname",IKeywordStatement.statement.Then,"some condition with my bean $anotherRef");
 		assertNotNull(search);
 		assertTrue((Boolean) search.execute());
 	}
@@ -83,7 +84,7 @@ public class JBehaviourReflexionTest {
 		 * retrieve and execute on context
 		 */
 		IBehaviourReflexionContext search = null;
-		search = registry.retrieve(IKeywordStatement.statement.Given,"set property 'webdriver.chrome.driver' to 'C:\\tmp'");
+		search = registry.retrieve("noname",IKeywordStatement.statement.Given,"set property 'webdriver.chrome.driver' to 'C:\\tmp'");
 		assertNotNull(search);
 		search.execute();
 		assertEquals(System.getProperty("webdriver.chrome.driver"),"C:\\tmp");

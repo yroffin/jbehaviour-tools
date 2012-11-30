@@ -21,7 +21,7 @@ import org.jbehaviour.reflexion.IBehaviourReflexionBean;
 import org.jbehaviour.reflexion.IBehaviourReflexionContext;
 import org.jbehaviour.reflexion.IBehaviourReflexionMethodBean;
 import org.jbehaviour.xref.IBehaviourXRef;
-import org.jbehaviour.xref.JBehaviourXRef;
+import org.jbehaviour.xref.impl.JBehaviourXRef;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -100,7 +100,7 @@ public class JBehaviourReflexion implements IBehaviourReflexion {
 		}
 	}
 
-	public IBehaviourReflexionContext retrieve(IKeywordStatement.statement klass, String text) throws JBehaviourParsingError, JBehaviourRuntimeError {
+	public IBehaviourReflexionContext retrieve(String scenarioMethodName, IKeywordStatement.statement klass, String text) throws JBehaviourParsingError, JBehaviourRuntimeError {
 		/**
 		 * first, parse this text
 		 */
@@ -119,7 +119,7 @@ public class JBehaviourReflexion implements IBehaviourReflexion {
 			if(klass == IKeywordStatement.statement.Store) {
 				IBehaviourReflexionMethodBean method = bean.matchStore(parsedStatement);
 				if(method != null) {
-					search = new JBehaviourReflexionContext(env,bean,method,parsedStatement);
+					search = new JBehaviourReflexionContext(scenarioMethodName, env,bean,method,parsedStatement);
 				}
 			}
 			/**
@@ -128,7 +128,7 @@ public class JBehaviourReflexion implements IBehaviourReflexion {
 			if(klass == IKeywordStatement.statement.Given) {
 				IBehaviourReflexionMethodBean method = bean.matchGiven(parsedStatement);
 				if(method != null) {
-					search = new JBehaviourReflexionContext(env,bean,method,parsedStatement);
+					search = new JBehaviourReflexionContext(scenarioMethodName, env,bean,method,parsedStatement);
 				}
 			}
 			/**
@@ -137,7 +137,7 @@ public class JBehaviourReflexion implements IBehaviourReflexion {
 			if(klass == IKeywordStatement.statement.When) {
 				IBehaviourReflexionMethodBean method = bean.matchWhen(parsedStatement);
 				if(method != null) {
-					search = new JBehaviourReflexionContext(env,bean,method,parsedStatement);
+					search = new JBehaviourReflexionContext(scenarioMethodName, env,bean,method,parsedStatement);
 				}
 			}
 			/**
@@ -146,7 +146,7 @@ public class JBehaviourReflexion implements IBehaviourReflexion {
 			if(klass == IKeywordStatement.statement.Then) {
 				IBehaviourReflexionMethodBean method = bean.matchThen(parsedStatement);
 				if(method != null) {
-					search = new JBehaviourReflexionContext(env,bean,method,parsedStatement);
+					search = new JBehaviourReflexionContext(scenarioMethodName, env,bean,method,parsedStatement);
 				}
 			}
 		}

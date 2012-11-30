@@ -31,6 +31,7 @@ public class JBehaviourVelocityTest {
 	@Test
 	public void testVelocitySteps() throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException, IOException, JBehaviourParsingError, JBehaviourRuntimeError {
 		IBehaviourReflexion registry = new JBehaviourReflexion();
+		registry.register("klass","org.jbehaviour.plugins.system.StoreSteps");
 		registry.register("complex","org.jbehaviour.plugins.ComplexSteps");
 		registry.register("velocity","org.jbehaviour.plugins.VelocitySteps");
 		
@@ -38,16 +39,16 @@ public class JBehaviourVelocityTest {
 		 * retrieve and execute on context
 		 */
 		IBehaviourReflexionContext search = null;
-		search = registry.retrieve(IKeywordStatement.statement.Given,"some precondition with complex object return");
+		search = registry.retrieve("noname",IKeywordStatement.statement.Given,"some precondition with complex object return");
 		assertNotNull(search);
 		search.execute();
-		search = registry.retrieve(IKeywordStatement.statement.Store,"result as 'anotherRef'");
+		search = registry.retrieve("noname",IKeywordStatement.statement.Store,"result as 'anotherRef'");
 		assertNotNull(search);
 		search.execute();
-		search = registry.retrieve(IKeywordStatement.statement.Given,"some template string as $anotherRef");
+		search = registry.retrieve("noname",IKeywordStatement.statement.Given,"some template string as $anotherRef");
 		assertNotNull(search);
 		search.execute();
-		search = registry.retrieve(IKeywordStatement.statement.Given,"some template string as $anotherRef.getSubbean(1).getSimple()");
+		search = registry.retrieve("noname",IKeywordStatement.statement.Given,"some template string as $anotherRef.getSubbean(1).getSimple()");
 		assertNotNull(search);
 		String result = (String) search.execute();
 		assertEquals("2",result);

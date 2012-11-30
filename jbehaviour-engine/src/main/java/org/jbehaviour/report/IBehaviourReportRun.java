@@ -16,4 +16,16 @@ public interface IBehaviourReportRun {
 
 	String getKlass();
 
+	String getPck();
+
+	boolean isSkipped();
+
+	boolean hasErrors();
+
+	boolean hasFailures();
+
+	boolean hasStdout();
+
+	boolean hasStderr();
+
 }

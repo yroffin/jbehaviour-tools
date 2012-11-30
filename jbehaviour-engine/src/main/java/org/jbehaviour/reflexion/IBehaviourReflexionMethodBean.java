@@ -11,6 +11,7 @@ public interface IBehaviourReflexionMethodBean {
 	public boolean match(IKeywordStatement parsedStatement);
 	/**
 	 * invoke this method, with object given in argument
+	 * @param scenarioMethodName 
 	 * @param object
 	 * @param object 
 	 * @param parsedStatement
@@ -21,5 +22,5 @@ public interface IBehaviourReflexionMethodBean {
 	 * @throws JBehaviourParsingError 
 	 * @throws IOException 
 	 */
-	public Object invoke(IBehaviourEnv env, Object object, IKeywordStatement parsedStatement) throws JBehaviourParsingError, JBehaviourRuntimeError;
+	public Object invoke(String scenarioMethodName, IBehaviourEnv env, Object object, IKeywordStatement parsedStatement) throws JBehaviourParsingError, JBehaviourRuntimeError;
 }

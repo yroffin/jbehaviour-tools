@@ -39,10 +39,10 @@ public class JBehaviourJsonReflexionTest extends TestCase {
 		 * retrieve and execute on context
 		 */
 		IBehaviourReflexionContext search = null;
-		search = registry.retrieve(IKeywordStatement.statement.Given,"some precondition with complex object return");
+		search = registry.retrieve("noname",IKeywordStatement.statement.Given,"some precondition with complex object return");
 		assertNotNull(search);
 		search.execute();
-		search = registry.retrieve(IKeywordStatement.statement.Given,"some json as {\"field1\":\"x\",\"field2\":\"y\",\"field3\":9}");
+		search = registry.retrieve("noname",IKeywordStatement.statement.Given,"some json as {\"field1\":\"x\",\"field2\":\"y\",\"field3\":9}");
 		assertNotNull(search);
 		ComplexJsonBean result = (ComplexJsonBean) search.execute();
 		assertEquals("x",result.getField1());

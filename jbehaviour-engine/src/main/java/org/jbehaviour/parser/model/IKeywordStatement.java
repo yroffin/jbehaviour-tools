@@ -47,7 +47,22 @@ public interface IKeywordStatement {
 	public Integer extractLiteralAsInteger(int index) throws JBehaviourParsingError;
 	public String  extractLiteralAsString(int index) throws JBehaviourParsingError;
 
+	/**
+	 * retrieve statements as a naming like a method
+	 * @return
+	 */
+	public String getTextLikeMethod();
+	
+	/**
+	 * retrieve statement as a string
+	 * @return
+	 */
 	public String getStatement();
+	
+	/**
+	 * retrieve type
+	 * @return
+	 */
 	public statement getType();
 
 	/**
