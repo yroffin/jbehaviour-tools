@@ -52,7 +52,12 @@ public class JBehaviourEnv implements IBehaviourEnv {
 							key.getValue().toString().toString().replace("\"", "'")));
 		}
 		for(String key : registry.keySet()) {
-			properties.add(new JBehaviourEnvProperty(key,registry.get(key).toString().replace("\"", "'")));
+			Object value = registry.get(key);
+			if(value != null) {
+				properties.add(new JBehaviourEnvProperty(key,value.toString().replace("\"", "'")));
+			} else {
+				properties.add(new JBehaviourEnvProperty(key,null));
+			}
 		}
 		for(String key : declare.keySet()) {
 			properties.add(new JBehaviourEnvProperty(key,declare.get(key).toString().replace("\"", "'")));

@@ -72,6 +72,31 @@ public class JBehaviourLauncher {
 			return false;
 		}
 
+		/**
+		 * check for report configuration
+		 */
+		for(IKeywordStatement item : parsedStory.getFeature().getKeywordReports()) {
+			KeywordReport report = (KeywordReport) item;
+			/**
+			 * check for class existence
+			 */
+			try {
+				Class.forName(report.getKlass()).newInstance();
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+				throw new JBehaviourParsingError(e);
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+				throw new JBehaviourParsingError(e);
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+				throw new JBehaviourParsingError(e);
+			}
+			if(!(new File(report.getTemplate()).exists())) {
+				throw new JBehaviourParsingError("No template file " + report.getTemplate());
+			}
+		}
+
 		IBehaviourReflexion registry = new JBehaviourReflexion();
 		boolean result = registerAndExecuteStory(story, parsedStory, registry);
 		

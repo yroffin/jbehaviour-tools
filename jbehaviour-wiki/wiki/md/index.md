@@ -24,5 +24,11 @@ and avoid to consider so much technical method for using testing tools :
 - selenium suite
 - and so on ...
 
-[Usage](usage/usage.md)
+[Default usage](usage/usage.md)
+
+Extention
+=========
+
+[Sikuli](usage/sikuli.md)
+
 

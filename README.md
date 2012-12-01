@@ -21,3 +21,12 @@ and avoid to consider so much technical method for using testing tools :
 - selenium suite
 - and so on ...
 
+TODO
+====
+
+- remove all antlr output during parsin
+> enter member [@10,49:60='.getSimple()',<29>,1:49]
+> exit member [@11,61:61='<EOF>',<-1>,1:61]
+> exit template [@11,61:61='<EOF>',<-1>,1:61]
+
+

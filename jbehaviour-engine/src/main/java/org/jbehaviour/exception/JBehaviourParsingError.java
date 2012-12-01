@@ -27,4 +27,12 @@ public class JBehaviourParsingError extends Exception {
 		super(e);
 	}
 
+	public JBehaviourParsingError(InstantiationException e) {
+		super(e);
+	}
+
+	public JBehaviourParsingError(IllegalAccessException e) {
+		super(e);
+	}
+
 }

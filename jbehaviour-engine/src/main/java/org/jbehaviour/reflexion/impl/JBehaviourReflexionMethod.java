@@ -218,13 +218,15 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 					/**
 					 * this reference is an object, we must find it in env
 					 */
-					logger.info("Lookup for " + name + " with " + parsedStatement.get(position).getValue());
+					logger.debug("Lookup for " + name + " with " + parsedStatement.get(position).getValue());
 					/**
 					 * ignore first character : $, % ...
 					 */
 					args[index] = env.getObject(parsedStatement.get(position).getValue().substring(1));
 					if(args[index] == null) {
 						logger.warn("Lookup for " + name + " with id " + parsedStatement.get(position).getValue().substring(1) + " fail");
+					} else {
+						logger.info("$" + parsedStatement.get(position).getValue().substring(1) + " = " + args[index]);
 					}
 					break;
 				case Template:

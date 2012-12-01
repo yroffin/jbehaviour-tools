@@ -11,6 +11,7 @@
 		<module>jbehaviour-console</module>
 		<module>jbehaviour-jdbc</module>
 		<module>jbehaviour-wiki</module>
+		<module>jbehaviour-sikuli</module>
 	</modules>
 	<build>
 		<plugins>
