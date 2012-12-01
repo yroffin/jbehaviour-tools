@@ -6,4 +6,22 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>jbehaviour-remote</artifactId>
+  <dependencies>
+  	<dependency>
+  		<groupId>jbehaviour-tools</groupId>
+  		<artifactId>jbehaviour-engine</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.apache.sshd</groupId>
+  		<artifactId>apache-sshd</artifactId>
+  		<version>0.8.0</version>
+  		<type>pom</type>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.mockftpserver</groupId>
+  		<artifactId>MockFtpServer</artifactId>
+  		<version>2.4</version>
+  	</dependency>
+  </dependencies>
 </project>

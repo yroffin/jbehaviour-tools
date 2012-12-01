@@ -20,8 +20,8 @@
 						<configuration>
 							<outputDirectory>target/generated-sources/antlr3</outputDirectory>
 							<sourceDirectory>src/main/antlr3</sourceDirectory>
-							<trace>true</trace>
-							<verbose>true</verbose>
+							<trace>false</trace>
+							<verbose>false</verbose>
 						</configuration>
 					</execution>
 				</executions>

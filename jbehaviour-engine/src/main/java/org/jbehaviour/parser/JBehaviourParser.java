@@ -20,10 +20,37 @@ public class JBehaviourParser extends AnotherStoryGrammerParser {
 	}
 
 	int error = 0;
+
 	@Override
 	public void emitErrorMessage(String msg) {
 		logger.error(msg);
 		error++;
+	}
+
+	@Override
+	public void traceIn(String ruleName, int ruleIndex) {
+		if(logger.isDebugEnabled()) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("enter "+ruleName+" "+input.LT(1));
+			if ( state.backtracking>0 ) {
+				sb.append(" backtracking="+state.backtracking);
+			}
+			logger.debug(sb.toString());
+		}
+	}
+
+	@Override
+	public void traceOut(String ruleName, int ruleIndex) {
+		if(logger.isDebugEnabled()) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("exit "+ruleName+" "+input.LT(1));
+			if ( state.backtracking>0 ) {
+				sb.append(" backtracking="+state.backtracking);
+	            if ( state.failed ) sb.append(" failed");
+	            else sb.append(" succeeded");
+	        }
+			logger.debug(sb.toString());
+		}
 	}
 
 	private FormalStory story;
@@ -32,7 +59,7 @@ public class JBehaviourParser extends AnotherStoryGrammerParser {
 
 	@Override
 	public void onAnyString(String value) {
-		super.onAnyString(value);
+		if(logger.isDebugEnabled()) super.onAnyString(value);
 		if(current != null) {
 			logger.debug("on "+current.getType()+" any string: " + value);
 			current.someString(value);
@@ -43,7 +70,7 @@ public class JBehaviourParser extends AnotherStoryGrammerParser {
 
 	@Override
 	public void onAnyNumeric(String value) {
-		super.onAnyNumeric(value);
+		if(logger.isDebugEnabled()) super.onAnyNumeric(value);
 		if(current != null) {
 			logger.debug("on "+current.getType()+" any integer: " + value);
 			current.someInteger(value);
@@ -54,7 +81,7 @@ public class JBehaviourParser extends AnotherStoryGrammerParser {
 
 	@Override
 	public void onAnyIdentifier(String value) {
-		super.onAnyIdentifier(value);
+		if(logger.isDebugEnabled()) super.onAnyIdentifier(value);
 		if(current != null) {
 			logger.debug("on "+current.getType()+" any identifier: " + value);
 			current.someIdentifier(value);
@@ -65,7 +92,7 @@ public class JBehaviourParser extends AnotherStoryGrammerParser {
 
 	@Override
 	public void onAnyReference(String value) {
-		super.onAnyReference(value);
+		if(logger.isDebugEnabled()) super.onAnyReference(value);
 		if(current != null) {
 			logger.debug("on "+current.getType()+" any reference: " + value);
 			current.someReference(value);
@@ -76,7 +103,7 @@ public class JBehaviourParser extends AnotherStoryGrammerParser {
 
 	@Override
 	public void onAnyTemplate(String value) {
-		super.onAnyTemplate(value);
+		if(logger.isDebugEnabled()) super.onAnyTemplate(value);
 		if(current != null) {
 			logger.debug("on "+current.getType()+" any template: " + value);
 			current.someTemplate(value);
@@ -87,7 +114,7 @@ public class JBehaviourParser extends AnotherStoryGrammerParser {
 
 	@Override
 	public void onAnyJsonObject(String value) {
-		super.onAnyJsonObject(value);
+		if(logger.isDebugEnabled()) super.onAnyJsonObject(value);
 		if(current != null) {
 			logger.debug("on "+current.getType()+" any json: " + value);
 			current.someJson(value);
@@ -98,42 +125,42 @@ public class JBehaviourParser extends AnotherStoryGrammerParser {
 
 	@Override
 	public void onFeatureKeyword() {
-		super.onFeatureRegisterKeyword();
+		if(logger.isDebugEnabled()) super.onFeatureRegisterKeyword();
 		logger.debug("on feature");
 		current = story.getFeature();
 	}
 
 	@Override
 	public void onFeatureIncludeKeyword() {
-		super.onFeatureIncludeKeyword();
+		if(logger.isDebugEnabled()) super.onFeatureIncludeKeyword();
 		logger.debug("on feature/include");
 		current = story.getFeature().addIncludeStatement();
 	}
 
 	@Override
 	public void onFeatureRegisterKeyword() {
-		super.onFeatureRegisterKeyword();
+		if(logger.isDebugEnabled()) super.onFeatureRegisterKeyword();
 		logger.debug("on feature/register");
 		current = story.getFeature().addRegisterStatement();
 	}
 
 	@Override
 	public void onFeatureReportKeyword() {
-		super.onFeatureReportKeyword();
+		if(logger.isDebugEnabled()) super.onFeatureReportKeyword();
 		logger.debug("on feature/report");
 		current = story.getFeature().addReportStatement();
 	}
 
 	@Override
 	public void onFeatureDeclareKeyword() {
-		super.onFeatureDeclareKeyword();
+		if(logger.isDebugEnabled()) super.onFeatureDeclareKeyword();
 		logger.debug("on feature/declare");
 		current = story.getFeature().addDeclareStatement();
 	}
 
 	@Override
 	public void onScenarioKeyword() {
-		super.onScenarioKeyword();
+		if(logger.isDebugEnabled()) super.onScenarioKeyword();
 		logger.debug("on scenario");
 		scenario = story.addScenario();
 		current = scenario;
@@ -141,28 +168,28 @@ public class JBehaviourParser extends AnotherStoryGrammerParser {
 
 	@Override
 	public void onGivenKeyword() {
-		super.onGivenKeyword();
+		if(logger.isDebugEnabled()) super.onGivenKeyword();
 		logger.debug("on scenario/given");
 		current = scenario.addGivenStatement();
 	}
 
 	@Override
 	public void onWhenKeyword() {
-		super.onWhenKeyword();
+		if(logger.isDebugEnabled()) super.onWhenKeyword();
 		logger.debug("on scenario/when");
 		current = scenario.addWhenStatement();
 	}
 
 	@Override
 	public void onThenKeyword() {
-		super.onThenKeyword();
+		if(logger.isDebugEnabled()) super.onThenKeyword();
 		logger.debug("on scenario/then");
 		current = scenario.addThenStatement();
 	}
 
 	@Override
 	public void onStoreKeyword() {
-		super.onStoreKeyword();
+		if(logger.isDebugEnabled()) super.onStoreKeyword();
 		logger.debug("on scenario/store");
 		current = scenario.addStoreStatement();
 	}

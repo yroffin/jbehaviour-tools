@@ -1,10 +1,10 @@
-package org.jbehaviour.plugins.resource.impl;
+package org.jbehaviour.plugins.remote.impl;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.jbehaviour.plugins.resource.IFileSystemResource;
+import org.jbehaviour.plugins.remote.IFileSystemResource;
 
 public abstract class FileSystemResourceImpl implements IFileSystemResource {
 
@@ -25,7 +25,7 @@ public abstract class FileSystemResourceImpl implements IFileSystemResource {
 		/**
 		 * url decoding
 		 */
-		urlDecode = new URL(url.replace("ssh","http"));
+		urlDecode = new URL(url.replace("ssh","http").replace("sftp","http"));
 		System.err.println(urlDecode.toString());
 	}
 
@@ -38,7 +38,12 @@ public abstract class FileSystemResourceImpl implements IFileSystemResource {
 	}
 
 	public String getPassword() {
-		return urlDecode.getUserInfo().split(":")[1];
+		/**
+		 * take care about empty password
+		 */
+		String[] password = urlDecode.getUserInfo().split(":");
+		if(password.length==2) return password[1];
+		else return "";
 	}
 
 	public String getHost() {

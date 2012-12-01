@@ -1,11 +1,12 @@
-package org.jbehaviour.plugins.resource;
+package org.jbehaviour.plugins.remote;
 
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jbehaviour.plugins.resource.impl.LocalFileSystemResource;
-import org.jbehaviour.plugins.resource.impl.SshFileSystemResource;
+import org.jbehaviour.plugins.remote.impl.LocalFileSystemResource;
+import org.jbehaviour.plugins.remote.impl.SftpFileSystemResource;
+import org.jbehaviour.plugins.remote.impl.SshFileSystemResource;
 import org.junit.Assert;
 
 public class FileSystemResources {
@@ -28,6 +29,10 @@ public class FileSystemResources {
 
 		if(type.startsWith("ssh")) {
 			allResources.put(key, new SshFileSystemResource(url));
+		}
+
+		if(type.startsWith("sftp")) {
+			allResources.put(key, new SftpFileSystemResource(url));
 		}
 
 		return get(key);	

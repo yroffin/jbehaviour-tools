@@ -29,6 +29,7 @@ and avoid to consider so much technical method for using testing tools :
 Extention
 =========
 
-[Sikuli](usage/sikuli.md)
-
+[System](plugins/system.md)
+[Sikuli](plugins/sikuli.md)
+[Remote](plugins/remote.md)
 

@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- xref JBehaviourXRef [run=[JBehaviourReportRun [duration=33, klass=org.jbehaviour.plugins.remote, name=createNewResource, text=with remote create $type resource $url identified by $resource, textLikeMethod=withRemoteCreateTypeResourceUrlIdentifiedByResource, object=org.jbehaviour.plugins.remote.JBehaviourRemoteSteps@285396e1, args=[sftp, sftp://none:none@localhost, sftp@gandalf], pck=verifyWeCanMakeSomeTestWithRemote, result=null, excp=null], JBehaviourReportRun [duration=381, klass=org.jbehaviour.plugins.remote, name=listDirectory, text=with remote list directory $directory on $resource, textLikeMethod=withRemoteListDirectoryDirectoryOnResource, object=org.jbehaviour.plugins.remote.JBehaviourRemoteSteps@285396e1, args=[/etc, sftp@gandalf], pck=verifyWeCanMakeSomeTestWithRemote, result=[ResourcesItem [name=dummy.txt, fullName=/etc/dummy.txt, longName=-rwx------   1 0        0               0 déc. 01 11:56 dummy.txt, canRead=true, canWrite=true, size=0]], excp=null], JBehaviourReportRun [duration=18, klass=org.jbehaviour.plugins.remote, name=checkIfFileExistOnResource, text=with remote check if $file exist on $resource, textLikeMethod=withRemoteCheckIfFileExistOnResource, object=org.jbehaviour.plugins.remote.JBehaviourRemoteSteps@285396e1, args=[/etc/passwd, sftp@gandalf], pck=verifyWeCanMakeSomeTestWithRemote, result=true, excp=null], JBehaviourReportRun [duration=6, klass=org.jbehaviour.plugins.remote, name=createNewResource, text=with remote create $type resource $url identified by $resource, textLikeMethod=withRemoteCreateTypeResourceUrlIdentifiedByResource, object=org.jbehaviour.plugins.remote.JBehaviourRemoteSteps@285396e1, args=[ssh, ssh://none:none@localhost, ssh@gandalf], pck=verifyWeCanMakeSomeTestWithRemote, result=null, excp=null], JBehaviourReportRun [duration=92, klass=org.jbehaviour.plugins.remote, name=executeCommand, text=with remote execute command $command on $resource, textLikeMethod=withRemoteExecuteCommandCommandOnResource, object=org.jbehaviour.plugins.remote.JBehaviourRemoteSteps@285396e1, args=[ls -lrt, ssh@gandalf], pck=verifyWeCanMakeSomeTestWithRemote, result=[host fictif>
+host fictif>a b
+host fictif>a b c
+], excp=null]], getDisabled()=0, getErrors()=0, getFailures()=0, getName()=remote.story, getTests()=5, getTime()=530] -->
+<testsuites disabled="0" errors="0" failures="0" name="remote.story" tests="5" time="530">
+<!-- testsuite JBehaviourXRefSuite [time=530, tests=5, failures=0, errors=0, disabled=0, runs=[JBehaviourReportRun [duration=33, klass=org.jbehaviour.plugins.remote, name=createNewResource, text=with remote create $type resource $url identified by $resource, textLikeMethod=withRemoteCreateTypeResourceUrlIdentifiedByResource, object=org.jbehaviour.plugins.remote.JBehaviourRemoteSteps@285396e1, args=[sftp, sftp://none:none@localhost, sftp@gandalf], pck=verifyWeCanMakeSomeTestWithRemote, result=null, excp=null], JBehaviourReportRun [duration=381, klass=org.jbehaviour.plugins.remote, name=listDirectory, text=with remote list directory $directory on $resource, textLikeMethod=withRemoteListDirectoryDirectoryOnResource, object=org.jbehaviour.plugins.remote.JBehaviourRemoteSteps@285396e1, args=[/etc, sftp@gandalf], pck=verifyWeCanMakeSomeTestWithRemote, result=[ResourcesItem [name=dummy.txt, fullName=/etc/dummy.txt, longName=-rwx------   1 0        0               0 déc. 01 11:56 dummy.txt, canRead=true, canWrite=true, size=0]], excp=null], JBehaviourReportRun [duration=18, klass=org.jbehaviour.plugins.remote, name=checkIfFileExistOnResource, text=with remote check if $file exist on $resource, textLikeMethod=withRemoteCheckIfFileExistOnResource, object=org.jbehaviour.plugins.remote.JBehaviourRemoteSteps@285396e1, args=[/etc/passwd, sftp@gandalf], pck=verifyWeCanMakeSomeTestWithRemote, result=true, excp=null], JBehaviourReportRun [duration=6, klass=org.jbehaviour.plugins.remote, name=createNewResource, text=with remote create $type resource $url identified by $resource, textLikeMethod=withRemoteCreateTypeResourceUrlIdentifiedByResource, object=org.jbehaviour.plugins.remote.JBehaviourRemoteSteps@285396e1, args=[ssh, ssh://none:none@localhost, ssh@gandalf], pck=verifyWeCanMakeSomeTestWithRemote, result=null, excp=null], JBehaviourReportRun [duration=92, klass=org.jbehaviour.plugins.remote, name=executeCommand, text=with remote execute command $command on $resource, textLikeMethod=withRemoteExecuteCommandCommandOnResource, object=org.jbehaviour.plugins.remote.JBehaviourRemoteSteps@285396e1, args=[ls -lrt, ssh@gandalf], pck=verifyWeCanMakeSomeTestWithRemote, result=[host fictif>
+host fictif>a b
+host fictif>a b c
+], excp=null]]] -->
+    <testsuite disabled="0" errors="0" failures="0"
+        package="verifyWeCanMakeSomeTestWithRemote" skipped="0" tests="5" time="530" timestamp="">
+        <properties>
+            <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+            <property name="sun.boot.library.path" value="U:\tools\com\jdk\jdk1.7.0\jre\bin"/>
+            <property name="java.vm.version" value="21.0-b17"/>
+            <property name="java.vm.vendor" value="Oracle Corporation"/>
+            <property name="java.vendor.url" value="http://java.oracle.com/"/>
+            <property name="path.separator" value=";"/>
+            <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+            <property name="file.encoding.pkg" value="sun.io"/>
+            <property name="user.country" value="FR"/>
+            <property name="user.script" value=""/>
+            <property name="sun.java.launcher" value="SUN_STANDARD"/>
+            <property name="sun.os.patch.level" value="Service Pack 1"/>
+            <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+            <property name="user.dir" value="C:\Users\Yannick\git\jbehaviour-tools\jbehaviour-remote"/>
+            <property name="java.runtime.version" value="1.7.0-b147"/>
+            <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+            <property name="java.endorsed.dirs" value="U:\tools\com\jdk\jdk1.7.0\jre\lib\endorsed"/>
+            <property name="os.arch" value="amd64"/>
+            <property name="java.io.tmpdir" value="C:\Users\Yannick\AppData\Local\Temp\"/>
+            <property name="line.separator" value="
+"/>
+            <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+            <property name="user.variant" value=""/>
+            <property name="os.name" value="Windows 7"/>
+            <property name="sun.jnu.encoding" value="Cp1252"/>
+            <property name="java.library.path" value="U:\tools\com\jdk\jdk1.7.0\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Common Files\Microsoft Shared\Windows Live;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\TortoiseSVN\bin;U:\eclipse\apache-maven-3.0.4\bin;u:\Program Files (x86)\Groovy\Groovy-1.7.5\bin;U:\tools\org\play\play-2.0.4;U:\Program Files (x86)\Mozilla Firefox;U:\tools\com\jdk\jdk1.7.0\bin;."/>
+            <property name="java.specification.name" value="Java Platform API Specification"/>
+            <property name="java.class.version" value="51.0"/>
+            <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+            <property name="os.version" value="6.1"/>
+            <property name="user.home" value="C:\Users\Yannick"/>
+            <property name="user.timezone" value="Europe/Paris"/>
+            <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+            <property name="file.encoding" value="UTF-8"/>
+            <property name="java.specification.version" value="1.7"/>
+            <property name="java.class.path" value="C:\Users\Yannick\git\jbehaviour-tools\jbehaviour-remote\target\test-classes;C:\Users\Yannick\git\jbehaviour-tools\jbehaviour-remote\target\classes;C:\Users\Yannick\git\jbehaviour-tools\jbehaviour-engine\target\classes;C:\Users\Yannick\.m2\repository\org\antlr\antlr\3.4\antlr-3.4.jar;C:\Users\Yannick\.m2\repository\org\antlr\antlr-runtime\3.4\antlr-runtime-3.4.jar;C:\Users\Yannick\.m2\repository\org\antlr\stringtemplate\3.2.1\stringtemplate-3.2.1.jar;C:\Users\Yannick\.m2\repository\antlr\antlr\2.7.7\antlr-2.7.7.jar;C:\Users\Yannick\.m2\repository\org\antlr\ST4\4.0.4\ST4-4.0.4.jar;C:\Users\Yannick\.m2\repository\com\thoughtworks\paranamer\paranamer\2.5.1\paranamer-2.5.1.jar;C:\Users\Yannick\.m2\repository\sshtools\j2ssh-core\0.2.9\j2ssh-core-0.2.9.jar;C:\Users\Yannick\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.1.1\jackson-core-2.1.1.jar;C:\Users\Yannick\.m2\repository\org\apache\velocity\velocity\1.7\velocity-1.7.jar;C:\Users\Yannick\.m2\repository\commons-collections\commons-collections\3.2.1\commons-collections-3.2.1.jar;C:\Users\Yannick\.m2\repository\commons-lang\commons-lang\2.4\commons-lang-2.4.jar;C:\Users\Yannick\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.1.1\jackson-databind-2.1.1.jar;C:\Users\Yannick\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.1.1\jackson-annotations-2.1.1.jar;C:\Users\Yannick\.m2\repository\org\apache\sshd\sshd-core\0.8.0\sshd-core-0.8.0.jar;C:\Users\Yannick\.m2\repository\org\apache\mina\mina-core\2.0.5\mina-core-2.0.5.jar;C:\Users\Yannick\.m2\repository\org\apache\sshd\sshd-pam\0.8.0\sshd-pam-0.8.0.jar;C:\Users\Yannick\.m2\repository\org\slf4j\slf4j-simple\1.6.4\slf4j-simple-1.6.4.jar;C:\Users\Yannick\.m2\repository\bouncycastle\bcprov-jdk15\140\bcprov-jdk15-140.jar;C:\Users\Yannick\.m2\repository\tomcat\tomcat-apr\5.5.23\tomcat-apr-5.5.23.jar;C:\Users\Yannick\.m2\repository\org\mockftpserver\MockFtpServer\2.4\MockFtpServer-2.4.jar;C:\Users\Yannick\.m2\repository\org\slf4j\slf4j-api\1.6.6\slf4j-api-1.6.6.jar;C:\Users\Yannick\.m2\repository\junit\junit\4.9\junit-4.9.jar;C:\Users\Yannick\.m2\repository\org\hamcrest\hamcrest-core\1.1\hamcrest-core-1.1.jar;C:\Users\Yannick\.m2\repository\org\apache\maven\plugins\maven-compiler-plugin\2.5.1\maven-compiler-plugin-2.5.1.jar;C:\Users\Yannick\.m2\repository\org\apache\maven\maven-plugin-api\2.0.9\maven-plugin-api-2.0.9.jar;C:\Users\Yannick\.m2\repository\org\apache\maven\maven-artifact\2.0.9\maven-artifact-2.0.9.jar;C:\Users\Yannick\.m2\repository\org\apache\maven\maven-core\2.0.9\maven-core-2.0.9.jar;C:\Users\Yannick\.m2\repository\org\apache\maven\maven-settings\2.0.9\maven-settings-2.0.9.jar;C:\Users\Yannick\.m2\repository\org\apache\maven\maven-plugin-parameter-documenter\2.0.9\maven-plugin-parameter-documenter-2.0.9.jar;C:\Users\Yannick\.m2\repository\org\apache\maven\wagon\wagon-webdav\1.0-beta-2\wagon-webdav-1.0-beta-2.jar;C:\Users\Yannick\.m2\repository\slide\slide-webdavlib\2.1\slide-webdavlib-2.1.jar;C:\Users\Yannick\.m2\repository\commons-httpclient\commons-httpclient\2.0.2\commons-httpclient-2.0.2.jar;C:\Users\Yannick\.m2\repository\jdom\jdom\1.0\jdom-1.0.jar;C:\Users\Yannick\.m2\repository\de\zeigermann\xml\xml-im-exporter\1.1\xml-im-exporter-1.1.jar;C:\Users\Yannick\.m2\repository\commons-logging\commons-logging\1.0.4\commons-logging-1.0.4.jar;C:\Users\Yannick\.m2\repository\org\apache\maven\maven-profile\2.0.9\maven-profile-2.0.9.jar;C:\Users\Yannick\.m2\repository\org\apache\maven\maven-model\2.0.9\maven-model-2.0.9.jar;C:\Users\Yannick\.m2\repository\org\apache\maven\wagon\wagon-provider-api\1.0-beta-2\wagon-provider-api-1.0-beta-2.jar;C:\Users\Yannick\.m2\repository\org\apache\maven\maven-repository-metadata\2.0.9\maven-repository-metadata-2.0.9.jar;C:\Users\Yannick\.m2\repository\org\apache\maven\maven-error-diagnostics\2.0.9\maven-error-diagnostics-2.0.9.jar;C:\Users\Yannick\.m2\repository\org\apache\maven\maven-project\2.0.9\maven-project-2.0.9.jar;C:\Users\Yannick\.m2\repository\org\apache\maven\maven-plugin-registry\2.0.9\maven-plugin-registry-2.0.9.jar;C:\Users\Yannick\.m2\repository\org\apache\maven\maven-plugin-descriptor\2.0.9\maven-plugin-descriptor-2.0.9.jar;C:\Users\Yannick\.m2\repository\org\apache\maven\maven-artifact-manager\2.0.9\maven-artifact-manager-2.0.9.jar;C:\Users\Yannick\.m2\repository\org\apache\maven\maven-monitor\2.0.9\maven-monitor-2.0.9.jar;C:\Users\Yannick\.m2\repository\org\apache\maven\maven-toolchain\1.0\maven-toolchain-1.0.jar;C:\Users\Yannick\.m2\repository\org\codehaus\plexus\plexus-utils\3.0\plexus-utils-3.0.jar;C:\Users\Yannick\.m2\repository\org\codehaus\plexus\plexus-compiler-api\1.9.1\plexus-compiler-api-1.9.1.jar;C:\Users\Yannick\.m2\repository\org\codehaus\plexus\plexus-compiler-manager\1.9.1\plexus-compiler-manager-1.9.1.jar;C:\Users\Yannick\.m2\repository\org\codehaus\plexus\plexus-compiler-javac\1.9.1\plexus-compiler-javac-1.9.1.jar;C:\Users\Yannick\.m2\repository\org\codehaus\plexus\plexus-container-default\1.0-alpha-9-stable-1\plexus-container-default-1.0-alpha-9-stable-1.jar;C:\Users\Yannick\.m2\repository\classworlds\classworlds\1.1-alpha-2\classworlds-1.1-alpha-2.jar;C:\Users\Yannick\.m2\repository\ch\qos\logback\logback-core\1.0.7\logback-core-1.0.7.jar;C:\Users\Yannick\.m2\repository\org\slf4j\slf4j-ext\1.7.2\slf4j-ext-1.7.2.jar;C:\Users\Yannick\.m2\repository\ch\qos\cal10n\cal10n-api\0.7.4\cal10n-api-0.7.4.jar;C:\Users\Yannick\.m2\repository\ch\qos\logback\logback-classic\1.0.7\logback-classic-1.0.7.jar;/U:/tools/org/eclipse/eclipse-modeling-juno-win32-x86_64/configuration/org.eclipse.osgi/bundles/306/2/.cp/;/U:/tools/org/eclipse/eclipse-modeling-juno-win32-x86_64/configuration/org.eclipse.osgi/bundles/305/2/.cp/"/>
+            <property name="user.name" value="Yannick"/>
+            <property name="java.vm.specification.version" value="1.7"/>
+            <property name="sun.java.command" value="org.eclipse.jdt.internal.junit.runner.RemoteTestRunner -version 3 -port 64061 -testLoaderClass org.eclipse.jdt.internal.junit4.runner.JUnit4TestLoader -loaderpluginname org.eclipse.jdt.junit4.runtime -classNames org.jbehaviour.plugins.remote.JBehaviourRemoteTest"/>
+            <property name="java.home" value="U:\tools\com\jdk\jdk1.7.0\jre"/>
+            <property name="sun.arch.data.model" value="64"/>
+            <property name="user.language" value="fr"/>
+            <property name="java.specification.vendor" value="Oracle Corporation"/>
+            <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+            <property name="java.vm.info" value="mixed mode"/>
+            <property name="java.version" value="1.7.0"/>
+            <property name="java.ext.dirs" value="U:\tools\com\jdk\jdk1.7.0\jre\lib\ext;C:\Windows\Sun\Java\lib\ext"/>
+            <property name="sun.boot.class.path" value="U:\tools\com\jdk\jdk1.7.0\jre\lib\resources.jar;U:\tools\com\jdk\jdk1.7.0\jre\lib\rt.jar;U:\tools\com\jdk\jdk1.7.0\jre\lib\sunrsasign.jar;U:\tools\com\jdk\jdk1.7.0\jre\lib\jsse.jar;U:\tools\com\jdk\jdk1.7.0\jre\lib\jce.jar;U:\tools\com\jdk\jdk1.7.0\jre\lib\charsets.jar;U:\tools\com\jdk\jdk1.7.0\jre\classes"/>
+            <property name="java.vendor" value="Oracle Corporation"/>
+            <property name="file.separator" value="\"/>
+            <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+            <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+            <property name="sun.cpu.endian" value="little"/>
+            <property name="sun.desktop" value="windows"/>
+            <property name="sun.cpu.isalist" value="amd64"/>
+            <property name="result" value="[host fictif>
+host fictif>a b
+host fictif>a b c
+]"/>
+            <property name="sshRessource" value="ssh://none:none@localhost"/>
+            <property name="sftpRessource" value="sftp://none:none@localhost"/>
+            <property name="org.jbehaviour.plugins.remote.JBehaviourRemoteSteps" value="org.jbehaviour.plugins.remote.JBehaviourRemoteSteps@285396e1"/>
+        </properties>
+<!-- testcase JBehaviourReportRun [duration=33, klass=org.jbehaviour.plugins.remote, name=createNewResource, text=with remote create $type resource $url identified by $resource, textLikeMethod=withRemoteCreateTypeResourceUrlIdentifiedByResource, object=org.jbehaviour.plugins.remote.JBehaviourRemoteSteps@285396e1, args=[sftp, sftp://none:none@localhost, sftp@gandalf], pck=verifyWeCanMakeSomeTestWithRemote, result=null, excp=null] -->
+        <testcase assertions="" classname="verifyWeCanMakeSomeTestWithRemote" name="withRemoteCreateTypeResourceUrlIdentifiedByResource" status="" time="0.033">
+            <system-out>
+</system-out>
+            <system-err>http://none:none@localhost
+
+</system-err>
+        </testcase>
+<!-- testcase JBehaviourReportRun [duration=381, klass=org.jbehaviour.plugins.remote, name=listDirectory, text=with remote list directory $directory on $resource, textLikeMethod=withRemoteListDirectoryDirectoryOnResource, object=org.jbehaviour.plugins.remote.JBehaviourRemoteSteps@285396e1, args=[/etc, sftp@gandalf], pck=verifyWeCanMakeSomeTestWithRemote, result=[ResourcesItem [name=dummy.txt, fullName=/etc/dummy.txt, longName=-rwx------   1 0        0               0 déc. 01 11:56 dummy.txt, canRead=true, canWrite=true, size=0]], excp=null] -->
+        <testcase assertions="" classname="verifyWeCanMakeSomeTestWithRemote" name="withRemoteListDirectoryDirectoryOnResource" status="" time="0.381">
+            <system-out>
+</system-out>
+            <system-err>déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.transport.cipher.SshCipherFactory <clinit>
+Infos: Loading supported cipher algorithms
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.transport.kex.SshKeyExchangeFactory <clinit>
+Infos: Loading key exchange methods
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.configuration.ConfigurationLoader initialize
+Infos: JAVA version is 1.7.0
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.configuration.ConfigurationLoader initialize
+Infos: Extension U:\tools\com\jdk\jdk1.7.0\jre\lib\ext\dnsns.jar being added to classpath
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.util.ExtensionClassLoader add
+Infos: Adding U:\tools\com\jdk\jdk1.7.0\jre\lib\ext\dnsns.jar to the extension classpath
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.configuration.ConfigurationLoader initialize
+Infos: Extension U:\tools\com\jdk\jdk1.7.0\jre\lib\ext\localedata.jar being added to classpath
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.util.ExtensionClassLoader add
+Infos: Adding U:\tools\com\jdk\jdk1.7.0\jre\lib\ext\localedata.jar to the extension classpath
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.configuration.ConfigurationLoader initialize
+Infos: Extension U:\tools\com\jdk\jdk1.7.0\jre\lib\ext\sunec.jar being added to classpath
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.util.ExtensionClassLoader add
+Infos: Adding U:\tools\com\jdk\jdk1.7.0\jre\lib\ext\sunec.jar to the extension classpath
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.configuration.ConfigurationLoader initialize
+Infos: Extension U:\tools\com\jdk\jdk1.7.0\jre\lib\ext\sunjce_provider.jar being added to classpath
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.util.ExtensionClassLoader add
+Infos: Adding U:\tools\com\jdk\jdk1.7.0\jre\lib\ext\sunjce_provider.jar to the extension classpath
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.configuration.ConfigurationLoader initialize
+Infos: Extension U:\tools\com\jdk\jdk1.7.0\jre\lib\ext\sunmscapi.jar being added to classpath
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.util.ExtensionClassLoader add
+Infos: Adding U:\tools\com\jdk\jdk1.7.0\jre\lib\ext\sunmscapi.jar to the extension classpath
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.configuration.ConfigurationLoader initialize
+Infos: Extension U:\tools\com\jdk\jdk1.7.0\jre\lib\ext\zipfs.jar being added to classpath
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.util.ExtensionClassLoader add
+Infos: Adding U:\tools\com\jdk\jdk1.7.0\jre\lib\ext\zipfs.jar to the extension classpath
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.transport.publickey.SshKeyPairFactory <clinit>
+Infos: Loading public key algorithms
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.transport.compression.SshCompressionFactory <clinit>
+Infos: Loading compression methods
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.transport.hmac.SshHmacFactory <clinit>
+Infos: Loading message authentication methods
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.transport.TransportProtocolCommon startTransportProtocol
+Infos: Starting transport protocol
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.transport.TransportProtocolCommon run
+Infos: Registering transport protocol messages with inputstream
+1545 [NioProcessor-2] INFO org.apache.sshd.server.session.ServerSession - Session created from /127.0.0.1:64075
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.transport.TransportProtocolCommon negotiateVersion
+Infos: Negotiating protocol version
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.transport.TransportProtocolCommon negotiateVersion
+Infos: Protocol negotiation complete
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.transport.TransportProtocolCommon beginKeyExchange
+Infos: Starting key exchange
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.transport.kex.DhGroup1Sha1 performClientExchange
+Infos: Starting client side key exchange.
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.transport.TransportProtocolClient verifyHostKey
+Infos: The host key signature is  valid
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.transport.TransportProtocolCommon completeKeyExchange
+Infos: Completing key exchange
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.transport.cipher.SshCipherFactory newInstance
+Infos: Creating new blowfish-cbc cipher instance
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.transport.cipher.SshCipherFactory newInstance
+Infos: Creating new blowfish-cbc cipher instance
+1733 [NioProcessor-2] INFO org.jbehaviour.plugins.remote.MockSftpServer - Authenticate with none
+1734 [NioProcessor-2] INFO org.apache.sshd.server.session.ServerSession - Session none@/127.0.0.1:64075 authenticated
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.connection.ConnectionProtocol onServiceInit
+Infos: Registering connection protocol messages
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.transport.Service start
+Infos: ssh-connection has been requested
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.transport.AsyncService onStart
+Infos: Starting ssh-connection service thread
+1738 [main] INFO org.jbehaviour.plugins.remote.impl.SslFileSystemResource - The authentication is complete
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.connection.ConnectionProtocol openChannel
+Infos: Channel 0 is open [session]
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.connection.ConnectionProtocol openChannel
+Infos: Channel 1 is open [sftp]
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.sftp.SftpSubsystemClient initialize
+Infos: Initializing SFTP protocol version 3
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.subsystem.SubsystemChannel startSubsystem
+Infos: Starting sftp subsystem
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.connection.ConnectionProtocol sendChannelRequest
+Infos: Sending subsystem request for the session channel
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.connection.ConnectionProtocol sendChannelRequest
+Infos: Waiting for channel request reply
+déc. 01, 2012 11:56:15 PM com.sshtools.j2ssh.connection.ConnectionProtocol sendChannelRequest
+Infos: Channel request succeeded
+déc. 01, 2012 11:56:16 PM com.sshtools.j2ssh.sftp.SftpSubsystemClient initialize
+Infos: Server responded with version 3
+déc. 01, 2012 11:56:16 PM com.sshtools.j2ssh.connection.ConnectionProtocol closeChannel
+Infos: Local computer has closed channel 1[sftp]
+déc. 01, 2012 11:56:16 PM com.sshtools.j2ssh.connection.ConnectionProtocol onMsgChannelClose
+Infos: Remote computer has closed channel 1[sftp]
+déc. 01, 2012 11:56:16 PM com.sshtools.j2ssh.connection.Channel remoteClose
+Infos: Remote side is closing channel
+déc. 01, 2012 11:56:16 PM com.sshtools.j2ssh.connection.Channel close
+Infos: Finializing channel close
+
+</system-err>
+        </testcase>
+<!-- testcase JBehaviourReportRun [duration=18, klass=org.jbehaviour.plugins.remote, name=checkIfFileExistOnResource, text=with remote check if $file exist on $resource, textLikeMethod=withRemoteCheckIfFileExistOnResource, object=org.jbehaviour.plugins.remote.JBehaviourRemoteSteps@285396e1, args=[/etc/passwd, sftp@gandalf], pck=verifyWeCanMakeSomeTestWithRemote, result=true, excp=null] -->
+        <testcase assertions="" classname="verifyWeCanMakeSomeTestWithRemote" name="withRemoteCheckIfFileExistOnResource" status="" time="0.018">
+            <system-out>
+</system-out>
+            <system-err>
+</system-err>
+        </testcase>
+<!-- testcase JBehaviourReportRun [duration=6, klass=org.jbehaviour.plugins.remote, name=createNewResource, text=with remote create $type resource $url identified by $resource, textLikeMethod=withRemoteCreateTypeResourceUrlIdentifiedByResource, object=org.jbehaviour.plugins.remote.JBehaviourRemoteSteps@285396e1, args=[ssh, ssh://none:none@localhost, ssh@gandalf], pck=verifyWeCanMakeSomeTestWithRemote, result=null, excp=null] -->
+        <testcase assertions="" classname="verifyWeCanMakeSomeTestWithRemote" name="withRemoteCreateTypeResourceUrlIdentifiedByResource" status="" time="0.006">
+            <system-out>
+</system-out>
+            <system-err>http://none:none@localhost
+
+</system-err>
+        </testcase>
+<!-- testcase JBehaviourReportRun [duration=92, klass=org.jbehaviour.plugins.remote, name=executeCommand, text=with remote execute command $command on $resource, textLikeMethod=withRemoteExecuteCommandCommandOnResource, object=org.jbehaviour.plugins.remote.JBehaviourRemoteSteps@285396e1, args=[ls -lrt, ssh@gandalf], pck=verifyWeCanMakeSomeTestWithRemote, result=[host fictif>
+host fictif>a b
+host fictif>a b c
+], excp=null] -->
+        <testcase assertions="" classname="verifyWeCanMakeSomeTestWithRemote" name="withRemoteExecuteCommandCommandOnResource" status="" time="0.092">
+            <system-out>
+</system-out>
+            <system-err>1868 [NioProcessor-3] INFO org.apache.sshd.server.session.ServerSession - Session created from /127.0.0.1:64076
+1901 [NioProcessor-3] INFO org.jbehaviour.plugins.remote.MockSftpServer - Authenticate with none
+1901 [NioProcessor-3] INFO org.apache.sshd.server.session.ServerSession - Session none@/127.0.0.1:64076 authenticated
+1904 [main] INFO org.jbehaviour.plugins.remote.impl.SslFileSystemResource - The authentication is complete
+1942 [NioProcessor-3] WARN org.apache.sshd.server.session.ServerSession - Exception caught
+java.io.IOException: Pipe closed
+	at org.apache.sshd.common.channel.ChannelPipedInputStream.receive(ChannelPipedInputStream.java:121)
+	at org.apache.sshd.common.channel.ChannelPipedOutputStream.write(ChannelPipedOutputStream.java:48)
+	at org.apache.sshd.server.channel.ChannelSession.doWriteData(ChannelSession.java:204)
+	at org.apache.sshd.common.channel.AbstractChannel.handleData(AbstractChannel.java:127)
+	at org.apache.sshd.common.session.AbstractSession.channelData(AbstractSession.java:988)
+	at org.apache.sshd.server.session.ServerSession.running(ServerSession.java:232)
+	at org.apache.sshd.server.session.ServerSession.handleMessage(ServerSession.java:205)
+	at org.apache.sshd.common.session.AbstractSession.decode(AbstractSession.java:566)
+	at org.apache.sshd.common.session.AbstractSession.messageReceived(AbstractSession.java:236)
+	at org.apache.sshd.common.AbstractSessionIoHandler.messageReceived(AbstractSessionIoHandler.java:58)
+	at org.apache.mina.core.filterchain.DefaultIoFilterChain$TailFilter.messageReceived(DefaultIoFilterChain.java:716)
+	at org.apache.mina.core.filterchain.DefaultIoFilterChain.callNextMessageReceived(DefaultIoFilterChain.java:434)
+	at org.apache.mina.core.filterchain.DefaultIoFilterChain.access$1200(DefaultIoFilterChain.java:46)
+	at org.apache.mina.core.filterchain.DefaultIoFilterChain$EntryImpl$1.messageReceived(DefaultIoFilterChain.java:796)
+	at org.apache.mina.core.filterchain.IoFilterAdapter.messageReceived(IoFilterAdapter.java:119)
+	at org.apache.mina.core.filterchain.DefaultIoFilterChain.callNextMessageReceived(DefaultIoFilterChain.java:434)
+	at org.apache.mina.core.filterchain.DefaultIoFilterChain.fireMessageReceived(DefaultIoFilterChain.java:426)
+	at org.apache.mina.core.polling.AbstractPollingIoProcessor.read(AbstractPollingIoProcessor.java:697)
+	at org.apache.mina.core.polling.AbstractPollingIoProcessor.process(AbstractPollingIoProcessor.java:651)
+	at org.apache.mina.core.polling.AbstractPollingIoProcessor.process(AbstractPollingIoProcessor.java:640)
+	at org.apache.mina.core.polling.AbstractPollingIoProcessor.access$600(AbstractPollingIoProcessor.java:67)
+	at org.apache.mina.core.polling.AbstractPollingIoProcessor$Processor.run(AbstractPollingIoProcessor.java:1111)
+	at org.apache.mina.util.NamePreservingRunnable.run(NamePreservingRunnable.java:64)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1110)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:603)
+	at java.lang.Thread.run(Thread.java:722)
+1945 [NioProcessor-3] INFO org.apache.sshd.server.session.ServerSession - Session none@/127.0.0.1:64076 closed
+
+</system-err>
+        </testcase>
+    </testsuite>
+</testsuites>

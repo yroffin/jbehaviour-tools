@@ -26,11 +26,37 @@ public class JBehaviourStatementParser extends AnotherStoryGrammerParser {
 		error++;
 	}
 
+	@Override
+	public void traceIn(String ruleName, int ruleIndex) {
+		if(logger.isDebugEnabled()) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("enter "+ruleName+" "+input.LT(1));
+			if ( state.backtracking>0 ) {
+				sb.append(" backtracking="+state.backtracking);
+			}
+			logger.debug(sb.toString());
+		}
+	}
+
+	@Override
+	public void traceOut(String ruleName, int ruleIndex) {
+		if(logger.isDebugEnabled()) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("exit "+ruleName+" "+input.LT(1));
+			if ( state.backtracking>0 ) {
+				sb.append(" backtracking="+state.backtracking);
+	            if ( state.failed ) sb.append(" failed");
+	            else sb.append(" succeeded");
+	        }
+			logger.debug(sb.toString());
+		}
+	}
+
 	private IKeywordStatement current = new KeywordAny();
 
 	@Override
 	public void onAnyNumeric(String value) {
-		super.onAnyNumeric(value);
+		if(logger.isDebugEnabled()) super.onAnyNumeric(value);
 		if(current != null) {
 			logger.debug("on "+current.getType()+" any integer: " + value);
 			current.someInteger(value);
@@ -41,35 +67,35 @@ public class JBehaviourStatementParser extends AnotherStoryGrammerParser {
 
 	@Override
 	public void onAnyString(String value) {
-		super.onAnyString(value);
+		if(logger.isDebugEnabled()) super.onAnyString(value);
 		logger.debug("on scenario/any string: " + value);
 		current.someString(value);
 	}
 
 	@Override
 	public void onAnyIdentifier(String value) {
-		super.onAnyIdentifier(value);
+		if(logger.isDebugEnabled()) super.onAnyIdentifier(value);
 		logger.debug("on scenario/any identifier: " + value);
 		current.someIdentifier(value);
 	}
 
 	@Override
 	public void onAnyReference(String value) {
-		super.onAnyReference(value);
+		if(logger.isDebugEnabled()) super.onAnyReference(value);
 		logger.debug("on scenario/any reference: " + value);
 		current.someReference(value);
 	}
 
 	@Override
 	public void onAnyTemplate(String value) {
-		super.onAnyTemplate(value);
+		if(logger.isDebugEnabled()) super.onAnyTemplate(value);
 		logger.debug("on scenario/any template: " + value);
 		current.someTemplate(value);
 	}
 
 	@Override
 	public void onAnyJsonObject(String value) {
-		super.onAnyJsonObject(value);
+		if(logger.isDebugEnabled()) super.onAnyJsonObject(value);
 		if(current != null) {
 			logger.debug("on "+current.getType()+" any json: " + value);
 			current.someJson(value);

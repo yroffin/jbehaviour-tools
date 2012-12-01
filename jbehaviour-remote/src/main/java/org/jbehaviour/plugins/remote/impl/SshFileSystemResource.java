@@ -1,9 +1,11 @@
-package org.jbehaviour.plugins.resource.impl;
+package org.jbehaviour.plugins.remote.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.sshtools.j2ssh.session.SessionChannelClient;
 
@@ -27,6 +29,7 @@ public class SshFileSystemResource extends SslFileSystemResource {
 	}
 
 	private boolean openSession() throws IOException {
+		open();
 		/**
 		 * open a new channel
 		 */
@@ -45,7 +48,7 @@ public class SshFileSystemResource extends SslFileSystemResource {
 		out.write(cmd.getBytes());
 	}
 
-	private void flushSession() throws IOException {
+	private void flushSession(List<String> res) throws IOException {
 		/**
 		 * Reading from the session InputStream
 		 */
@@ -54,14 +57,14 @@ public class SshFileSystemResource extends SslFileSystemResource {
 		int read;
 		while ((read = in.read(buffer)) > 0) {
 			String out = new String(buffer, 0, read);
-			System.out.println(out + ":" + read);
+			res.add(out);
 		}
 
 		in = session.getStderrInputStream();
 		buffer = new byte[255];
 		while ((read = in.read(buffer)) > 0) {
 			String out = new String(buffer, 0, read);
-			System.out.println(out);
+			res.add(out);
 		}
 	}
 
@@ -70,13 +73,13 @@ public class SshFileSystemResource extends SslFileSystemResource {
 	}
 
 	@Override
-	public boolean checkIfFileExist(String filename) throws IOException {
-		if (openSession()) {
-			write("[ -f "+filename+" ];exit $?\n");
-			flushSession();
+	public List<String> execute(String command) throws IOException {
+		List<String> res = new ArrayList<String>();
+		if(openSession()) {
+			write(command);
+			flushSession(res);
 			closeSession();
 		}
-		return session.getExitCode() == 0;
+		return res;
 	}
-
 }

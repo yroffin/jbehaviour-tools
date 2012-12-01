@@ -413,7 +413,7 @@ Member : Dot Identifier (LeftBrace (Identifier|String)? RightBrace)?
 	;
 
 Identifier :
-	(Alphanumeric|UnderScrore)+
+	(Alphanumeric|UnderScrore|Arobase)+
 	;
 
 Comment
@@ -458,6 +458,10 @@ fragment DoubleCote
 
 fragment Dot
 	: '.'
+	;
+
+fragment Arobase
+	: '@'
 	;
 
 fragment UnicodeEscape

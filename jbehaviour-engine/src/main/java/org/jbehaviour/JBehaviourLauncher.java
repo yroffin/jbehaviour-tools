@@ -18,8 +18,6 @@ import org.jbehaviour.reflexion.IBehaviourReflexion;
 import org.jbehaviour.reflexion.IBehaviourReflexionContext;
 import org.jbehaviour.reflexion.impl.JBehaviourReflexion;
 import org.jbehaviour.report.IBehaviourReport;
-import org.jbehaviour.report.IBehaviourReportRun;
-import org.jbehaviour.xref.IBehaviourXRefSuite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -125,19 +123,6 @@ public class JBehaviourLauncher {
 			} catch (IOException e) {
 				e.printStackTrace();
 				return false;
-			}
-		}
-
-		for(String key : registry.getXRef().getRunsByScenario().keySet()) {
-			IBehaviourXRefSuite suite = registry.getXRef().getRunsByScenario().get(key);
-			for(IBehaviourReportRun run : suite.getRuns()) {
-				logger.info("name: " + run.getName());
-				logger.info("duration: " + run.getDuration());
-				logger.info("object: " + run.getObject());
-				logger.info("args: " + run.getArgs());
-				logger.info("text: " + run.getText());
-				logger.info("klass: " + run.getKlass());
-				logger.info("text like: " + run.getTextLikeMethod());
 			}
 		}
 

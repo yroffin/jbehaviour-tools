@@ -14,9 +14,40 @@ public class JBehahiourLexer extends AnotherStoryGrammerLexer {
 	Logger logger = LoggerFactory.getLogger(JBehahiourLexer.class);
 
 	int error = 0;
-	
 	public int getError() {
 		return error;
+	}
+
+	@Override
+	public void emitErrorMessage(String msg) {
+		logger.error(msg);
+		error++;
+	}
+
+	@Override
+	public void traceIn(String ruleName, int ruleIndex, Object inputSymbol) {
+		if(logger.isDebugEnabled()) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("enter "+ruleName+" "+inputSymbol);
+			if ( state.backtracking>0 ) {
+				sb.append(" backtracking="+state.backtracking);
+			}
+			logger.debug(sb.toString());
+		}
+	}
+
+	@Override
+	public void traceOut(String ruleName, int ruleIndex, Object inputSymbol) {
+		if(logger.isDebugEnabled()) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("exit "+ruleName+" "+inputSymbol);
+			if ( state.backtracking>0 ) {
+				sb.append(" backtracking="+state.backtracking);
+	            if ( state.failed ) sb.append(" failed");
+	            else sb.append(" succeeded");
+	        }
+			logger.debug(sb.toString());
+		}
 	}
 
 	public JBehahiourLexer(ANTLRFileStream antlrFileStream) {
@@ -25,12 +56,6 @@ public class JBehahiourLexer extends AnotherStoryGrammerLexer {
 
 	public JBehahiourLexer(ANTLRStringStream antlrStringStream) {
 		super(antlrStringStream);
-	}
-
-	@Override
-	public void emitErrorMessage(String msg) {
-		logger.error(msg);
-		error++;
 	}
 
 	protected static CommonTokenStream getTokens(String filename) throws JBehaviourParsingError {
