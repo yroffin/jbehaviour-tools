@@ -6,6 +6,48 @@
 <title></title>
 </head>
 
-<h1>System plugin</h1>
+<h1>System Extention</h1>
 
-<p>TODO ...</p>
+<h2>1. Setup</h2>
+
+<p>This step is stored in maven module : jbehaviour-engine (core)</p>
+
+<p>This extention permit to store object in session :</p>
+
+<blockquote>
+  <p>Set environement property to a defined value<br /></p>
+  
+  <blockquote>
+    <p>set property $property to $value
+    Example: set property 'PATH' to 'C:\temp'</p>
+  </blockquote>
+  
+  <p>Print object (object is a reference to a defined reference) as string in default output<br /></p>
+  
+  <blockquote>
+    <p>print object $value
+    Example: print object 'ID'</p>
+  </blockquote>
+  
+  <p>Store last action result in reference $reference<br /></p>
+  
+  <blockquote>
+    <p>store last result as $reference
+    Example: result as 'myReference'</p>
+  </blockquote>
+  
+  <p>Store last action result in file $filename<br /></p>
+  
+  <blockquote>
+    <p>store last result in file $filename
+    Example: in file 'C:\output\file.txt'</p>
+  </blockquote>
+</blockquote>
+
+<p>Extention declaration :</p>
+
+<blockquote>
+  <p>  ...<br />
+  Register sample with 'org.jbehaviour.plugins.system.SystemSteps' plugin<br />
+    ...<br /></p>
+</blockquote>

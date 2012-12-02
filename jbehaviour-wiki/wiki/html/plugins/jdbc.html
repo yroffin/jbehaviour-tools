@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="markdown.css" rel="stylesheet"></link>
+<title></title>
+</head>
+
+<h1>Jdbc Extention</h1>
+
+<h2>1. Setup</h2>
+
+<p>This step is stored in maven module : jbehaviour-jdbc</p>
+
+<p>This step implements:
+- jdbc connect
+- describe table
+- select from entities and store result</p>
+
+<h2>2. Sample</h2>
+
+<blockquote>
+  <p>Feature: Launch all test from jdbc feature<br/>
+   In order to test this feature<br/>
+   As an explicit system actor<br/>
+   I want to verify this behaviour<br/>
+   Register system  with "org.jbehaviour.plugins.system.SystemSteps" plugin<br/>
+   Register jdbc    with "org.jbehaviour.plugins.jdbc.JdbcSteps" plugin<br/>
+   Declare driverJdbc as String 'org.h2.Driver'<br/></p>
+  
+  <p>  Scenario: Verify we can use this jdbc driver<br/>
+     Given connect with 'org.h2.Driver' and url 'jdbc:h2:mem' 'sa' '' as 'connexion01'<br/>
+     Given column length to 20 bytes<br/>
+     Given desc 'TEST1'<br/>
+     When  query 'SELECT * FROM TEST1' as select1<br/>
+     When  query 'SELECT * FROM TEST2' as select2<br/>
+     When  query 'SELECT * FROM TEST3' as select3<br/>
+     When  query 'SELECT * FROM TEST4' as select4<br/>
+     Then  $select1 have 4 lines<br/>
+     Then  $select2 have 4 lines<br/>
+     Then  $select3 have 5 lines<br/>
+     Then  $select4 have 6 lines<br/></p>
+</blockquote>

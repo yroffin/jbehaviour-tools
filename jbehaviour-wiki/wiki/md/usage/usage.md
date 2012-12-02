@@ -52,7 +52,7 @@ Class register consist to declare a class path associated to one global unique i
 This declaration declare an internal global id 'sample' for the class [org.jbehaviour.plugins.SampleSteps](https://github.com/yroffin/jbehaviour-tools/blob/v1.1a/jbehaviour-engine/src/test/java/org/jbehaviour/plugins/SampleSteps.java)
 this class must be in classpath.
 
-**Notice that** override is working, so default extention can be overriden (StoreSteps, SystemSteps etc ...).
+**Notice that** override is working, so default extention can be overriden (SystemSteps etc ...).
 
 ### Declare ###
 
@@ -87,42 +87,5 @@ A sample code could be :
 
 >   ...<br />
 > Include 'src/test/resources/files/sample.story'<br />
->   ...<br />
-
-2. Extention
-------------
-
-### StoreSteps ###
-
-This extention permit to store object in session :
-
-> Store last action result in reference $reference<br />
->> result as $reference
->> Example: result as 'myReference'
-
-> Store last action result in file $filename<br />
->> in file $filename
->> Example: in file 'C:\\output\\file.txt'
-
-Extention declaration :
->   ...<br />
-> Register sample with 'org.jbehaviour.plugins.system.StoreSteps' plugin<br />
->   ...<br />
-
-### SystemSteps ###
-
-This extention permit to store object in session :
-
-> Set environement property to a defined value<br />
->> set property $property to $value
->> Example: set property 'PATH' to 'C:\\temp'
-
-> Print object (object is a reference to a defined reference) as string in default output<br />
->> print object $value
->> Example: print object 'ID'
-
-Extention declaration :
->   ...<br />
-> Register sample with 'org.jbehaviour.plugins.system.StoreSteps' plugin<br />
 >   ...<br />
 

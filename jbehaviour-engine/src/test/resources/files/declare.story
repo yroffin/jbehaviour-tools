@@ -7,7 +7,6 @@ Feature: Launch a story sample
   # sample reference is defined so it can be use to suppress
   # ambigous declaration
   #
-  Register store  with 'org.jbehaviour.plugins.system.StoreSteps' plugin
   Register sample with 'org.jbehaviour.plugins.SampleSteps' plugin
   Declare ref001 as String 'some string 001'
   Declare ref002 as String "some string 002"

@@ -57,7 +57,7 @@ public class JBehaviourReflexionTest {
 	@Test
 	public void testComplexSteps() throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException, IOException, JBehaviourParsingError, JBehaviourRuntimeError {
 		IBehaviourReflexion registry = new JBehaviourReflexion();
-		registry.register("klass","org.jbehaviour.plugins.system.StoreSteps");
+		registry.register("klass","org.jbehaviour.plugins.system.SystemSteps");
 		registry.register("klass","org.jbehaviour.plugins.ComplexSteps");
 		
 		/**
@@ -67,7 +67,7 @@ public class JBehaviourReflexionTest {
 		search = registry.retrieve("noname",IKeywordStatement.statement.Given,"some precondition with complex object return");
 		assertNotNull(search);
 		search.execute();
-		search = registry.retrieve("noname",IKeywordStatement.statement.Store,"result as 'anotherRef'");
+		search = registry.retrieve("noname",IKeywordStatement.statement.Then,"store last result as 'anotherRef'");
 		assertNotNull(search);
 		search.execute();
 		search = registry.retrieve("noname",IKeywordStatement.statement.Then,"some condition with my bean $anotherRef");

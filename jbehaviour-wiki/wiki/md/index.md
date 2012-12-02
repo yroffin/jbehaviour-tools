@@ -29,7 +29,7 @@ and avoid to consider so much technical method for using testing tools :
 Extention
 =========
 
-[System](plugins/system.md)
+[System](plugins/system.md) core included ...
 [Sikuli](plugins/sikuli.md)
 [Remote](plugins/remote.md)
 [Jdbc](plugins/jdbc.md)

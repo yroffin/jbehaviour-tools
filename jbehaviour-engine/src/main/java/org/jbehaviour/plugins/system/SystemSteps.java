@@ -1,13 +1,21 @@
 package org.jbehaviour.plugins.system;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
+import org.jbehaviour.annotation.EnvReference;
 import org.jbehaviour.annotation.Given;
 import org.jbehaviour.annotation.Then;
+import org.jbehaviour.reflexion.IBehaviourEnv;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SystemSteps {
 	Logger logger = LoggerFactory.getLogger(SystemSteps.class);
-	
+
+	@EnvReference
+	public IBehaviourEnv env = null;
+
 	@Given("set property $property to $value")
 	public void setProperty(String property, String value) {
 		logger.info("System set property [" + property + "] to [" + value + "]");
@@ -33,6 +41,20 @@ public class SystemSteps {
 		Thread.sleep(value);
 		return value;
 	}
+
+    @Then("store last result as $reference")
+    public Object storeReference(String reference) {
+    	logger.info("Store as " + reference);
+    	return env.store(reference, env.getObject("result"));
+    }
+
+    @Then("store last result in file $filename")
+    public void storeFile(String filename) throws IOException {
+    	logger.info("Store in file " + filename + " / " + env.getObject("result"));
+    	FileWriter myFile = new FileWriter(filename);
+    	myFile.write(env.getObject("result")+"");
+    	myFile.close();
+    }
 
 	@Then("return $value")
 	public boolean returnResult(String value) {
