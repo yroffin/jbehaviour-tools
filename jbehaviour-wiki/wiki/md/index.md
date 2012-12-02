@@ -33,4 +33,5 @@ Extention
 [Sikuli](plugins/sikuli.md)
 [Remote](plugins/remote.md)
 [Jdbc](plugins/jdbc.md)
+[Fluentlenium](plugins/fluentlenium.md)
 

@@ -40,7 +40,22 @@
 		</dependency>
 		<dependency>
 			<groupId>jbehaviour-tools</groupId>
+			<artifactId>jbehaviour-jdbc</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>jbehaviour-tools</groupId>
+			<artifactId>jbehaviour-remote</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>jbehaviour-tools</groupId>
 			<artifactId>jbehaviour-selenium</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>jbehaviour-tools</groupId>
+			<artifactId>jbehaviour-sikuli</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>

@@ -24,6 +24,7 @@ and avoid to consider so much technical method for using testing tools :
 TODO
 ====
 
-- remove Store keyword
+- transform getDuration in getTime
+
 
 
