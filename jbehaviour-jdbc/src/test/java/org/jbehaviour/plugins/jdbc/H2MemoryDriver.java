@@ -38,6 +38,12 @@ public class H2MemoryDriver {
 		stat.execute();
 	}
 
+	/**
+	 * load file name in table
+	 * @param filename
+	 * @throws IOException
+	 * @throws SQLException
+	 */
 	public void load(File filename) throws IOException, SQLException {
 		FileReader fr = new FileReader(filename);
 		char[] cbuf = new char[16384];

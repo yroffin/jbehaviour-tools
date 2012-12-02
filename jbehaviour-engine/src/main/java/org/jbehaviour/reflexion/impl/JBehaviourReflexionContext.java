@@ -60,7 +60,7 @@ public class JBehaviourReflexionContext implements IBehaviourReflexionContext {
 		 * store on env last result
 		 */
 		env.store("result", result);
-		logger.info("Store result: " + env.getObject("result"));
+		logger.debug("Store result: " + env.getObject("result"));
 		return result;
 	}
 

@@ -32,4 +32,5 @@ Extention
 [System](plugins/system.md)
 [Sikuli](plugins/sikuli.md)
 [Remote](plugins/remote.md)
+[Jdbc](plugins/jdbc.md)
 
