@@ -19,11 +19,8 @@ import org.apache.sshd.server.keyprovider.PEMGeneratorHostKeyProvider;
 import org.apache.sshd.server.keyprovider.SimpleGeneratorHostKeyProvider;
 import org.apache.sshd.server.session.ServerSession;
 import org.apache.sshd.server.sftp.SftpSubsystem;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class MockSftpServer {
-	static Logger logger = LoggerFactory.getLogger(MockSftpServer.class);
 
 	SshServer sshd = null;
 
@@ -46,7 +43,6 @@ public class MockSftpServer {
 			@Override
 			public boolean authenticate(String username, String password,
 					ServerSession session) {
-				logger.info("Authenticate with " + username);
 				return username != null && username.equals(password);
 			}
 		});
@@ -55,7 +51,6 @@ public class MockSftpServer {
 			@Override
 			public boolean authenticate(String username, PublicKey key,
 					ServerSession session) {
-				logger.info("Authenticate with key");
 				return true;
 			}
 		});

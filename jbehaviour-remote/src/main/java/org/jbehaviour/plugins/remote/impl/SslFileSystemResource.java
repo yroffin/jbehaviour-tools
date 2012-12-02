@@ -6,9 +6,6 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.sshtools.j2ssh.SshClient;
 import com.sshtools.j2ssh.authentication.AuthenticationProtocolState;
 import com.sshtools.j2ssh.authentication.PasswordAuthenticationClient;
@@ -17,25 +14,24 @@ import com.sshtools.j2ssh.transport.TransportProtocolException;
 import com.sshtools.j2ssh.transport.publickey.SshPublicKey;
 
 public abstract class SslFileSystemResource extends FileSystemResourceImpl {
-	static Logger logger = LoggerFactory.getLogger(SslFileSystemResource.class);
 
 	@Override
 	public boolean checkIfFileExist(String filename) throws IOException {
-		logger.warn("Using abstract method !!!");
+		System.err.println("Using abstract method checkIfFileExist !!!");
 		return false;
 	}
 
 
 	@Override
 	public List<ResourcesItem> listdir(String directory) throws IOException {
-		logger.warn("Using abstract method !!!");
+		System.err.println("Using abstract method listdir !!!");
 		List<ResourcesItem> res = new ArrayList<ResourcesItem>();
 		return res;
 	}
 
 	@Override
 	public List<String> execute(String command) throws IOException {
-		logger.warn("Using abstract method !!!");
+		System.err.println("Using abstract method !!!");
 		List<String> res = new ArrayList<String>();
 		return res;
 	}
@@ -107,7 +103,7 @@ public abstract class SslFileSystemResource extends FileSystemResourceImpl {
 		}
 
 		if (result == AuthenticationProtocolState.COMPLETE) {
-			logger.info("The authentication is complete");
+			System.out.println("The authentication is complete");
 		}
 	}
 
