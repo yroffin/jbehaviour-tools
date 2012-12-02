@@ -7,6 +7,7 @@ Feature: Launch a story sample
   # sample reference is defined so it can be use to suppress
   # ambigous declaration
   #
+  Register sample with 'org.jbehaviour.plugins.system.SystemSteps' plugin
   Register sample with 'org.jbehaviour.plugins.SampleSteps' plugin
   Declare ref001 as String 'some string 001'
   Declare ref002 as String "some string 002"
@@ -19,6 +20,6 @@ Feature: Launch a story sample
       And some other action
       And yet another action
      Then some testable outcome is achieved
-     Store result as resultat_du_test_1
+     Then store last result as resultat_du_test_1
       And something else we can check happens too
-     Store result as resultat_du_test_2
+     Then store last result as resultat_du_test_2

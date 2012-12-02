@@ -15,7 +15,7 @@ Feature: Launch a web client and go to 'http://www.bing.com'
      When i goto to $urlBinq
      When i fill '#sb_form_q' with $fluentLenium
      When i submit '#sb_form_go'
-     Store in file $output
+     Then store last result in file $output
      Then Title must contain $fluentLenium
      Then Close internet browser
 
