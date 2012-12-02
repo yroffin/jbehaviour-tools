@@ -252,3 +252,56 @@ CREATE TABLE TEST1(ID INT PRIMARY KEY, NAME VARCHAR(255)) AS SELECT * FROM CSVRE
 	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
 	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
 	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
+12-02 21:59:10 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "DESC[*] TEST1"; expected "DELETE, DROP, DECLARE, DEALLOCATE, {"; SQL statement:
+DESC TEST1 [42001-168]
+12-02 22:00:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "DESCRIBE[*] TEST1"; expected "DELETE, DROP, DECLARE, DEALLOCATE, {"; SQL statement:
+DESCRIBE TEST1 [42001-168]
+12-02 22:01:23 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT "; expected "TOP, LIMIT, DISTINCT, ALL, *, NOT, EXISTS"; SQL statement:
+SHOW TEST1 [42001-168]
+12-02 22:45:46 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Invalid value "0" for parameter "columnIndex" [90008-168]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:169)
+	at org.h2.message.DbException.getInvalidValueException(DbException.java:215)
+	at org.h2.jdbc.JdbcResultSetMetaData.checkColumnIndex(JdbcResultSetMetaData.java:428)
+	at org.h2.jdbc.JdbcResultSetMetaData.getColumnName(JdbcResultSetMetaData.java:83)
+	at org.jbehaviour.plugins.jdbc.JBehaviourResultSet.<init>(JBehaviourResultSet.java:24)
+	at org.jbehaviour.plugins.jdbc.JdbcSteps.descTable(JdbcSteps.java:48)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:601)
+	at org.jbehaviour.reflexion.impl.JBehaviourReflexionMethod.invokeLocaly(JBehaviourReflexionMethod.java:133)
+	at org.jbehaviour.reflexion.impl.JBehaviourReflexionMethod.invoke(JBehaviourReflexionMethod.java:357)
+	at org.jbehaviour.reflexion.impl.JBehaviourReflexionContext.execute(JBehaviourReflexionContext.java:51)
+	at org.jbehaviour.JBehaviourLauncher.registerAndExecuteStory(JBehaviourLauncher.java:210)
+	at org.jbehaviour.JBehaviourLauncher.registerAndExecute(JBehaviourLauncher.java:99)
+	at org.jbehaviour.plugins.jdbc.H2InMemoryDatabaseTest.test(H2InMemoryDatabaseTest.java:51)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:601)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.junit.internal.runners.JUnit38ClassRunner.run(JUnit38ClassRunner.java:83)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
+12-02 23:40:17 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "TABLE" not found; SQL statement:
+INSERT INTO TABLE TEST1 (1000, 'Ligne 1000'); [42102-168]
+12-02 23:40:45 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "TABLE" not found; SQL statement:
+INSERT INTO TABLE TEST1 (ID, NAME) VALUES (1000, 'Ligne 1000'); [42102-168]
