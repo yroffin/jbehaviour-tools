@@ -25,6 +25,9 @@ TODO
 ====
 
 - transform getDuration in getTime
+- integrate dis-ambiguity system using plugin name
+- create atomic scenario notion (for calling as sub routine)
+- implement Foreach keyword to iterate on List
 
 
 
