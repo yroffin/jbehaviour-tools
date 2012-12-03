@@ -21,6 +21,10 @@ and avoid to consider so much technical method for using testing tools :
 - selenium suite
 - and so on ...
 
+WIKI
+====
+[wiki](jbehaviour-wiki/wiki/md/index.md)
+
 TODO
 ====
 
