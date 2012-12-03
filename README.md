@@ -25,6 +25,8 @@ TODO
 ====
 
 - transform getDuration in getTime
+- find report in classpath (with resource loader)
+
 
 
 
