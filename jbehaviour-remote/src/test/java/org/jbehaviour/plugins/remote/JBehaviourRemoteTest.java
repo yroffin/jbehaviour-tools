@@ -37,7 +37,7 @@ public class JBehaviourRemoteTest {
 		 * FTP mock
 		 */
 		ftpMock = new MockFtpServer(21,"TestUsername", "TestPassword", new File("src/test/resources"));
-		ftpMock.addDir(new File("src/test/resources/root"));
+		ftpMock.addDir(new File(new File("src/test/resources/root").getAbsolutePath()));
 		ftpMock.start();
 
 		/**
