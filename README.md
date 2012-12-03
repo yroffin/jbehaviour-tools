@@ -21,17 +21,12 @@ and avoid to consider so much technical method for using testing tools :
 - selenium suite
 - and so on ...
 
-WIKI
-====
-[go to](jbehaviour-wiki/wiki/md/index.md)
-
 TODO
 ====
 
 - transform getDuration in getTime
-- integrate dis-ambiguity system using plugin name
-- create atomic scenario notion (for calling as sub routine)
-- implement Foreach keyword to iterate on List
+- find report in classpath (with resource loader)
+
 
 
 

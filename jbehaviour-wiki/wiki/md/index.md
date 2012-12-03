@@ -29,9 +29,9 @@ and avoid to consider so much technical method for using testing tools :
 Extention
 =========
 
-[System](plugins/system.md) core included ...<br/>
-[Sikuli](plugins/sikuli.md)<br/>
-[Remote](plugins/remote.md)<br/>
-[Jdbc](plugins/jdbc.md)<br/>
-[Fluentlenium](plugins/fluentlenium.md)<br/>
+[System](plugins/system.md) core included ...
+[Sikuli](plugins/sikuli.md)
+[Remote](plugins/remote.md)
+[Jdbc](plugins/jdbc.md)
+[Fluentlenium](plugins/fluentlenium.md)
 
