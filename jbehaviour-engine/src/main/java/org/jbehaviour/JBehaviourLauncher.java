@@ -232,7 +232,7 @@ public class JBehaviourLauncher {
 							 * false break the scenario/story execution
 							 */
 							if(ret == null) {
-								throw new JBehaviourRuntimeError("Return on Then keyword cannot be null !!!");
+								throw new JBehaviourRuntimeError(stepToExecute.toString() + " : return on Then keyword cannot be null !!!");
 							}
 							if((Boolean) ret == false) return (Boolean) ret;
 						default:

@@ -42,18 +42,19 @@ public class SystemSteps {
 		return value;
 	}
 
-    @Then("store last result as $reference")
+    @Given("store last result as $reference")
     public Object storeReference(String reference) {
     	logger.info("Store as " + reference);
     	return env.store(reference, env.getObject("result"));
     }
 
     @Then("store last result in file $filename")
-    public void storeFile(String filename) throws IOException {
+    public boolean storeFile(String filename) throws IOException {
     	logger.info("Store in file " + filename + " / " + env.getObject("result"));
     	FileWriter myFile = new FileWriter(filename);
     	myFile.write(env.getObject("result")+"");
     	myFile.close();
+    	return true;
     }
 
 	@Then("return $value")

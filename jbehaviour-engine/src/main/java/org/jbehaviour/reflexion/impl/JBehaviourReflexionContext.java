@@ -14,6 +14,13 @@ import org.slf4j.LoggerFactory;
 public class JBehaviourReflexionContext implements IBehaviourReflexionContext {
 	Logger logger = LoggerFactory.getLogger(JBehaviourReflexionContext.class);
 
+	@Override
+	public String toString() {
+		return "JBehaviourReflexionContext [parsedStatement=" + parsedStatement
+				+ ", bean=" + bean + ", method=" + method + ", env=" + env
+				+ ", scenarioMethodName=" + scenarioMethodName + "]";
+	}
+
 	private IKeywordStatement parsedStatement;
 	private IBehaviourReflexionBean bean;
 	private IBehaviourReflexionMethodBean method;

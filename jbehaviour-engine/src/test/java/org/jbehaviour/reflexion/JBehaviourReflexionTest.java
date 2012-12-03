@@ -67,7 +67,7 @@ public class JBehaviourReflexionTest {
 		search = registry.retrieve("noname",IKeywordStatement.statement.Given,"some precondition with complex object return");
 		assertNotNull(search);
 		search.execute();
-		search = registry.retrieve("noname",IKeywordStatement.statement.Then,"store last result as 'anotherRef'");
+		search = registry.retrieve("noname",IKeywordStatement.statement.Given,"store last result as 'anotherRef'");
 		assertNotNull(search);
 		search.execute();
 		search = registry.retrieve("noname",IKeywordStatement.statement.Then,"some condition with my bean $anotherRef");

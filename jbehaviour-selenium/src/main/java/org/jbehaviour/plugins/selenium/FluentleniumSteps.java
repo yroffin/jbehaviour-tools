@@ -63,7 +63,8 @@ public class FluentleniumSteps extends FluentAdapter {
 	}
 
 	@Then("Close internet browser")
-	public void closeIt() {
-		this.driver.close();
+	public boolean closeIt() {
+		driver.close();
+		return true;
 	}
 }

@@ -58,8 +58,8 @@ public class JBehaviourStoryParserTest {
 		assertEquals("ref002",parser.getFeature().getKeywordDeclare().get(1).getReference());
 		assertEquals("some string 001",parser.getFeature().getKeywordDeclare().get(0).extractLiteralAsString(3));
 		assertEquals("some string 002",parser.getFeature().getKeywordDeclare().get(1).extractLiteralAsString(3));
-		assertEquals("store last result as resultat_du_test_1",parser.getScenarios().get(0).getKeywordThens().get(1).getStatement());
-		assertEquals("store last result as resultat_du_test_2",parser.getScenarios().get(0).getKeywordThens().get(3).getStatement());
+		assertEquals("store last result as resultat_du_test_1",parser.getScenarios().get(0).getKeywordGivens().get(2).getStatement());
+		assertEquals("store last result as resultat_du_test_2",parser.getScenarios().get(0).getKeywordGivens().get(3).getStatement());
 	}
 
 	@Test

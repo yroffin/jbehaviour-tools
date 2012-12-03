@@ -20,6 +20,6 @@ Feature: Launch a story sample
       And some other action
       And yet another action
      Then some testable outcome is achieved
-     Then store last result as resultat_du_test_1
-      And something else we can check happens too
-     Then store last result as resultat_du_test_2
+    Given store last result as resultat_du_test_1
+     Then something else we can check happens too
+    Given store last result as resultat_du_test_2
