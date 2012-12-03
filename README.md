@@ -26,6 +26,9 @@ TODO
 
 - transform getDuration in getTime
 - find report in classpath (with resource loader)
+- implement scenario as subroutine call
+- implement Foreach keyword
+
 
 
 
