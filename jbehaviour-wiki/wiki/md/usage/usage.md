@@ -89,3 +89,8 @@ A sample code could be :
 > Include 'src/test/resources/files/sample.story'<br />
 >   ...<br />
 
+2. Session management
+---------------------
+
+TODO : explain how internal reference are handled ...
+
