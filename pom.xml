@@ -53,7 +53,13 @@
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<version>1.0.7</version>
-		</dependency>
+			<exclusions>
+		      <exclusion> 
+		        <groupId>org.slf4j</groupId>
+		        <artifactId>slf4j-simple</artifactId>
+		      </exclusion>
+		    </exclusions>
+    		</dependency>
 	</dependencies>
 	<properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
