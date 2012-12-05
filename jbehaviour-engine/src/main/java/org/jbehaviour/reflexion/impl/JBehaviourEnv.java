@@ -17,6 +17,7 @@
 package org.jbehaviour.reflexion.impl;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.annotation.Annotation;
@@ -29,6 +30,9 @@ import java.util.Map.Entry;
 
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
+import org.apache.velocity.runtime.RuntimeSingleton;
+import org.apache.velocity.runtime.parser.ParseException;
+import org.apache.velocity.runtime.parser.node.SimpleNode;
 import org.jbehaviour.annotation.EnvReference;
 import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;

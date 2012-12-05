@@ -71,10 +71,15 @@ public class JBehaviourStatementParser extends AnotherStoryGrammerParser {
 	private IKeywordStatement current = new KeywordAny();
 
 	@Override
+	public void onDebug(String where, String value) {
+		if(logger.isDebugEnabled()) logger.debug(where + " [" + value + "]");
+	}
+
+	@Override
 	public void onAnyNumeric(String value) {
-		if(logger.isDebugEnabled()) super.onAnyNumeric(value);
+		super.onAnyNumeric(value);
 		if(current != null) {
-			logger.debug("on "+current.getType()+" any integer: " + value);
+			if(logger.isDebugEnabled()) logger.debug("on "+current.getType()+" any integer: " + value);
 			current.someInteger(value);
 		} else {
 			logger.error("Internal error");
@@ -83,37 +88,37 @@ public class JBehaviourStatementParser extends AnotherStoryGrammerParser {
 
 	@Override
 	public void onAnyString(String value) {
-		if(logger.isDebugEnabled()) super.onAnyString(value);
-		logger.debug("on scenario/any string: " + value);
+		super.onAnyString(value);
+		if(logger.isDebugEnabled()) logger.debug("on scenario/any string: " + value);
 		current.someString(value);
 	}
 
 	@Override
 	public void onAnyIdentifier(String value) {
-		if(logger.isDebugEnabled()) super.onAnyIdentifier(value);
+		super.onAnyIdentifier(value);
 		logger.debug("on scenario/any identifier: " + value);
 		current.someIdentifier(value);
 	}
 
 	@Override
 	public void onAnyReference(String value) {
-		if(logger.isDebugEnabled()) super.onAnyReference(value);
+		super.onAnyReference(value);
 		logger.debug("on scenario/any reference: " + value);
 		current.someReference(value);
 	}
 
 	@Override
 	public void onAnyTemplate(String value) {
-		if(logger.isDebugEnabled()) super.onAnyTemplate(value);
+		super.onAnyTemplate(value);
 		logger.debug("on scenario/any template: " + value);
 		current.someTemplate(value);
 	}
 
 	@Override
 	public void onAnyJsonObject(String value) {
-		if(logger.isDebugEnabled()) super.onAnyJsonObject(value);
+		super.onAnyJsonObject(value);
 		if(current != null) {
-			logger.debug("on "+current.getType()+" any json: " + value);
+			if(logger.isDebugEnabled()) logger.debug("on "+current.getType()+" any json: " + value);
 			current.someJson(value);
 		} else {
 			logger.error("Internal error");

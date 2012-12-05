@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="markdown.css" rel="stylesheet"></link>
+<title></title>
+</head>
+
+<h1>Fluentlenium Extention</h1>
+
+<h2>1. Setup</h2>
+
+<p>This step is stored in maven module : jbehaviour-selenium</p>
+
+<p>This module is based on <a href="http://http://seleniumhq.org">selenium</a> and <a href="https://github.com/FluentLenium/FluentLenium">fluentlenium</a></p>
+
+<p>This step implements:
+- TODO ...</p>
+
+<h2>2. Sample</h2>
+
+<blockquote>
+  <p>Feature: Launch a web client and go to 'http://www.bing.com'<br/>
+   In order to test this feature<br/>
+   As an explicit system actor<br/>
+   I want to verify this behaviour<br/>
+   Register system       with "org.jbehaviour.plugins.system.SystemSteps" plugin<br/>
+   Register fluentlenium with 'org.jbehaviour.plugins.selenium.FluentleniumSteps' plugin<br/>
+   Declare urlBinq as String 'http://www.bing.com'<br/>
+   Declare chromeDriver as String 'C:\tmp\chromedriver.exe'<br/>
+   Declare fluentLenium as String 'FluentLenium'<br/>
+   Declare output as String 'target/output.txt'<br/></p>
+  
+  <p>  Scenario: Verify we can go to 'http://www.bing.com'<br/>
+     Given set property 'webdriver.chrome.driver' to $chromeDriver<br/>
+     Given launch the html navigator<br/>
+      When i goto to $urlBinq<br/>
+      When i fill '#sb<em>form</em>q' with $fluentLenium<br/>
+      When i submit '#sb<em>form</em>go'<br/>
+      Store in file $output<br/>
+      Then Title must contain $fluentLenium<br/></p>
+</blockquote>

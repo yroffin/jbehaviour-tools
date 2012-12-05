@@ -18,6 +18,7 @@ package org.jbehaviour.plugins.system;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 import org.jbehaviour.annotation.EnvReference;
 import org.jbehaviour.annotation.Given;
@@ -40,7 +41,7 @@ public class SystemSteps {
 
 	@Given("print object $value")
 	public Object print(Object value) {
-		logger.info("Print [" + value.toString() +"]");
+		System.out.println("\n" + "[" + value.toString() +"]");
 		return value;
 	}
 
@@ -72,6 +73,11 @@ public class SystemSteps {
     	myFile.close();
     	return true;
     }
+
+	@Given("foreach $list as $item call $scenario")
+	public void foreach(List<?> list, String reference, String scenario) {
+		System.out.println("Foreach [" + list + "]");
+	}
 
 	@Then("return $value")
 	public boolean returnResult(String value) {

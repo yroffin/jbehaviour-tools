@@ -409,7 +409,7 @@ Reference :
 	Dollar Identifier
 	;
 
-Member : Dot Identifier (LeftBrace (Identifier|String)? RightBrace)?
+Member : Dot Identifier (LeftBrace (Number|String|WS|COMMA)* RightBrace)?
 	;
 
 Identifier :
@@ -448,6 +448,10 @@ fragment Dollar
 	: '$'
 	;
 
+fragment Arobase
+	: '@'
+	;
+
 fragment Cote
 	: '\''
 	;
@@ -458,10 +462,6 @@ fragment DoubleCote
 
 fragment Dot
 	: '.'
-	;
-
-fragment Arobase
-	: '@'
 	;
 
 fragment UnicodeEscape
