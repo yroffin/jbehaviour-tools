@@ -1,3 +1,4 @@
 /target
 *.iml
 .idea
+jbehaviour-jdbc/mem.*.db
