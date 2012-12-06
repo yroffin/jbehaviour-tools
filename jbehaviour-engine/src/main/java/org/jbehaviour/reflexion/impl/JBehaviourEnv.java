@@ -30,12 +30,16 @@ import java.util.Map.Entry;
 
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
+import org.jbehaviour.IBehaviourLauncher;
 import org.jbehaviour.annotation.EnvReference;
 import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
 import org.jbehaviour.parser.JBehaviourCallParser;
 import org.jbehaviour.parser.model.IKeywordCall;
+import org.jbehaviour.parser.model.IKeywordStatement.statement;
 import org.jbehaviour.reflexion.IBehaviourEnv;
+import org.jbehaviour.reflexion.IBehaviourReflexion;
+import org.jbehaviour.reflexion.IBehaviourReflexionContext;
 import org.jbehaviour.xref.IBehaviourXRef;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,12 +57,18 @@ public class JBehaviourEnv implements IBehaviourEnv {
 	private Writer writer = new StringWriter();
 
 	private IBehaviourXRef xref;
+
+	private IBehaviourReflexion ref;
+
+	private IBehaviourLauncher launcher;
 	
-	public JBehaviourEnv(IBehaviourXRef _xref) {
+	public JBehaviourEnv(IBehaviourLauncher _launcher, IBehaviourReflexion _registry, IBehaviourXRef _xref) {
 		Velocity.init();
 		context = new VelocityContext();
 		xref = _xref;
-		
+		ref = _registry;
+		ref.setEnv(this);
+		launcher = _launcher;
 	}
 
 	@Override
@@ -200,5 +210,25 @@ public class JBehaviourEnv implements IBehaviourEnv {
 	@Override
 	public IBehaviourXRef getXRef() {
 		return xref;
+	}
+
+	@Override
+	public IBehaviourReflexion getRef() {
+		return ref;
+	}
+
+	@Override
+	public IBehaviourLauncher getLauncher() {
+		return launcher;
+	}
+
+	@Override
+	public void register(String reference, String classname) throws JBehaviourParsingError {
+		ref.register(reference, classname);
+	}
+
+	@Override
+	public IBehaviourReflexionContext retrieve(String reference, statement s, String text) throws JBehaviourParsingError, JBehaviourRuntimeError {
+		return ref.retrieve(reference, s, text);
 	}
 }

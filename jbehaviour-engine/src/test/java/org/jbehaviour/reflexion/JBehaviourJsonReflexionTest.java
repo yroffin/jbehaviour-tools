@@ -25,7 +25,9 @@ import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
 import org.jbehaviour.parser.model.IKeywordStatement;
 import org.jbehaviour.plugins.ComplexJsonBean;
+import org.jbehaviour.reflexion.impl.JBehaviourEnv;
 import org.jbehaviour.reflexion.impl.JBehaviourReflexion;
+import org.jbehaviour.xref.impl.JBehaviourXRef;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -47,20 +49,20 @@ public class JBehaviourJsonReflexionTest extends TestCase {
 
 	@Test
 	public void testJsonSteps() throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException, IOException, JBehaviourParsingError, JBehaviourRuntimeError {
-		IBehaviourReflexion registry = new JBehaviourReflexion();
-		registry.register("complex","org.jbehaviour.plugins.ComplexSteps");
-		registry.register("json","org.jbehaviour.plugins.JsonSteps");
+		IBehaviourEnv env = new JBehaviourEnv(null,new JBehaviourReflexion(),new JBehaviourXRef());
+		env.register("complex","org.jbehaviour.plugins.ComplexSteps");
+		env.register("json","org.jbehaviour.plugins.JsonSteps");
 		
 		/**
 		 * retrieve and execute on context
 		 */
 		IBehaviourReflexionContext search = null;
-		search = registry.retrieve("noname",IKeywordStatement.statement.Given,"some precondition with complex object return");
+		search = env.retrieve("noname",IKeywordStatement.statement.Given,"some precondition with complex object return");
 		assertNotNull(search);
-		search.execute();
-		search = registry.retrieve("noname",IKeywordStatement.statement.Given,"some json as {\"field1\":\"x\",\"field2\":\"y\",\"field3\":9}");
+		search.execute(env);
+		search = env.retrieve("noname",IKeywordStatement.statement.Given,"some json as {\"field1\":\"x\",\"field2\":\"y\",\"field3\":9}");
 		assertNotNull(search);
-		ComplexJsonBean result = (ComplexJsonBean) search.execute();
+		ComplexJsonBean result = (ComplexJsonBean) search.execute(env);
 		assertEquals("x",result.getField1());
 		assertEquals("y",result.getField2());
 		assertEquals(9,result.getField3());

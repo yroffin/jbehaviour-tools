@@ -37,7 +37,6 @@ import org.jbehaviour.reflexion.IBehaviourReflexionBean;
 import org.jbehaviour.reflexion.IBehaviourReflexionContext;
 import org.jbehaviour.reflexion.IBehaviourReflexionMethodBean;
 import org.jbehaviour.xref.IBehaviourXRef;
-import org.jbehaviour.xref.impl.JBehaviourXRef;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,9 +46,16 @@ import org.slf4j.LoggerFactory;
 public class JBehaviourReflexion implements IBehaviourReflexion {
 	Logger logger = LoggerFactory.getLogger(JBehaviourReflexion.class);
 
-	IBehaviourEnv env = new JBehaviourEnv(new JBehaviourXRef());
+	IBehaviourEnv env = null;
 	Map<String,IBehaviourReflexionBean> beans = new HashMap<String,IBehaviourReflexionBean>();
 
+	@Override
+	public IBehaviourEnv setEnv(IBehaviourEnv _env) {
+		env = _env;
+		return env;
+	}
+
+	@Override
 	public IBehaviourEnv getEnv() {
 		return env;
 	}

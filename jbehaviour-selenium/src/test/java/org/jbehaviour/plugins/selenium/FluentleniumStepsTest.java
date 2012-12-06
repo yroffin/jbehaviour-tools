@@ -24,9 +24,11 @@ import java.lang.reflect.InvocationTargetException;
 import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
 import org.jbehaviour.parser.model.IKeywordStatement;
-import org.jbehaviour.reflexion.IBehaviourReflexion;
+import org.jbehaviour.reflexion.IBehaviourEnv;
 import org.jbehaviour.reflexion.IBehaviourReflexionContext;
+import org.jbehaviour.reflexion.impl.JBehaviourEnv;
 import org.jbehaviour.reflexion.impl.JBehaviourReflexion;
+import org.jbehaviour.xref.impl.JBehaviourXRef;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -48,23 +50,23 @@ public class FluentleniumStepsTest {
 
 	@Test
 	public void test() throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException, IOException, JBehaviourParsingError, JBehaviourRuntimeError {
-		IBehaviourReflexion registry = new JBehaviourReflexion();
-		registry.register("selenium","org.jbehaviour.plugins.selenium.FluentleniumSteps");
-		registry.register("system","org.jbehaviour.plugins.system.SystemSteps");
+		IBehaviourEnv env = new JBehaviourEnv(null,new JBehaviourReflexion(),new JBehaviourXRef());
+		env.register("selenium","org.jbehaviour.plugins.selenium.FluentleniumSteps");
+		env.register("system","org.jbehaviour.plugins.system.SystemSteps");
 		
 		/**
 		 * retrieve and execute on context
 		 */
 		IBehaviourReflexionContext search = null;
-		search = registry.retrieve("noname",IKeywordStatement.statement.Given,"launch the html navigator");
+		search = env.retrieve("noname",IKeywordStatement.statement.Given,"launch the html navigator");
 		assertNotNull(search);
-		search.execute();
-		search = registry.retrieve("noname",IKeywordStatement.statement.When,"i goto to 'http://www.google.com'");
+		search.execute(env);
+		search = env.retrieve("noname",IKeywordStatement.statement.When,"i goto to 'http://www.google.com'");
 		assertNotNull(search);
-		search.execute();
-		search = registry.retrieve("noname",IKeywordStatement.statement.Then,"close internet browser");
+		search.execute(env);
+		search = env.retrieve("noname",IKeywordStatement.statement.Then,"close internet browser");
 		assertNotNull(search);
-		search.execute();
+		search.execute(env);
 	}
 
 }

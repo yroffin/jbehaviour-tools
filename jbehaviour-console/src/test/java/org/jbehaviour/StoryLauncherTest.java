@@ -22,6 +22,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
+import org.jbehaviour.impl.JBehaviourLauncher;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -43,6 +44,6 @@ public class StoryLauncherTest {
 
 	@Test
 	public void testExecuteSample() throws IOException, JBehaviourParsingError, ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException, JBehaviourRuntimeError {
-		JBehaviourLauncher.registerAndExecute("story/binq.story");
+		(new JBehaviourLauncher()).registerAndExecute("story/binq.story");
 	}
 }

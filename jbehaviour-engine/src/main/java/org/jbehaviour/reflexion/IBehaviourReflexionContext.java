@@ -33,5 +33,5 @@ public interface IBehaviourReflexionContext {
 	 * @throws JBehaviourParsingError
 	 * @throws JBehaviourRuntimeError
 	 */
-	Object execute() throws JBehaviourParsingError, JBehaviourRuntimeError;
+	Object execute(IBehaviourEnv env) throws JBehaviourParsingError, JBehaviourRuntimeError;
 }

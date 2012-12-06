@@ -52,7 +52,7 @@ public class JBehaviourVelocityTest {
 
 	@Test
 	public void testEvaluateObject() throws JBehaviourParsingError {
-		IBehaviourEnv env = new JBehaviourEnv(new JBehaviourXRef());
+		IBehaviourEnv env = new JBehaviourEnv(null,new JBehaviourReflexion(),new JBehaviourXRef());
 		ComplexBean myBean = new ComplexBean();
 		ComplexBean mySubBean = myBean.getSubbean(2);
 		env.store("object001", myBean);
@@ -91,31 +91,31 @@ public class JBehaviourVelocityTest {
 
 	@Test
 	public void testVelocitySteps() throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException, IOException, JBehaviourParsingError, JBehaviourRuntimeError {
-		IBehaviourReflexion registry = new JBehaviourReflexion();
-		registry.register("klass","org.jbehaviour.plugins.system.SystemSteps");
-		registry.register("complex","org.jbehaviour.plugins.ComplexSteps");
-		registry.register("velocity","org.jbehaviour.plugins.VelocitySteps");
+		IBehaviourEnv env = new JBehaviourEnv(null,new JBehaviourReflexion(),new JBehaviourXRef());
+		env.register("klass","org.jbehaviour.plugins.system.SystemSteps");
+		env.register("complex","org.jbehaviour.plugins.ComplexSteps");
+		env.register("velocity","org.jbehaviour.plugins.VelocitySteps");
 		
 		/**
 		 * retrieve and execute on context
 		 */
 		IBehaviourReflexionContext search = null;
-		search = registry.retrieve("noname",IKeywordStatement.statement.Given,"some precondition with complex object return");
+		search = env.retrieve("noname",IKeywordStatement.statement.Given,"some precondition with complex object return");
 		assertNotNull(search);
-		search.execute();
-		search = registry.retrieve("noname",IKeywordStatement.statement.Given,"store last result as 'anotherRef'");
+		search.execute(env);
+		search = env.retrieve("noname",IKeywordStatement.statement.Given,"store last result as 'anotherRef'");
 		assertNotNull(search);
-		search.execute();
-		search = registry.retrieve("noname",IKeywordStatement.statement.Given,"some template reference as $anotherRef");
+		search.execute(env);
+		search = env.retrieve("noname",IKeywordStatement.statement.Given,"some template reference as $anotherRef");
 		assertNotNull(search);
-		search.execute();
-		search = registry.retrieve("noname",IKeywordStatement.statement.Given,"some template string as $anotherRef.getSubbean(1).getSimple()");
+		search.execute(env);
+		search = env.retrieve("noname",IKeywordStatement.statement.Given,"some template string as $anotherRef.getSubbean(1).getSimple()");
 		assertNotNull(search);
-		String result = (String) search.execute();
+		String result = (String) search.execute(env);
 		assertEquals("2",result);
-		search = registry.retrieve("noname",IKeywordStatement.statement.Given,"some template reference as $anotherRef.getSubbean(1).getSimple()");
+		search = env.retrieve("noname",IKeywordStatement.statement.Given,"some template reference as $anotherRef.getSubbean(1).getSimple()");
 		assertNotNull(search);
-		Integer resultInteger = (Integer) search.execute();
+		Integer resultInteger = (Integer) search.execute(env);
 		assertEquals(2,resultInteger.intValue());
 	}
 }

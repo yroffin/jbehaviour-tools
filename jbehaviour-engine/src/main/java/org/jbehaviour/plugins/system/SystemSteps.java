@@ -76,7 +76,9 @@ public class SystemSteps {
 
 	@Given("foreach $list as $item call $scenario")
 	public void foreach(List<?> list, String reference, String scenario) {
-		System.out.println("Foreach [" + list + "]");
+		for(Object obj : list) {
+			System.out.println("Foreach [" + obj + "]");
+		}
 	}
 
 	@Then("return $value")

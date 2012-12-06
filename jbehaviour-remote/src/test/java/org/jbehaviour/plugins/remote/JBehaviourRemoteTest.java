@@ -20,9 +20,9 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 
-import org.jbehaviour.JBehaviourLauncher;
 import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
+import org.jbehaviour.impl.JBehaviourLauncher;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -59,6 +59,6 @@ public class JBehaviourRemoteTest {
 
 	@Test
 	public void testRemoteSample() throws JBehaviourParsingError, JBehaviourRuntimeError {
-		assertEquals(true,JBehaviourLauncher.registerAndExecute("src/test/resources/files/remote.story"));
+		assertEquals(true,(new JBehaviourLauncher()).registerAndExecute("src/test/resources/files/remote.story"));
 	}
 }

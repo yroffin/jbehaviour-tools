@@ -24,7 +24,6 @@ import org.jbehaviour.parser.model.IKeywordStatement;
 import org.jbehaviour.xref.IBehaviourXRef;
 
 public interface IBehaviourReflexion {
-
 	/**
 	 * get env helper
 	 * @return
@@ -69,10 +68,15 @@ public interface IBehaviourReflexion {
 	 * @throws JBehaviourRuntimeError 
 	 */
 	public void declareJson(String reference, String klass, String json) throws JBehaviourRuntimeError;
-	
 	/**
 	 * retrieve XRef
 	 * @return
 	 */
 	public IBehaviourXRef getXRef();
+	/**
+	 * retrieve env
+	 * @param _env
+	 * @return
+	 */
+	public IBehaviourEnv setEnv(IBehaviourEnv _env);
 }

@@ -32,15 +32,15 @@ public class JBehaviourReflexionContext implements IBehaviourReflexionContext {
 
 	@Override
 	public String toString() {
-		return "JBehaviourReflexionContext [parsedStatement=" + parsedStatement
-				+ ", bean=" + bean + ", method=" + method + ", env=" + env
-				+ ", scenarioMethodName=" + scenarioMethodName + "]";
+		return "JBehaviourReflexionContext [logger=" + logger
+				+ ", parsedStatement=" + parsedStatement + ", bean=" + bean
+				+ ", method=" + method + ", scenarioMethodName="
+				+ scenarioMethodName + "]";
 	}
 
 	private IKeywordStatement parsedStatement;
 	private IBehaviourReflexionBean bean;
 	private IBehaviourReflexionMethodBean method;
-	private IBehaviourEnv env;
 	private String scenarioMethodName;
 
 	public String getScenarioMethodName() {
@@ -65,10 +65,10 @@ public class JBehaviourReflexionContext implements IBehaviourReflexionContext {
 		parsedStatement = _parsedStatement;
 		bean = _bean;
 		method = _method;
-		env = _env;
 	}
 
-	public Object execute() throws JBehaviourParsingError, JBehaviourRuntimeError {
+	@Override
+	public Object execute(IBehaviourEnv env) throws JBehaviourParsingError, JBehaviourRuntimeError {
 		Object result;
 		try {
 			result = method.invoke(scenarioMethodName,env,bean.getInstance(env), parsedStatement);

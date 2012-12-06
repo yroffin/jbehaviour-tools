@@ -20,6 +20,7 @@ import static org.junit.Assert.*;
 
 import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
+import org.jbehaviour.impl.JBehaviourLauncher;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -41,6 +42,6 @@ public class BehaviourForeachTest {
 
 	@Test
 	public void testForeachSteps() throws JBehaviourParsingError, JBehaviourRuntimeError  {
-		//assertEquals(true,JBehaviourLauncher.registerAndExecute("src/test/resources/files/foreach.story"));
+		assertEquals(true,(new JBehaviourLauncher()).registerAndExecute("src/test/resources/files/foreach.story"));
 	}
 }

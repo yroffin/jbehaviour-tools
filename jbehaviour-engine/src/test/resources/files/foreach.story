@@ -14,5 +14,5 @@ Feature: Launch a story sample for testing scenario call
     Given foreach $ref001.getListInteger() as arg001 call 'Print each item'
 
   Scenario: Print each item
-    Given print $arg001
+    Given print object $arg001
     

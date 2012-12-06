@@ -21,9 +21,9 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import org.jbehaviour.JBehaviourLauncher;
 import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
+import org.jbehaviour.impl.JBehaviourLauncher;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -64,7 +64,7 @@ public class H2InMemoryDatabaseTest extends TestCase {
 		/**
 		 * test code here
 		 */
-		boolean result = JBehaviourLauncher.registerAndExecute("src/test/resources/jdbc.story");
+		boolean result = (new JBehaviourLauncher()).registerAndExecute("src/test/resources/jdbc.story");
 
 		server.stop();
 		assertEquals(result,true);

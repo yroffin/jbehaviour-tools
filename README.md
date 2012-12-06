@@ -32,6 +32,7 @@ TODO
 - find report in classpath (with resource loader)
 - implement scenario as subroutine call
 - implement Foreach keyword
+- remove JBehaviour prefix on standard Steps
 
 
 
