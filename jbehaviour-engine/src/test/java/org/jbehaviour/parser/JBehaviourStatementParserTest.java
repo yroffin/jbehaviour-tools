@@ -27,7 +27,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class JBehaviourParserTest {
+public class JBehaviourStatementParserTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {

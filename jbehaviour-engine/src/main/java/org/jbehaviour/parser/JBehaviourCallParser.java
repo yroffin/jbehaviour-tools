@@ -20,19 +20,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.antlr.runtime.RecognitionException;
-import org.jbehaviour.antlr.AnotherStoryGrammerParser;
+import org.jbehaviour.antlr.AnotherMethodGrammerParser;
 import org.jbehaviour.exception.JBehaviourParsingError;
-import org.jbehaviour.parser.model.IKeywordStatement;
-import org.jbehaviour.parser.model.impl.KeywordAny;
+import org.jbehaviour.parser.model.IKeywordCall;
+import org.jbehaviour.parser.model.IKeywordCallElement;
+import org.jbehaviour.parser.model.impl.KeywordCall;
 
-public class JBehaviourStatementParser extends AnotherStoryGrammerParser {
-	Logger logger = LoggerFactory.getLogger(JBehaviourStatementParser.class);
+public class JBehaviourCallParser extends AnotherMethodGrammerParser {
+	Logger logger = LoggerFactory.getLogger(JBehaviourCallParser.class);
 
-	JBehahiourStoryLexer lexer;
+	JBehahiourCallLexer lexer;
 	
-	public JBehaviourStatementParser(String data) throws JBehaviourParsingError {
-		super(JBehahiourStoryLexer.getTokensFromString(data));
-		lexer = (JBehahiourStoryLexer) input.getTokenSource();
+	public JBehaviourCallParser(String data) throws JBehaviourParsingError {
+		super(JBehahiourCallLexer.getTokensFromString(data));
+		lexer = (JBehahiourCallLexer) input.getTokenSource();
 	}
 
 	int error = 0;
@@ -68,68 +69,53 @@ public class JBehaviourStatementParser extends AnotherStoryGrammerParser {
 		}
 	}
 
-	private IKeywordStatement current = new KeywordAny();
-
 	@Override
 	public void onDebug(String where, String value) {
 		if(logger.isDebugEnabled()) logger.debug(where + " [" + value + "]");
 	}
 
+	private IKeywordCall current = null;
+	private IKeywordCallElement call;
+
 	@Override
-	public void onAnyNumeric(String value) {
-		super.onAnyNumeric(value);
-		if(current != null) {
-			if(logger.isDebugEnabled()) logger.debug("on "+current.getType()+" any integer: " + value);
-			current.someInteger(value);
+	public void onAnyReference(String reference) {
+		super.onAnyReference(reference);
+		current = new KeywordCall(reference);
+	}
+
+	@Override
+	public void onAnyIdentifier(String identifier) {
+		super.onAnyIdentifier(identifier);
+		call = current.someIdentifier(identifier);
+	}
+
+	@Override
+	public void onIsMethod(String isMethod) {
+		super.onIsMethod(isMethod);
+		call.setMethod("(".compareTo(isMethod)==0);
+	}
+
+	@Override
+	public void onAnyString(String string) {
+		super.onAnyString(string);
+		current.someString(string.substring(1,string.length()-1));
+	}
+
+	@Override
+	public void onAnyNumber(String number) {
+		super.onAnyNumber(number);
+		if(number.contains(".")) {
+			current.someNumber(new Double(number));
 		} else {
-			logger.error("Internal error");
+			current.someNumber(new Integer(number));
 		}
 	}
 
-	@Override
-	public void onAnyString(String value) {
-		super.onAnyString(value);
-		if(logger.isDebugEnabled()) logger.debug("on scenario/any string: " + value);
-		current.someString(value);
-	}
-
-	@Override
-	public void onAnyIdentifier(String value) {
-		super.onAnyIdentifier(value);
-		logger.debug("on scenario/any identifier: " + value);
-		current.someIdentifier(value);
-	}
-
-	@Override
-	public void onAnyReference(String value) {
-		super.onAnyReference(value);
-		logger.debug("on scenario/any reference: " + value);
-		current.someReference(value);
-	}
-
-	@Override
-	public void onAnyTemplate(String value) {
-		super.onAnyTemplate(value);
-		logger.debug("on scenario/any template: " + value);
-		current.someTemplate(value);
-	}
-
-	@Override
-	public void onAnyJsonObject(String value) {
-		super.onAnyJsonObject(value);
-		if(current != null) {
-			if(logger.isDebugEnabled()) logger.debug("on "+current.getType()+" any json: " + value);
-			current.someJson(value);
-		} else {
-			logger.error("Internal error");
-		}
-	}
-
-	public IKeywordStatement parse() throws JBehaviourParsingError {
+	public IKeywordCall parse() throws JBehaviourParsingError {
 		try {
 			error = 0;
 			lexer.setError(0);
-			anyDecl();
+			template();
 			if(lexer.getError()>0) throw new JBehaviourParsingError("This story has lexer errors");
 			if(error>0) throw new JBehaviourParsingError("This statement has errors");
 			return current;

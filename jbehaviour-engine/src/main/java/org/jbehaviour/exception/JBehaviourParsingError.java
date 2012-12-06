@@ -17,6 +17,7 @@
 package org.jbehaviour.exception;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 import org.antlr.runtime.RecognitionException;
 
@@ -27,8 +28,8 @@ public class JBehaviourParsingError extends Exception {
 	 */
 	private static final long serialVersionUID = 4322248954939295684L;
 
-	public JBehaviourParsingError(String message) {
-		super(message);
+	public JBehaviourParsingError(IllegalArgumentException e) {
+		super(e);
 	}
 
 	public JBehaviourParsingError(RecognitionException e) {
@@ -48,6 +49,26 @@ public class JBehaviourParsingError extends Exception {
 	}
 
 	public JBehaviourParsingError(IllegalAccessException e) {
+		super(e);
+	}
+
+	public JBehaviourParsingError(InvocationTargetException e) {
+		super(e);
+	}
+
+	public JBehaviourParsingError(NoSuchMethodException e) {
+		super(e);
+	}
+
+	public JBehaviourParsingError(String string) {
+		super(string);
+	}
+
+	public JBehaviourParsingError(SecurityException e) {
+		super(e);
+	}
+
+	public JBehaviourParsingError(NoSuchFieldException e) {
 		super(e);
 	}
 

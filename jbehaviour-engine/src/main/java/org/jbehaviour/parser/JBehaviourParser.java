@@ -29,10 +29,10 @@ import org.jbehaviour.parser.model.impl.KeywordScenario;
 public class JBehaviourParser extends AnotherStoryGrammerParser {
 	Logger logger = LoggerFactory.getLogger(JBehaviourParser.class);
 
-	JBehahiourLexer lexer;
+	JBehahiourStoryLexer lexer;
 	public JBehaviourParser(String filename) throws JBehaviourParsingError {
-		super(JBehahiourLexer.getTokens(filename));
-		lexer = (JBehahiourLexer) input.getTokenSource();
+		super(JBehahiourStoryLexer.getTokens(filename));
+		lexer = (JBehahiourStoryLexer) input.getTokenSource();
 	}
 
 	int error = 0;

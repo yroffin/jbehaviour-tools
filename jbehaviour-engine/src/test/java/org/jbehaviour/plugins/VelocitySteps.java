@@ -27,8 +27,18 @@ public class VelocitySteps {
 	 * basic steps
 	 * @return 
 	 */
-	@Given("some template string as $template")
+	@Given("some template reference as $template")
 	public Object validateVelocity(Object obj) {
+		logger.debug("validateVelocity:" + obj);
+		return obj;
+	}
+
+	/**
+	 * basic steps
+	 * @return 
+	 */
+	@Given("some template string as $template")
+	public Object validateVelocity(String obj) {
 		logger.debug("validateVelocity:" + obj);
 		return obj;
 	}

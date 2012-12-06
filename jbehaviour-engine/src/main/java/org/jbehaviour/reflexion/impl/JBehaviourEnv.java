@@ -17,11 +17,11 @@
 package org.jbehaviour.reflexion.impl;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,12 +30,11 @@ import java.util.Map.Entry;
 
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
-import org.apache.velocity.runtime.RuntimeSingleton;
-import org.apache.velocity.runtime.parser.ParseException;
-import org.apache.velocity.runtime.parser.node.SimpleNode;
 import org.jbehaviour.annotation.EnvReference;
 import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
+import org.jbehaviour.parser.JBehaviourCallParser;
+import org.jbehaviour.parser.model.IKeywordCall;
 import org.jbehaviour.reflexion.IBehaviourEnv;
 import org.jbehaviour.xref.IBehaviourXRef;
 import org.slf4j.Logger;
@@ -148,10 +147,39 @@ public class JBehaviourEnv implements IBehaviourEnv {
 	}
 
 	@Override
-	public String render(String value) throws IOException {
+	public String asString(String value) throws JBehaviourParsingError {
 		writer = new StringWriter();
 		Velocity.evaluate( context, writer, "", value);
 		return writer.toString();
+	}
+
+	@Override
+	public Object asObject(String value) throws JBehaviourParsingError {
+		IKeywordCall call = (new JBehaviourCallParser(value)).parse();
+		try {
+			if(getObject(call.getIdentifier()) == null) {
+				throw new JBehaviourParsingError("Reference is null");
+			}
+			return call.evaluate(getObject(call.getIdentifier()),0);
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+			throw new JBehaviourParsingError(e);
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			throw new JBehaviourParsingError(e);
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+			throw new JBehaviourParsingError(e);
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+			throw new JBehaviourParsingError(e);
+		} catch (SecurityException e) {
+			e.printStackTrace();
+			throw new JBehaviourParsingError(e);
+		} catch (NoSuchFieldException e) {
+			e.printStackTrace();
+			throw new JBehaviourParsingError(e);
+		}
 	}
 
 	@Override

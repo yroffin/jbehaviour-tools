@@ -21,13 +21,13 @@ import java.io.IOException;
 import org.antlr.runtime.ANTLRFileStream;
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
-import org.jbehaviour.antlr.AnotherStoryGrammerLexer;
+import org.jbehaviour.antlr.AnotherMethodGrammerLexer;
 import org.jbehaviour.exception.JBehaviourParsingError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JBehahiourLexer extends AnotherStoryGrammerLexer {
-	Logger logger = LoggerFactory.getLogger(JBehahiourLexer.class);
+public class JBehahiourCallLexer extends AnotherMethodGrammerLexer {
+	Logger logger = LoggerFactory.getLogger(JBehahiourCallLexer.class);
 
 	int error = 0;
 	public int getError() {
@@ -66,18 +66,18 @@ public class JBehahiourLexer extends AnotherStoryGrammerLexer {
 		}
 	}
 
-	public JBehahiourLexer(ANTLRFileStream antlrFileStream) {
+	public JBehahiourCallLexer(ANTLRFileStream antlrFileStream) {
 		super(antlrFileStream);
 	}
 
-	public JBehahiourLexer(ANTLRStringStream antlrStringStream) {
+	public JBehahiourCallLexer(ANTLRStringStream antlrStringStream) {
 		super(antlrStringStream);
 	}
 
 	protected static CommonTokenStream getTokens(String filename) throws JBehaviourParsingError {
-		JBehahiourLexer lexer;
+		JBehahiourCallLexer lexer;
 		try {
-			lexer = new JBehahiourLexer(
+			lexer = new JBehahiourCallLexer(
 					new ANTLRFileStream(filename,"UTF8"));
 		} catch (IOException e) {
 			throw new JBehaviourParsingError(e);
@@ -86,7 +86,7 @@ public class JBehahiourLexer extends AnotherStoryGrammerLexer {
 	}
 	
 	protected static CommonTokenStream getTokensFromString(String data) throws JBehaviourParsingError {
-		JBehahiourLexer lexer = new JBehahiourLexer(new ANTLRStringStream(data));
+		JBehahiourCallLexer lexer = new JBehahiourCallLexer(new ANTLRStringStream(data));
 		return new CommonTokenStream(lexer);
 	}
 

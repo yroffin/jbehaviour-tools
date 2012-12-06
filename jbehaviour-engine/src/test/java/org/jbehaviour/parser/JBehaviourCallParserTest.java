@@ -14,18 +14,20 @@
  *   limitations under the License.
  */
 
-package org.jbehaviour.reflexion;
+package org.jbehaviour.parser;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+
 import org.jbehaviour.exception.JBehaviourParsingError;
-import org.jbehaviour.exception.JBehaviourRuntimeError;
+import org.jbehaviour.parser.model.IKeywordCall;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class BehaviourForeachTest {
+public class JBehaviourCallParserTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -40,7 +42,18 @@ public class BehaviourForeachTest {
 	}
 
 	@Test
-	public void testForeachSteps() throws JBehaviourParsingError, JBehaviourRuntimeError  {
-		//assertEquals(true,JBehaviourLauncher.registerAndExecute("src/test/resources/files/foreach.story"));
+	public void testCallParser001() throws IOException, JBehaviourParsingError {
+		IKeywordCall call = (new JBehaviourCallParser("$object.get().another( 6 ).is( \"toto\" ).not( ).get( 1.2 , \"b\")")).parse();
+		System.err.println(call);
+		assertEquals("object",call.getIdentifier());
+		assertEquals(call.getElement(0).getValue(),"get");
+		assertEquals(call.getElement(1).getValue(),"another");
+		assertEquals(call.getElement(1).toArray()[0],6);
+		assertEquals(call.getElement(2).getValue(),"is");
+		assertEquals(call.getElement(2).toArray()[0],"toto");
+		assertEquals(call.getElement(3).getValue(),"not");
+		assertEquals(call.getElement(4).getValue(),"get");
+		assertEquals(call.getElement(4).toArray()[0],1.2);
+		assertEquals(call.getElement(4).toArray()[1],"b");
 	}
 }

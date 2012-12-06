@@ -16,7 +16,6 @@
 
 package org.jbehaviour.reflexion;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.jbehaviour.exception.JBehaviourParsingError;
@@ -48,8 +47,6 @@ public interface IBehaviourEnv {
 
 	public void store(String id, String value);
 
-	public String render(String value) throws IOException;
-
 	public Object getInstance(String key) throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException, JBehaviourParsingError;
 
@@ -66,4 +63,7 @@ public interface IBehaviourEnv {
 	 * @return
 	 */
 	public List<JBehaviourEnvProperty> getProperties();
+
+	public Object asString(String value) throws JBehaviourParsingError;
+	public Object asObject(String value) throws JBehaviourParsingError;
 }

@@ -266,7 +266,12 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 		 */
 		Object[] args = new Object[parametersByName.size()];
 		int index = 0;
+		/**
+		 * iterate on parameterNames
+		 */
+		if(logger.isDebugEnabled()) logger.debug("parameterNames: " + parameterNames.length);
 		for (String name : parameterNames) {
+			if(logger.isDebugEnabled()) logger.debug("name: " + name);
 			int position = parametersByName.get(name);
 
 			switch (parsedStatement.get(position).getType()) {
@@ -316,13 +321,18 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 			case Template:
 				/**
 				 * this template must be parsed
+				 * - as velocity template if target type is String
+				 * - as Object retrieve if target is not String
 				 */
 				logger.info("Templating for " + name + " with "
-						+ parsedStatement.get(position).getValue());
+						+ parsedStatement.get(position).getValue() + " as " + methodToInvoke.getParameterTypes()[index]);
 				try {
-					args[index] = env.render(parsedStatement.get(position)
-							.getValue());
-				} catch (IOException e) {
+					if (methodToInvoke.getParameterTypes()[index] == String.class) {
+						args[index] = env.asString(parsedStatement.get(position).getValue());
+					} else {
+						args[index] = env.asObject(parsedStatement.get(position).getValue());
+					}
+				} catch (JBehaviourParsingError e) {
 					throw new JBehaviourRuntimeError(e);
 				}
 				if (args[index] == null) {
