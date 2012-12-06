@@ -23,6 +23,7 @@ import java.util.List;
 import org.jbehaviour.annotation.EnvReference;
 import org.jbehaviour.annotation.Given;
 import org.jbehaviour.annotation.Then;
+import org.jbehaviour.exception.JBehaviourRuntimeError;
 import org.jbehaviour.reflexion.IBehaviourEnv;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +42,11 @@ public class SystemSteps {
 
 	@Given("print object $value")
 	public Object print(Object value) {
-		System.out.println("\n" + "[" + value.toString() +"]");
+		if(value != null) {
+			System.out.println("\n" + "[" + value.toString() +"]");
+		} else {
+			System.out.println("\n" + "[" + value +"]");
+		}
 		return value;
 	}
 
@@ -75,9 +80,14 @@ public class SystemSteps {
     }
 
 	@Given("foreach $list as $item call $scenario")
-	public void foreach(List<?> list, String reference, String scenario) {
+	public void foreach(List<?> list, String reference, String scenario) throws JBehaviourRuntimeError {
 		for(Object obj : list) {
-			System.out.println("Foreach [" + obj + "]");
+			System.out.println("Foreach [" + obj + "] => $" + reference);
+			/**
+			 * use launcher to execute our scenario
+			 */
+			env.store(reference, obj);
+			env.getLauncher().executeByStatement(scenario);
 		}
 	}
 
