@@ -67,9 +67,9 @@ public class MockFtpServer {
 	 */
 	private FileSystem getFakeFileSystem() {
 		if(System.getProperty("file.separator").compareTo("/")==0) {
-			return new WindowsFakeFileSystem();
-		} else {
 			return new UnixFakeFileSystem();
+		} else {
+			return new WindowsFakeFileSystem();
 		}
 	}
 
