@@ -53,8 +53,8 @@ public class JBehaviourRemoteTest {
 
 	@After
 	public void tearDown() throws InterruptedException{
-		ftpMock.stop();
-		sshMock.stop();
+		if(ftpMock != null) ftpMock.stop();
+		if(sshMock != null) sshMock.stop();
 	}
 
 	@Test
