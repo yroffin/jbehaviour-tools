@@ -13,6 +13,7 @@
 		<module>jbehaviour-wiki</module>
 		<module>jbehaviour-sikuli</module>
 		<module>jbehaviour-remote</module>
+		<module>jbehaviour-soapui</module>
 	</modules>
 	<build>
 		<plugins>
