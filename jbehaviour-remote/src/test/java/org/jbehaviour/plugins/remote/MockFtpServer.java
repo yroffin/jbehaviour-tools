@@ -25,6 +25,7 @@ import org.mockftpserver.fake.UserAccount;
 import org.mockftpserver.fake.filesystem.DirectoryEntry;
 import org.mockftpserver.fake.filesystem.FileEntry;
 import org.mockftpserver.fake.filesystem.FileSystem;
+import org.mockftpserver.fake.filesystem.UnixFakeFileSystem;
 import org.mockftpserver.fake.filesystem.WindowsFakeFileSystem;
 
 /**
@@ -60,6 +61,17 @@ public class MockFtpServer {
         return sb.toString();
     }
 
+	/**
+	 * return fake
+	 * @return
+	 */
+	private FileSystem getFakeFileSystem() {
+		if(System.getProperty("file.separator").compareTo("/")==0) {
+			return new WindowsFakeFileSystem();
+		} else {
+			return new UnixFakeFileSystem();
+		}
+	}
 
 	/**
 	 * Add the given directory and all it's files recursively
@@ -67,7 +79,7 @@ public class MockFtpServer {
 	 * @param dir
 	 */
 	public void addDir(File dir){
-		FileSystem fileSystem = new WindowsFakeFileSystem();
+		FileSystem fileSystem = getFakeFileSystem();
 		fileSystem.add(new DirectoryEntry(dir.getAbsolutePath()));
 		for(File file : dir.listFiles()){
 			try {
