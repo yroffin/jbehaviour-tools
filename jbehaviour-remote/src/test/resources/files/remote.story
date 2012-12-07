@@ -4,7 +4,7 @@ Feature: Launch some tests with remote
   I want to verify this behaviour
   Register system with 'org.jbehaviour.plugins.system.SystemSteps' plugin
   Register sikuli with 'org.jbehaviour.plugins.remote.JBehaviourRemoteSteps' plugin
-  Report 'org.jbehaviour.report.impl.JBehaviourVelocityReport' 'src/test/resources/template/junit.vm' 'target/TEST-remote.xml'
+  Report 'org.jbehaviour.report.impl.JBehaviourVelocityReport' 'src/test/resources/template/junit.vm' 'target/surefire-reports/TEST-remote.xml'
   Declare sftpRessource as String 'sftp://none:none@localhost:2222'
   Declare sshRessource as String 'ssh://none:none@localhost:2222'
 
