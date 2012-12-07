@@ -99,6 +99,7 @@ public abstract class SslFileSystemResource extends FileSystemResourceImpl {
 		 */
 		ssh.connect(
 				getHost(),
+				getPort(),
 				new LocalKnownHostsKeyVerification(File.createTempFile("xxx",
 						"xxx")));
 		if (!ssh.isConnected()) {

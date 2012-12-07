@@ -40,9 +40,9 @@ public class MockSftpServer {
 
 	SshServer sshd = null;
 
-	public MockSftpServer() {
+	public MockSftpServer(int i) {
 		sshd = SshServer.setUpDefaultServer();
-		sshd.setPort(22);
+		sshd.setPort(i);
 
         if (SecurityUtils.isBouncyCastleRegistered()) {
             sshd.setKeyPairProvider(new PEMGeneratorHostKeyProvider("key.pem"));

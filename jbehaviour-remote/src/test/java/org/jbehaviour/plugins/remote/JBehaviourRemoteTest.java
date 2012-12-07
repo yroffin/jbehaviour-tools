@@ -36,14 +36,14 @@ public class JBehaviourRemoteTest {
 		/**
 		 * FTP mock
 		 */
-		ftpMock = new MockFtpServer(21,"TestUsername", "TestPassword", new File("src/test/resources"));
+		ftpMock = new MockFtpServer(2121,"TestUsername", "TestPassword", new File("src/test/resources"));
 		ftpMock.addDir(new File(new File("src/test/resources/root").getAbsolutePath()));
 		ftpMock.start();
 
 		/**
 		 * SSH/SFTP/SCP Mock
 		 */
-		sshMock = new MockSftpServer();
+		sshMock = new MockSftpServer(2222);
 		try {
 			sshMock.start();
 	    } catch (Exception e) {

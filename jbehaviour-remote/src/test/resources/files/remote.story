@@ -5,8 +5,8 @@ Feature: Launch some tests with remote
   Register system with 'org.jbehaviour.plugins.system.SystemSteps' plugin
   Register sikuli with 'org.jbehaviour.plugins.remote.JBehaviourRemoteSteps' plugin
   Report 'org.jbehaviour.report.impl.JBehaviourVelocityReport' 'src/test/resources/template/junit.vm' 'target/TEST-remote.xml'
-  Declare sftpRessource as String 'sftp://none:none@localhost'
-  Declare sshRessource as String 'ssh://none:none@localhost'
+  Declare sftpRessource as String 'sftp://none:none@localhost:2222'
+  Declare sshRessource as String 'ssh://none:none@localhost:2222'
 
 Scenario: Verify we can make some test with remote
 	Given with remote create sftp resource $sftpRessource identified by sftp@gandalf
