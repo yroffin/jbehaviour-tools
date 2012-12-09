@@ -16,19 +16,40 @@
 
 package org.jbehaviour.async;
 
-import java.util.ArrayList;
-import java.util.List;
+import static org.junit.Assert.assertEquals;
 
-import org.jbehaviour.plugins.system.SystemAsyncThread;
+import org.jbehaviour.exception.JBehaviourParsingError;
+import org.jbehaviour.exception.JBehaviourRuntimeError;
+import org.jbehaviour.impl.JBehaviourLauncher;
+import org.jbehaviour.plugins.system.ISystemAsyncTread;
+import org.jbehaviour.plugins.system.SystemSteps;
+import org.jbehaviour.reflexion.impl.JBehaviourEnv;
+import org.jbehaviour.reflexion.impl.JBehaviourReflexion;
+import org.jbehaviour.xref.impl.JBehaviourXRef;
 import org.junit.Test;
 
 public class SystemAsyncThreadTest {
 	@Test
-	public void testSystemAsyncThread() {
-		List<String> args = new ArrayList<String>();
-		args.add("c:\\windows\\cmd.exe");
-		args.add("/C");
-		args.add("date");
-		(new SystemAsyncThread(args)).start();
+	public void testSystemAsyncThread() throws InterruptedException, JBehaviourParsingError, JBehaviourRuntimeError {
+		SystemSteps step = new SystemSteps();
+		step.env = new JBehaviourEnv(null,new JBehaviourReflexion(),new JBehaviourXRef());
+		
+		if(System.getProperty("file.separator").compareTo("\\")==0) {
+			step.startCommandWithArgsAsReference("cmd.exe", "/C echo SystemAsyncThreadTest", "test001");
+		} else {
+			step.startCommandWithArgsAsReference("echo", "SystemAsyncThreadTest", "test001");
+		}
+
+		ISystemAsyncTread result = step.waitForAsyncCommandReference((ISystemAsyncTread) step.env.getObject("test001"));
+		assertEquals("SystemAsyncThreadTest",result.getStdoutAsList().get(0));
+	}
+
+	@Test
+	public void testSystemAsyncThreadWithStory() throws InterruptedException, JBehaviourParsingError, JBehaviourRuntimeError {
+		if(System.getProperty("file.separator").compareTo("\\")==0) {
+			assertEquals(true,(new JBehaviourLauncher()).registerAndExecute("src/test/resources/system/windows.story"));
+		} else {
+			assertEquals(true,(new JBehaviourLauncher()).registerAndExecute("src/test/resources/system/unix.story"));
+		}
 	}
 }

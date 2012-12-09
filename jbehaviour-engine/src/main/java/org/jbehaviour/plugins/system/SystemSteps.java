@@ -18,12 +18,14 @@ package org.jbehaviour.plugins.system;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jbehaviour.annotation.EnvReference;
 import org.jbehaviour.annotation.Given;
 import org.jbehaviour.annotation.Then;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
+import org.jbehaviour.plugins.system.impl.SystemAsyncThread;
 import org.jbehaviour.reflexion.IBehaviourEnv;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +35,29 @@ public class SystemSteps {
 
 	@EnvReference
 	public IBehaviourEnv env = null;
+
+	@Given("start $command with $args as $reference")
+	public ISystemAsyncTread startCommandWithArgsAsReference(String command, String args, String reference) {
+		logger.info("Start [" + command + "] with [" + args + "] as [" + reference + "]");
+		List<String> arguments = new ArrayList<String>();
+		arguments.add(command);
+		for(String item : args.split(" ")) {
+			arguments.add(item);
+		}
+		ISystemAsyncTread localThread = new SystemAsyncThread(arguments);
+		env.store(reference, localThread);
+		localThread.start();
+		return localThread;
+	}
+
+	@Given("wait for async command $reference")
+	public ISystemAsyncTread waitForAsyncCommandReference(ISystemAsyncTread localThread) throws InterruptedException, JBehaviourRuntimeError {
+		if(localThread == null) {
+			throw new JBehaviourRuntimeError("Reference is null");
+		}
+		localThread.waitFor();
+		return localThread;
+	}
 
 	@Given("set property $property to $value")
 	public void setProperty(String property, String value) {
@@ -50,14 +75,14 @@ public class SystemSteps {
 		return value;
 	}
 
-	@Given("wait for $value second")
+	@Given("wait for $value seconds")
 	public Integer waitInSecond(Integer value) throws InterruptedException {
 		logger.info("Waiting for [" + value.toString() +"] second");
 		Thread.sleep(value * 1000);
 		return value;
 	}
 
-	@Given("wait for $value millisecond")
+	@Given("wait for $value milliseconds")
 	public Integer waitInMilisecond(Integer value) throws InterruptedException {
 		logger.info("Waiting for [" + value.toString() +"] millisecond");
 		Thread.sleep(value);

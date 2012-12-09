@@ -12,42 +12,140 @@
 
 <p>This step is stored in maven module : jbehaviour-engine (core)</p>
 
-<p>This extention permit to store object in session :</p>
+<p>A standard step object exist, call SystemSteps ... it can be resistered like this in story feature part</p>
 
-<blockquote>
-  <p>Set environement property to a defined value<br /></p>
-  
-  <blockquote>
-    <p>set property $property to $value
-    Example: set property 'PATH' to 'C:\temp'</p>
-  </blockquote>
-  
-  <p>Print object (object is a reference to a defined reference) as string in default output<br /></p>
-  
-  <blockquote>
-    <p>print object $value
-    Example: print object 'ID'</p>
-  </blockquote>
-  
-  <p>Store last action result in reference $reference<br /></p>
-  
-  <blockquote>
-    <p>store last result as $reference
-    Example: result as 'myReference'</p>
-  </blockquote>
-  
-  <p>Store last action result in file $filename<br /></p>
-  
-  <blockquote>
-    <p>store last result in file $filename
-    Example: in file 'C:\output\file.txt'</p>
-  </blockquote>
-</blockquote>
+<pre><code>...
+Register sample with 'org.jbehaviour.plugins.system.SystemSteps' plugin
+...
+</code></pre>
 
-<p>Extention declaration :</p>
+<h2>2. Asynchronous command call</h2>
 
-<blockquote>
-  <p>  ...<br />
-  Register sample with 'org.jbehaviour.plugins.system.SystemSteps' plugin<br />
-    ...<br /></p>
-</blockquote>
+<p>An asynchronous command can be start (system dependent, so take care with unix ou windows prerequisite)</p>
+
+<p>This command is started by a first "Given" command, and the second "Given" wait for completion.</p>
+
+<p>Framework vision ...</p>
+
+<pre><code>...
+public class org.jbehaviour.plugins.system.SystemSteps {
+...
+@Given("start $command with $args as $reference") {
+    ...
+}
+@Given("wait for async command $reference") {
+    ...
+}
+...
+</code></pre>
+
+<p>And in story it could be used as ...</p>
+
+<pre><code>...
+Given start 'cmd.exe' with '/C echo storyTest' as windowsCmdTest
+Given wait for async command $windowsCmdTest
+...
+</code></pre>
+
+<p>Waiting for completion can be call whenever you want in your story, this behaviour is needed for example
+when you want to start daemon tools (ex: soapui webservice server mocking) and then waiting for it's completion.</p>
+
+<h2>3. Setting environnement</h2>
+
+<p>This extention permit to modify environnement variable.</p>
+
+<p>Framework vision ...</p>
+
+<pre><code>...
+public class org.jbehaviour.plugins.system.SystemSteps {
+...
+@Given("set property $property to $value")
+    ...
+}
+...
+</code></pre>
+
+<p>And in story it could be used as ...</p>
+
+<pre><code>...
+Given set property 'PATH' to 'C:\\temp'
+...
+</code></pre>
+
+<h2>4. Printing/Writing object</h2>
+
+<p>This extention permit to print in local logs object (by calling toString())</p>
+
+<p>Framework vision ...</p>
+
+<pre><code>...
+public class org.jbehaviour.plugins.system.SystemSteps {
+...
+@Given("print object $value")
+    ...
+}
+@Then("store last result in file $filename")
+    ...
+}
+...
+</code></pre>
+
+<p>And in story it could be used as ...</p>
+
+<pre><code>...
+Given print object 'ID'
+Then store last result in file 'C:\\temp\last_result.txt'
+...
+</code></pre>
+
+<h2>5. Waiting for second and millisecond</h2>
+
+<p>This extention permit to waiting.</p>
+
+<p>Framework vision ...</p>
+
+<pre><code>...
+public class org.jbehaviour.plugins.system.SystemSteps {
+...
+@Given("wait for $value second")
+    ...
+}
+@Given("wait for $value millisecond")
+    ...
+}
+...
+</code></pre>
+
+<p>And in story it could be used as ...</p>
+
+<pre><code>...
+Given wait for 2 seconds
+Given wait for 2 milliseconds
+...
+</code></pre>
+
+<h2>6. Storing object in session</h2>
+
+<p>This extention permit to store and lod object/string from session (all the story session).
+Main order is 'store last result as $reference', then you can re-use this reference in story.</p>
+
+<p>Framework vision ...</p>
+
+<pre><code>...
+public class org.jbehaviour.plugins.system.SystemSteps {
+...
+ @Given("store last result as $reference")
+    ...
+}
+...
+</code></pre>
+
+<p>And in story it could be used as ...</p>
+
+<pre><code>...
+Given store last result as 'myReference'
+Given make something with $myReference
+...
+</code></pre>
+
+<p>Notice that $myReference will be passed as a plain object during method call ...</p>
