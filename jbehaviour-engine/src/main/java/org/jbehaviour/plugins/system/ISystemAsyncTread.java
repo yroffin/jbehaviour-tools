@@ -19,9 +19,10 @@ public interface ISystemAsyncTread {
 	public void start();
 	/**
 	 * wait for completion
+	 * @return 
 	 * @throws InterruptedException
 	 */
-	public void waitFor() throws InterruptedException;
+	public int waitFor() throws InterruptedException;
 	List<String> getStdoutAsList();
 	List<String> getStderrAsList();
 	/**

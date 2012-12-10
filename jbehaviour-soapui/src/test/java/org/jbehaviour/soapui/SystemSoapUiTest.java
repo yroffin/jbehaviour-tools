@@ -18,16 +18,34 @@ package org.jbehaviour.soapui;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
 import org.jbehaviour.impl.JBehaviourLauncher;
+import org.jbehaviour.plugins.system.ISystemAsyncTread;
+import org.jbehaviour.plugins.system.impl.SystemAsyncThread;
 import org.junit.Test;
 
 public class SystemSoapUiTest {
 	@Test
 	public void testSystemAsyncThreadWithStory() throws InterruptedException, JBehaviourParsingError, JBehaviourRuntimeError {
 		if(System.getProperty("file.separator").compareTo("\\")==0) {
-			assertEquals(true,(new JBehaviourLauncher()).registerAndExecute("src/test/resources/soapui/windows.story"));
+			/**
+			 * check if mockservicerunner.bat is in the path
+			 */
+			List<String> arguments = new ArrayList<String>();
+			arguments.add("mockservicerunner.bat");
+			ISystemAsyncTread localThread = new SystemAsyncThread(arguments);
+			localThread.start();
+			int result = localThread.waitFor();
+			/**
+			 * make the test only if soapui is setup on system
+			 */
+			if(result == 0) {
+				assertEquals(true,(new JBehaviourLauncher()).registerAndExecute("src/test/resources/soapui/windows.story"));
+			}
 		}
 	}
 }

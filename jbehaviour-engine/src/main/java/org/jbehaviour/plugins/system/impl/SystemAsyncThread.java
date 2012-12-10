@@ -19,7 +19,6 @@ package org.jbehaviour.plugins.system.impl;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +45,16 @@ public class SystemAsyncThread extends Thread implements ISystemAsyncTread {
 
 	public SystemAsyncThread(List<String> args) {
 		pb = new ProcessBuilder(args);
+	}
+
+	@Override
+	public synchronized void start() {
+		try {
+			super.start();
+		} catch(Exception e) {
+			e.printStackTrace();
+			result = -4;
+		}
 	}
 
 	@Override
@@ -148,8 +157,9 @@ public class SystemAsyncThread extends Thread implements ISystemAsyncTread {
 	}
 
 	@Override
-	public void waitFor() throws InterruptedException {
+	public int waitFor() throws InterruptedException {
 		this.join();
+		return this.getResult();
 	}
 
 	public int getiStdout() {
