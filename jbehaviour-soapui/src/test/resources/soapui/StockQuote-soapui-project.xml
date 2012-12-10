@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="StockQuote" resourceRoot="" soapui-version="4.5.1" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.actions.iface.tools.soapui.TestRunnerAction@values-local"><![CDATA[<xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  <con:entry key="Environment" value="Default"/>
+  <con:entry key="Global Properties" value=""/>
+  <con:entry key="TestSuite" value="StockQuoteSoapBinding TestSuite"/>
+  <con:entry key="Report to Generate" value=""/>
+  <con:entry key="Password" value=""/>
+  <con:entry key="soapui-setings.xml Password" value=""/>
+  <con:entry key="TestRunner Path" value=""/>
+  <con:entry key="Tool Args" value=""/>
+  <con:entry key="Ignore Errors" value="false"/>
+  <con:entry key="Host:Port" value=""/>
+  <con:entry key="WSS Password Type" value=""/>
+  <con:entry key="Save Project" value="false"/>
+  <con:entry key="Enable UI" value="false"/>
+  <con:entry key="System Properties" value=""/>
+  <con:entry key="Domain" value=""/>
+  <con:entry key="Coverage Report" value="false"/>
+  <con:entry key="Export JUnit Results" value="false"/>
+  <con:entry key="Open Report" value="false"/>
+  <con:entry key="Project Properties" value=""/>
+  <con:entry key="Project Password" value=""/>
+  <con:entry key="Export All" value="false"/>
+  <con:entry key="Report Format(s)" value=""/>
+  <con:entry key="TestCase" value="&lt;all>"/>
+  <con:entry key="Print Report" value="false"/>
+  <con:entry key="Username" value=""/>
+  <con:entry key="Root Folder" value=""/>
+  <con:entry key="Save After" value="false"/>
+  <con:entry key="Add Settings" value="false"/>
+  <con:entry key="Endpoint" value=""/>
+</xml-fragment>]]></con:setting></con:settings><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="StockQuoteSoapBinding" type="wsdl" bindingName="{http://example.com/stockquote.wsdl}StockQuoteSoapBinding" soapVersion="1_1" anonymous="optional" definition="file:/U:/Users/Yannick/Documents/StockQuote.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/U:/Users/Yannick/Documents/StockQuote.wsdl"><con:part><con:url>file:/U:/Users/Yannick/Documents/StockQuote.wsdl</con:url><con:content><![CDATA[<definitions name="StockQuote" targetNamespace="http://example.com/stockquote.wsdl" xmlns:tns="http://example.com/stockquote.wsdl" xmlns:xsd1="http://example.com/stockquote.xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <schema targetNamespace="http://example.com/stockquote.xsd" xmlns="http://www.w3.org/2000/10/XMLSchema">
+      <element name="TradePriceRequest">
+        <complexType>
+          <all>
+            <element name="tickerSymbol" type="string"/>
+          </all>
+        </complexType>
+      </element>
+      <element name="TradePrice">
+        <complexType>
+          <all>
+            <element name="price" type="float"/>
+          </all>
+        </complexType>
+      </element>
+    </schema>
+  </types>
+  <message name="GetLastTradePriceInput">
+    <part name="body" element="xsd1:TradePriceRequest"/>
+  </message>
+  <message name="GetLastTradePriceOutput">
+    <part name="body" element="xsd1:TradePrice"/>
+  </message>
+  <portType name="StockQuotePortType">
+    <operation name="GetLastTradePrice">
+      <input message="tns:GetLastTradePriceInput"/>
+      <output message="tns:GetLastTradePriceOutput"/>
+    </operation>
+  </portType>
+  <binding name="StockQuoteSoapBinding" type="tns:StockQuotePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="GetLastTradePrice">
+      <soap:operation soapAction="http://example.com/GetLastTradePrice"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="StockQuoteService">
+    <documentation>My first service</documentation>
+    <port name="StockQuotePort" binding="tns:StockQuoteSoapBinding">
+      <soap:address location="http://example.com/stockquote"/>
+    </port>
+  </service>
+</definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://example.com/stockquote</con:endpoint><con:endpoint>http://localhost:8080/test</con:endpoint></con:endpoints><con:operation isOneWay="false" action="http://example.com/GetLastTradePrice" name="GetLastTradePrice" bindingOperationName="GetLastTradePrice" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation></con:interface><con:testSuite name="StockQuoteSoapBinding TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="GetLastTradePrice TestCase" searchProperties="true" id="9d7e2912-b9e1-4fca-ad81-4bfd2576392c"><con:settings/><con:testStep type="request" name="GetLastTradePrice"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>StockQuoteSoapBinding</con:interface><con:operation>GetLastTradePrice</con:operation><con:request name="GetLastTradePrice"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/test</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:stoc="http://example.com/stockquote.xsd">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <stoc:TradePriceRequest/>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://example.com/GetLastTradePrice" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:mockService port="8088" path="/mockStockQuoteSoapBinding" host="FRODON" name="StockQuoteSoapBinding MockService"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="GetLastTradePrice" interface="StockQuoteSoapBinding" operation="GetLastTradePrice"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="Response 1" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:stoc="http://example.com/stockquote.xsd">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <stoc:TradePrice/>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://example.com/GetLastTradePrice"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:properties/><con:wssContainer/></con:soapui-project>

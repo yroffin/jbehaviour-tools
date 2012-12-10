@@ -1,5 +1,6 @@
 package org.jbehaviour.plugins.system;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface ISystemAsyncTread {
@@ -23,5 +24,12 @@ public interface ISystemAsyncTread {
 	public void waitFor() throws InterruptedException;
 	List<String> getStdoutAsList();
 	List<String> getStderrAsList();
+	/**
+	 * write some string to stdin
+	 * @param string
+	 * @throws IOException 
+	 */
+	public void write(String string) throws IOException;
+	public boolean ready();
 
 }

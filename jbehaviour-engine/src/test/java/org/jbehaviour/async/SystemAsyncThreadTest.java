@@ -18,6 +18,8 @@ package org.jbehaviour.async;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
+
 import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
 import org.jbehaviour.impl.JBehaviourLauncher;
@@ -30,17 +32,19 @@ import org.junit.Test;
 
 public class SystemAsyncThreadTest {
 	@Test
-	public void testSystemAsyncThread() throws InterruptedException, JBehaviourParsingError, JBehaviourRuntimeError {
+	public void testSystemAsyncThread() throws InterruptedException, JBehaviourParsingError, JBehaviourRuntimeError, IOException {
 		SystemSteps step = new SystemSteps();
 		step.env = new JBehaviourEnv(null,new JBehaviourReflexion(),new JBehaviourXRef());
 		
+		ISystemAsyncTread result = null;
 		if(System.getProperty("file.separator").compareTo("\\")==0) {
-			step.startCommandWithArgsAsReference("cmd.exe", "/C echo SystemAsyncThreadTest", "test001");
+			result = step.startCommandWithArgsAsReference("cmd.exe", "/C echo SystemAsyncThreadTest", "test001");
 		} else {
-			step.startCommandWithArgsAsReference("echo", "SystemAsyncThreadTest", "test001");
+			result = step.startCommandWithArgsAsReference("echo", "SystemAsyncThreadTest", "test001");
 		}
 
-		ISystemAsyncTread result = step.waitForAsyncCommandReference((ISystemAsyncTread) step.env.getObject("test001"));
+		result.write("\n");
+		result = step.waitForAsyncCommandReference((ISystemAsyncTread) step.env.getObject("test001"));
 		assertEquals("SystemAsyncThreadTest",result.getStdoutAsList().get(0));
 	}
 

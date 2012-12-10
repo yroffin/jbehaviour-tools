@@ -6,4 +6,11 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>jbehaviour-soapui</artifactId>
+  <dependencies>
+  	<dependency>
+  		<groupId>jbehaviour-tools</groupId>
+  		<artifactId>jbehaviour-engine</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  </dependencies>
 </project>

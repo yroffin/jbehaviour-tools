@@ -16,9 +16,11 @@
 
 package org.jbehaviour.plugins.system.impl;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,11 +32,7 @@ public class SystemAsyncThread extends Thread implements ISystemAsyncTread {
 	private ProcessBuilder pb;
 	private int result = -1;
 
-	public SystemAsyncThread(List<String> args) {
-		pb = new ProcessBuilder(args);
-	}
-
-	OutputStream stdin = null;
+	BufferedWriter stdin = null;
 	InputStream stderr = null;
 	InputStream stdout = null;
 	
@@ -46,15 +44,8 @@ public class SystemAsyncThread extends Thread implements ISystemAsyncTread {
 	List<String> stdoutAsList = new ArrayList<String>();
 	List<String> stderrAsList = new ArrayList<String>();
 
-	
-	@Override
-	public synchronized List<String> getStdoutAsList() {
-		return stdoutAsList;
-	}
-
-	@Override
-	public synchronized List<String> getStderrAsList() {
-		return stderrAsList;
+	public SystemAsyncThread(List<String> args) {
+		pb = new ProcessBuilder(args);
 	}
 
 	@Override
@@ -72,9 +63,9 @@ public class SystemAsyncThread extends Thread implements ISystemAsyncTread {
 			 * get stdin, stdout and stderr
 			 * stream
 			 */
-			stdin  = process.getOutputStream ();
-			stderr = process.getErrorStream ();
-			stdout = process.getInputStream ();
+			stdin  = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
+			stderr = process.getErrorStream();
+			stdout = process.getInputStream();
 
 			int car=0;
 			
@@ -127,6 +118,30 @@ public class SystemAsyncThread extends Thread implements ISystemAsyncTread {
 		}
 	}
 	
+	@Override
+	public synchronized List<String> getStdoutAsList() {
+		return stdoutAsList;
+	}
+
+	@Override
+	public synchronized List<String> getStderrAsList() {
+		return stderrAsList;
+	}
+
+	@Override
+	public synchronized boolean ready() {
+		return stdout != null;
+	}
+
+	@Override
+	public void write(String string) throws IOException {
+		if(stdin == null) {
+			throw new IOException("stdin is null");
+		}
+		stdin.write(string);
+		stdin.flush();
+	}
+
 	@Override
 	public int getResult() {
 		return result;

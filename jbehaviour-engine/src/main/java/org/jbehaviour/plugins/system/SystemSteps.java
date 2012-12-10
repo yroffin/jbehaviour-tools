@@ -37,7 +37,7 @@ public class SystemSteps {
 	public IBehaviourEnv env = null;
 
 	@Given("start $command with $args as $reference")
-	public ISystemAsyncTread startCommandWithArgsAsReference(String command, String args, String reference) {
+	public ISystemAsyncTread startCommandWithArgsAsReference(String command, String args, String reference) throws InterruptedException {
 		logger.info("Start [" + command + "] with [" + args + "] as [" + reference + "]");
 		List<String> arguments = new ArrayList<String>();
 		arguments.add(command);
@@ -47,6 +47,19 @@ public class SystemSteps {
 		ISystemAsyncTread localThread = new SystemAsyncThread(arguments);
 		env.store(reference, localThread);
 		localThread.start();
+		
+		while(!localThread.ready()) {
+			Thread.sleep(100);
+		}
+		return localThread;
+	}
+
+	@Given("send return to async command $reference")
+	public ISystemAsyncTread sendReturnToAsyncCommandReference(ISystemAsyncTread localThread) throws InterruptedException, JBehaviourRuntimeError, IOException {
+		if(localThread == null) {
+			throw new JBehaviourRuntimeError("Reference is null");
+		}
+		localThread.write("\n");
 		return localThread;
 	}
 

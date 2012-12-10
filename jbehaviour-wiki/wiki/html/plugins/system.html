@@ -149,3 +149,39 @@ Given make something with $myReference
 </code></pre>
 
 <p>Notice that $myReference will be passed as a plain object during method call ...</p>
+
+<h2>7. Iterate on object</h2>
+
+<p>This extention permit to iterate on object such as list.</p>
+
+<p>Framework vision ...</p>
+
+<pre><code>...
+public class org.jbehaviour.plugins.system.SystemSteps {
+...
+@Given("foreach $list as $item call $scenario")
+    ...
+}
+...
+</code></pre>
+
+<p>And in story it could be used as ...</p>
+
+<pre><code>Feature: Launch a story sample for testing scenario call
+In order to test this feature
+As an explicit system actor
+I want to verify this behaviour
+Register system with 'org.jbehaviour.plugins.system.SystemSteps' plugin
+Declare ref001 as Json 'org.jbehaviour.plugins.ComplexForeachBean'
+{
+    "listInteger":[0,1,2,3,4],
+    "listString":["A","B","C"]
+}
+
+Scenario: Verify this sample
+    Given print object $ref001
+    Given foreach $ref001.getListInteger() as arg001 call 'Print each item'
+
+Scenario: Print each item
+    Given print object $arg001
+</code></pre>
