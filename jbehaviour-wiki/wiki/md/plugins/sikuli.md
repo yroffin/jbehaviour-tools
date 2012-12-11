@@ -9,21 +9,21 @@ This step is stored in maven module : jbehaviour-sikuli
 2. Sample
 ---------
 
-> Feature: Launch some tests with sikuli<br/>
->  In order to test this feature<br/>
->  As an explicit system actor<br/>
->  I want to verify this behaviour<br/>
->  Register system with 'org.jbehaviour.plugins.system.SystemSteps' plugin<br/>
->  Register sikuli with 'org.jbehaviour.plugins.sikuli.JBehaviourSikuliSteps' plugin<br/>
->  Report 'org.jbehaviour.report.impl.JBehaviourVelocityReport' 'src/test/resources/template/junit.vm' 'target/TEST-report.xml'<br/>
->  Declare filename as String 'target/screen.png'<br/>
->  Declare iconGoogle as String 'file:src/test/resources/files/icon_google.png'<br/>
->  Declare barreGoogle as String 'file:src/test/resources/files/barre_google.png'<br/>
+	Feature: Launch some tests with sikuli
+		In order to test this feature	
+		As an explicit system actor	
+		I want to verify this behaviour	
+		Register system with 'org.jbehaviour.plugins.system.SystemSteps' plugin	
+		Register sikuli with 'org.jbehaviour.plugins.sikuli.JBehaviourSikuliSteps' plugin	
+		Report 'org.jbehaviour.report.impl.JBehaviourVelocityReport' 'src/test/resources/template/junit.vm' 'target/TEST-report.xml'	
+		Declare filename as String 'target/screen.png'	
+		Declare iconGoogle as String 'file:src/test/resources/files/icon_google.png'	
+		Declare barreGoogle as String 'file:src/test/resources/files/barre_google.png'	
 
-> Scenario: Verify we can make some test with sikuli<br/>
->  Given with sikuli doubleclick on $iconGoogle<br/>
->  Given with sikuli type 'www.google.fr' on $barreGoogle<br/>
->  Given with sikuli type return<br/>
->  Given wait for 1 second<br/>
->  Given with sikuli capture desktop to $filename in png format<br/>
+	Scenario: Verify we can make some test with sikuli	
+		Given with sikuli doubleclick on $iconGoogle	
+		Given with sikuli type 'www.google.fr' on $barreGoogle	
+		Given with sikuli type return	
+		Given wait for 1 second	
+		Given with sikuli capture desktop to $filename in png format	
 

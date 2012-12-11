@@ -34,4 +34,5 @@ Extention
 [Remote](plugins/remote.md)<br/>
 [Jdbc](plugins/jdbc.md)<br/>
 [Fluentlenium](plugins/fluentlenium.md)<br/>
+[Soapui](plugins/soapui.md)<br/>
 

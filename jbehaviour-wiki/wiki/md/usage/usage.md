@@ -6,76 +6,100 @@ Usage
 
 A story look like this kind of presentation :
 
-> \#<br />
-> \# some comment ...<br />
-> \#<br />
-> 
-> Feature: [some feature](# "some feature to implement with this story")<br />
-> In order to [test purpose](# "objectives of this story")<br />
-> As an [actor description](# "actor for this story")<br />
-> I want to [story purpose](# "purpose of this story")<br />
-> Register [reference](# "reference of this class during story running") with [classpath](# "class path, class path must be enclose by cote") plugin<br />
-> Declare  [reference](# "reference of this object during story running") as   [String|Json](# "type of this object") [classpath](# "class path, class path must be enclose by cote") [json declaration](# "object declaration or value")<br />
-> Include  [story path](# "path where we can find this story, path must be enclose by cote")<br />
-> 
->	#<br />
->	# some comment ...<br />
->	#<br />
->	Scenario: [scenario purpose](# "some scenario description")<br />
->	Given [some precondition](# "some precondition")<br />
->	And   [some other condition](# "some other precondition to initialize")<br />
->	When  [something hapen](# "declare an event reaction")<br />
->	And   [some other event](# "another declaration")<br />
->	Then  [some action](# "some feature to implement with this story")<br />
->	And   [some other action](# "some feature to implement with this story")<br />
+	...
+	#
+	# some comment ...
+	#
+	...
+	Feature: [some feature]
+		==> some feature to implement with this story
+	In order to [test purpose]
+		==> objectives of this story
+	As an [actor description]
+		==> actor for this story
+	I want to [story purpose]
+		==> purpose of this story
+	Register [reference]
+		==> reference of this class during story running") with [classpath] ==> class path, class path must be enclose by cote plugin
+	Declare  [reference]
+		==> reference of this object during story running") as   [String|Json]
+		==> type of this object") [classpath]
+		==> class path, class path must be enclose by cote [json declaration] ==> object declaration or value
+	Include  [story path]
+		==> path where we can find this story, path must be enclose by cote")
+	...
+	
+	...
+	#
+	# some comment ...
+	#
+	Scenario: [scenario purpose]
+		==> some scenario description
+	Given [some precondition]
+		==> some precondition
+	And   [some other condition]
+		==> some other precondition to initialize
+	When  [something hapen]
+		==> declare an event reaction
+	And   [some other event]
+		==> another declaration
+	Then  [some action]
+		==> some feature to implement with this story
+	And   [some other action]
+		==> some feature to implement with this story
+	...
 
-### Feature ###
+2. Feature
+----------
 
 A feature implement the story declaration, this feature can have a description to identify
 the purpose of this story.
 
-> Feature: Launch a story sample<br />
->   In order to test this feature<br />
->   As an explicit system actor<br />
->   I want to verify this behaviour<br />
->   ...<br />
+	Feature: Launch a story sample
+	In order to test this feature
+	As an explicit system actor
+	I want to verify this behaviour
+	...
 
-### Register ###
+2. Register
+-----------
 
 Each scenario will implement some steps, each step must be recognized by a declared class.
 Class register consist to declare a class path associated to one global unique id, this global id will be use to correct ambiguity if necessary.
 
->   ...<br />
-> Register sample with 'org.jbehaviour.plugins.SampleSteps' plugin<br />
->   ...<br />
+	...
+	Register sample with 'org.jbehaviour.plugins.SampleSteps' plugin
+	...
 
 This declaration declare an internal global id 'sample' for the class [org.jbehaviour.plugins.SampleSteps](https://github.com/yroffin/jbehaviour-tools/blob/v1.1a/jbehaviour-engine/src/test/java/org/jbehaviour/plugins/SampleSteps.java)
 this class must be in classpath.
 
 **Notice that** override is working, so default extention can be overriden (SystemSteps etc ...).
 
-### Declare ###
+3. Declare
+----------
 
 Each scenario will implement some steps, each step can use local object (String, Class ...) ...
 
 For a json declaration :
 
->   ...<br />
-> Declare ref001 as Json 'org.jbehaviour.plugins.ComplexJsonBean'<br />
-> {<br />
->   "field1":"value1",<br />
->   "field2":"value2",<br />
->   "field3":1000<br />
-> }<br />
->   ...<br />
+	...
+	Declare ref001 as Json 'org.jbehaviour.plugins.ComplexJsonBean'
+	{
+	"field1":"value1",
+	"field2":"value2",
+	"field3":1000
+	}
+	...
 
 And for a String declaration :
 
->   ...<br />
-> Declare ref002 as String "some string 002"<br />
->   ...<br />
+	...
+	Declare ref002 as String "some string 002"
+	...
 
-### Include ###
+3. Include
+----------
 
 A story can include an external story for :
 
@@ -85,7 +109,7 @@ A story can include an external story for :
 
 A sample code could be :
 
->   ...<br />
-> Include 'src/test/resources/files/sample.story'<br />
->   ...<br />
+	...
+	Include 'src/test/resources/files/sample.story'
+	...
 
