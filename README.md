@@ -23,7 +23,7 @@ and avoid to consider so much technical method for using testing tools :
 
 WIKI
 ====
-[wiki](jbehaviour-wiki/wiki/md/index.md)
+Cf: [wiki](jbehaviour-wiki/wiki/md/index.md)
 
 TODO
 ====
