@@ -43,7 +43,6 @@ public class SystemAsyncThreadTest {
 			result = step.startCommandWithArgsAsReference("echo", "SystemAsyncThreadTest", "test001");
 		}
 
-		result.write("\n");
 		result = step.waitForAsyncCommandReference((ISystemAsyncTread) step.env.getObject("test001"));
 		assertEquals("SystemAsyncThreadTest",result.getStdoutAsList().get(0));
 	}

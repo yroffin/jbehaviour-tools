@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="markdown.css" rel="stylesheet"></link>
+<title></title>
+</head>
+
+<h1>System Extention</h1>
+
+<h2>1. Setup</h2>
+
+<p>This step is stored in maven module : jbehaviour-soapui</p>
+
+<p>Soapui integration simply use <a href="system.html">SystemSteps</a></p>
+
+<pre><code>...
+Register sample with 'org.jbehaviour.plugins.system.SystemSteps' plugin
+...
+</code></pre>
+
+<h2>2. Service mock server</h2>
+
+<p>An asynchronous command can be start (system dependent, so take care with unix ou windows prerequisite)</p>
+
+<p>This command is started by a first "Given" command, and the second "Given" wait for completion.</p>
+
+<p>And in story it could be used as ...</p>
+
+<pre><code>Feature: Launch a story sample for testing async command call
+...
+Register system with 'org.jbehaviour.plugins.system.SystemSteps' plugin
+Declare mockservicerunner as Json 'org.jbehaviour.soapui.ConfigSoapuiBean'
+{
+    "xml":"src/test/resources/soapui/StockQuote-soapui-project.xml",
+    "port":8080,
+    "url":"/test"
+}
+...
+Given start 'mockservicerunner.bat' with $mockservicerunner.getMockServiceRunner() as mockservicerunner
+Given wait for 2 seconds
+Given start 'testrunner.bat' with $mockservicerunner.getServiceRunner() as testrunner
+Given wait for async command $testrunner
+Given send return to async command $mockservicerunner
+Given wait for async command $mockservicerunner
+...
+</code></pre>
+
+<p>TODO ... more description</p>

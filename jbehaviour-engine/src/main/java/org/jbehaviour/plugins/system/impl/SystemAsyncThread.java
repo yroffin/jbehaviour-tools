@@ -29,7 +29,7 @@ import org.jbehaviour.plugins.system.ISystemAsyncTread;
 public class SystemAsyncThread extends Thread implements ISystemAsyncTread {
 	
 	private ProcessBuilder pb;
-	private int result = -1;
+	private int result = -999999999;
 
 	BufferedWriter stdin = null;
 	InputStream stderr = null;
@@ -76,6 +76,11 @@ public class SystemAsyncThread extends Thread implements ISystemAsyncTread {
 			stderr = process.getErrorStream();
 			stdout = process.getInputStream();
 
+			/**
+			 * sync wait
+			 */
+			result = process.waitFor();
+
 			int car=0;
 			
 			/**
@@ -114,10 +119,6 @@ public class SystemAsyncThread extends Thread implements ISystemAsyncTread {
 				}
 			}
 
-			/**
-			 * sync wait
-			 */
-			result = process.waitFor();
 		} catch (IOException e) {
 			e.printStackTrace();
 			result = -2;
@@ -139,7 +140,7 @@ public class SystemAsyncThread extends Thread implements ISystemAsyncTread {
 
 	@Override
 	public synchronized boolean ready() {
-		return stdout != null;
+		return result != -999999999;
 	}
 
 	@Override
