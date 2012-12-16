@@ -16,6 +16,8 @@
 
 package org.jbehaviour;
 
+import java.io.File;
+
 import junit.framework.TestCase;
 
 import org.jbehaviour.exception.JBehaviourParsingError;
@@ -42,36 +44,36 @@ public class JBehaviourLauncherTest extends TestCase {
 
 	@Test
 	public void testExecuteSample() throws JBehaviourParsingError, JBehaviourRuntimeError {
-		assertEquals(true,(new JBehaviourLauncher()).registerAndExecute("src/test/resources/files/sample.story"));
+		assertEquals(true,(new JBehaviourLauncher()).registerAndExecute(new File("src/test/resources/files/sample.story")));
 	}
 
 	@Test
 	public void testExecuteExtended() throws JBehaviourParsingError, JBehaviourRuntimeError {
-		assertEquals(true,(new JBehaviourLauncher()).registerAndExecute("src/test/resources/files/extended.story"));
+		assertEquals(true,(new JBehaviourLauncher()).registerAndExecute(new File("src/test/resources/files/extended.story")));
 	}
 
 	@Test
 	public void testJsonExtended() throws JBehaviourParsingError, JBehaviourRuntimeError {
-		assertEquals(true,(new JBehaviourLauncher()).registerAndExecute("src/test/resources/files/json.story"));
+		assertEquals(true,(new JBehaviourLauncher()).registerAndExecute(new File("src/test/resources/files/json.story")));
 	}
 
 	@Test
 	public void testExecuteReport() throws JBehaviourParsingError, JBehaviourRuntimeError {
-		assertEquals(false,(new JBehaviourLauncher()).registerAndExecute("src/test/resources/report/report.story"));
+		assertEquals(false,(new JBehaviourLauncher()).registerAndExecute(new File("src/test/resources/report/report.story")));
 	}
 
 	@Test
 	public void testExecuteReportError() throws JBehaviourParsingError, JBehaviourRuntimeError {
-		assertEquals(false,(new JBehaviourLauncher()).registerAndExecute("src/test/resources/report/report_error.story"));
+		assertEquals(false,(new JBehaviourLauncher()).registerAndExecute(new File("src/test/resources/report/report_error.story")));
 	}
 
 	@Test
 	public void testExecuteReportFailure() throws JBehaviourParsingError, JBehaviourRuntimeError {
-		assertEquals(false,(new JBehaviourLauncher()).registerAndExecute("src/test/resources/report/report_failure.story"));
+		assertEquals(false,(new JBehaviourLauncher()).registerAndExecute(new File("src/test/resources/report/report_failure.story")));
 	}
 
 	@Test
 	public void testExecuteInclude() throws JBehaviourParsingError, JBehaviourRuntimeError {
-		assertEquals(true,(new JBehaviourLauncher()).registerAndExecute("src/test/resources/files/include.story"));
+		assertEquals(true,(new JBehaviourLauncher()).registerAndExecute(new File("src/test/resources/files/include.story")));
 	}
 }

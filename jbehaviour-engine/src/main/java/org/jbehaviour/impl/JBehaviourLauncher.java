@@ -68,7 +68,7 @@ public class JBehaviourLauncher implements IBehaviourLauncher {
 	}
 
 	@Override
-	public boolean registerAndExecute(String story) throws JBehaviourParsingError, JBehaviourRuntimeError {
+	public boolean registerAndExecute(File story) throws JBehaviourParsingError, JBehaviourRuntimeError {
 		/**
 		 * story parser
 		 */
@@ -114,7 +114,7 @@ public class JBehaviourLauncher implements IBehaviourLauncher {
 		 * xref have collected all statistics elements during
 		 * story run
 		 */
-		env.getXRef().setName(new File(story).getName());
+		env.getXRef().setName(story.getName());
 		for(IKeywordStatement item : parsedStory.getFeature().getKeywordReports()) {
 			KeywordReport report = (KeywordReport) item;
 			logger.info("Report: " + report.getKlass());
@@ -143,7 +143,7 @@ public class JBehaviourLauncher implements IBehaviourLauncher {
 	}
 	
 	@Override
-	public boolean registerAndExecuteStory(String story, FormalStory parsedStory) throws JBehaviourParsingError, JBehaviourRuntimeError {
+	public boolean registerAndExecuteStory(File story, FormalStory parsedStory) throws JBehaviourParsingError, JBehaviourRuntimeError {
 		/**
 		 * reflexion manager
 		 */
@@ -154,7 +154,7 @@ public class JBehaviourLauncher implements IBehaviourLauncher {
 			 */
 			FormalStory includeStory = null;
 			try {
-				includeStory = (new JBehaviourParser(include.getReference())).parse();
+				includeStory = (new JBehaviourParser(new File(include.getReference()))).parse();
 			} catch (JBehaviourParsingError e) {
 				e.printStackTrace();
 				return false;

@@ -16,6 +16,8 @@
 
 package org.jbehaviour.parser;
 
+import java.io.File;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,8 +32,8 @@ public class JBehaviourParser extends AnotherStoryGrammerParser {
 	Logger logger = LoggerFactory.getLogger(JBehaviourParser.class);
 
 	JBehahiourStoryLexer lexer;
-	public JBehaviourParser(String filename) throws JBehaviourParsingError {
-		super(JBehahiourStoryLexer.getTokens(filename));
+	public JBehaviourParser(File filename) throws JBehaviourParsingError {
+		super(JBehahiourStoryLexer.getTokens(filename.getAbsolutePath()));
 		lexer = (JBehahiourStoryLexer) input.getTokenSource();
 	}
 

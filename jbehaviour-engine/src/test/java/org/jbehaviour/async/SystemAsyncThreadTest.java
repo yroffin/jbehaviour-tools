@@ -18,6 +18,7 @@ package org.jbehaviour.async;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.jbehaviour.exception.JBehaviourParsingError;
@@ -50,9 +51,9 @@ public class SystemAsyncThreadTest {
 	@Test
 	public void testSystemAsyncThreadWithStory() throws InterruptedException, JBehaviourParsingError, JBehaviourRuntimeError {
 		if(System.getProperty("file.separator").compareTo("\\")==0) {
-			assertEquals(true,(new JBehaviourLauncher()).registerAndExecute("src/test/resources/system/windows.story"));
+			assertEquals(true,(new JBehaviourLauncher()).registerAndExecute(new File("src/test/resources/system/windows.story")));
 		} else {
-			assertEquals(true,(new JBehaviourLauncher()).registerAndExecute("src/test/resources/system/unix.story"));
+			assertEquals(true,(new JBehaviourLauncher()).registerAndExecute(new File("src/test/resources/system/unix.story")));
 		}
 	}
 }

@@ -18,6 +18,7 @@ package org.jbehaviour.parser;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.jbehaviour.exception.JBehaviourParsingError;
@@ -43,7 +44,7 @@ public class JBehaviourStoryParserTest {
 
 	@Test
 	public void testSampleStory() throws IOException, JBehaviourParsingError {
-		FormalStory parser = (new JBehaviourParser("src/test/resources/files/sample.story")).parse();
+		FormalStory parser = (new JBehaviourParser(new File("src/test/resources/files/sample.story"))).parse();
 		System.err.println(parser.toString());
 		assertEquals("some",parser.getScenarios().get(0).getKeywordGivens().get(0).get(0).getValue());
 		assertEquals("precondition",parser.getScenarios().get(0).getKeywordGivens().get(0).get(1).getValue());
@@ -55,7 +56,7 @@ public class JBehaviourStoryParserTest {
 
 	@Test
 	public void testExtendedStory() throws IOException, JBehaviourParsingError {
-		FormalStory parser = (new JBehaviourParser("src/test/resources/files/extended.story")).parse();
+		FormalStory parser = (new JBehaviourParser(new File("src/test/resources/files/extended.story"))).parse();
 		System.err.println(parser.toString());
 		assertEquals("org.jbehaviour.plugins.SampleSteps",parser.getFeature().getKeywordRegister().get(0).getKlass());
 		assertEquals("some",parser.getScenarios().get(0).getKeywordGivens().get(0).get(0).getValue());
@@ -68,7 +69,7 @@ public class JBehaviourStoryParserTest {
 
 	@Test
 	public void testDeclareStory() throws IOException, JBehaviourParsingError {
-		FormalStory parser = (new JBehaviourParser("src/test/resources/files/declare.story")).parse();
+		FormalStory parser = (new JBehaviourParser(new File("src/test/resources/files/declare.story"))).parse();
 		System.err.println(parser.toString());
 		assertEquals("ref001",parser.getFeature().getKeywordDeclare().get(0).getReference());
 		assertEquals("ref002",parser.getFeature().getKeywordDeclare().get(1).getReference());
@@ -80,7 +81,7 @@ public class JBehaviourStoryParserTest {
 
 	@Test
 	public void testIncludeStory() throws IOException, JBehaviourParsingError {
-		FormalStory parser = (new JBehaviourParser("src/test/resources/files/include.story")).parse();
+		FormalStory parser = (new JBehaviourParser(new File("src/test/resources/files/include.story"))).parse();
 		System.err.println(parser.toString());
 	}
 }

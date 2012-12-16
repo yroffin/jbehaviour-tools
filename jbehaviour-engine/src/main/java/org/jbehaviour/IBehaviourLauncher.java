@@ -1,5 +1,7 @@
 package org.jbehaviour;
 
+import java.io.File;
+
 import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
 import org.jbehaviour.parser.model.FormalStory;
@@ -14,7 +16,7 @@ public interface IBehaviourLauncher {
 	 * @throws JBehaviourParsingError
 	 * @throws JBehaviourRuntimeError
 	 */
-	public abstract boolean registerAndExecute(String story)
+	public abstract boolean registerAndExecute(File story)
 			throws JBehaviourParsingError, JBehaviourRuntimeError;
 
 	/**
@@ -26,7 +28,7 @@ public interface IBehaviourLauncher {
 	 * @throws JBehaviourParsingError
 	 * @throws JBehaviourRuntimeError
 	 */
-	public abstract boolean registerAndExecuteStory(String story,
+	public abstract boolean registerAndExecuteStory(File story,
 			FormalStory parsedStory) throws JBehaviourParsingError,
 			JBehaviourRuntimeError;
 

@@ -1,5 +1,6 @@
 package org.jbehaviour;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
@@ -33,7 +34,7 @@ public class JBehaviourMain {
 			index++;
 		}
 
-		if(!(new JBehaviourLauncher()).registerAndExecute(story)) {
+		if(!(new JBehaviourLauncher()).registerAndExecute(new File(story))) {
 			System.err.println("Fail to execute this story");
 		}
 	}
