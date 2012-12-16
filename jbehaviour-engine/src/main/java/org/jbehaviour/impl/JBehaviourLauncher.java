@@ -33,6 +33,7 @@ import org.jbehaviour.parser.model.FormalStory;
 import org.jbehaviour.parser.model.IKeywordStatement;
 import org.jbehaviour.parser.model.impl.KeywordReport;
 import org.jbehaviour.parser.model.impl.KeywordScenario;
+import org.jbehaviour.reflexion.IBehaviourEnv;
 import org.jbehaviour.reflexion.IBehaviourReflexionContext;
 import org.jbehaviour.reflexion.impl.JBehaviourEnv;
 import org.jbehaviour.reflexion.impl.JBehaviourReflexion;
@@ -46,7 +47,7 @@ import org.slf4j.LoggerFactory;
  */
 public class JBehaviourLauncher implements IBehaviourLauncher {
 	static Logger logger = LoggerFactory.getLogger(JBehaviourLauncher.class);
-	private JBehaviourEnv env;
+	private IBehaviourEnv env;
 
 	private List<IBehaviourScenario> scenarios = new ArrayList<IBehaviourScenario>();
 	private Map<String,IBehaviourScenario> scenariosByName = new HashMap<String,IBehaviourScenario>();
@@ -61,6 +62,11 @@ public class JBehaviourLauncher implements IBehaviourLauncher {
 	}
 
 	FormalStory parsedStory = null;
+
+	@Override
+	public IBehaviourEnv getEnv() {
+		return env;
+	}
 
 	@Override
 	public FormalStory getParsedStory() {

@@ -17,7 +17,10 @@
 package org.jbehaviour.xref;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
+
+import org.jbehaviour.report.IBehaviourReportRun;
 
 public interface IBehaviourXRef {
 	/**
@@ -88,4 +91,9 @@ public interface IBehaviourXRef {
 	 * @return
 	 */
 	public long getTime();
+	/**
+	 * retrieve the list of run
+	 * @return
+	 */
+	List<IBehaviourReportRun> getRuns();
 }

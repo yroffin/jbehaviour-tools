@@ -30,6 +30,12 @@ import org.jbehaviour.xref.IBehaviourXRefSuite;
 public class JBehaviourXRef implements IBehaviourXRef {
 
 	List<IBehaviourReportRun> runs = new ArrayList<IBehaviourReportRun>();
+	
+	@Override
+	public List<IBehaviourReportRun> getRuns() {
+		return runs;
+	}
+
 	String name;
 
 	public JBehaviourXRef() {

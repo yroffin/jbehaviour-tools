@@ -6,6 +6,7 @@ import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
 import org.jbehaviour.parser.model.FormalStory;
 import org.jbehaviour.parser.model.impl.KeywordScenario;
+import org.jbehaviour.reflexion.IBehaviourEnv;
 
 public interface IBehaviourLauncher {
 
@@ -64,4 +65,6 @@ public interface IBehaviourLauncher {
 	 * @throws JBehaviourRuntimeError 
 	 */
 	public abstract boolean executeByStatement(String scenario) throws JBehaviourRuntimeError;
+
+	IBehaviourEnv getEnv();
 }
