@@ -42,6 +42,6 @@ public class BehaviourForeachTest {
 
 	@Test
 	public void testForeachSteps() throws JBehaviourParsingError, JBehaviourRuntimeError  {
-		assertEquals(true,(new JBehaviourLauncher()).registerAndExecute("src/test/resources/files/foreach.story"));
+		assertEquals(true,(new JBehaviourLauncher()).registerAndExecute("src/test/resources/foreach/foreach.story"));
 	}
 }

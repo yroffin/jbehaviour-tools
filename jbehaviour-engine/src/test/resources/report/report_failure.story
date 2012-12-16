@@ -13,7 +13,7 @@ Feature: Launch a story sample for testing json object
 
   Scenario: Verify this sample
     Given print object $ref001
-    Given wait for 10 millisecond
+    Given wait for 10 milliseconds
     Then  throw 'unable to check this value'
 
  

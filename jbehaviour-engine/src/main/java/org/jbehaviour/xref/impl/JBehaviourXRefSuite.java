@@ -37,7 +37,7 @@ public class JBehaviourXRefSuite implements IBehaviourXRefSuite {
 		if(run.hasFailures()) failures++;
 		if(run.hasErrors()) errors++;
 		tests++;
-		time+=run.getDuration();
+		time+=run.getTime();
 		runs.add(run);
 		return run;
 	}

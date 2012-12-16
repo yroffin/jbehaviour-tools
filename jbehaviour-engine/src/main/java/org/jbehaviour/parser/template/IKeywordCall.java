@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package org.jbehaviour.parser.model;
+package org.jbehaviour.parser.template;
 
 import java.lang.reflect.InvocationTargetException;
 

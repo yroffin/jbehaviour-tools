@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jbehaviour.annotation.Call;
 import org.jbehaviour.annotation.EnvReference;
 import org.jbehaviour.annotation.Given;
 import org.jbehaviour.annotation.Then;
@@ -117,7 +118,7 @@ public class SystemSteps {
     	return true;
     }
 
-	@Given("foreach $list as $item call $scenario")
+	@Call("foreach $list as $item call $scenario")
 	public void foreach(List<?> list, String reference, String scenario) throws JBehaviourRuntimeError {
 		for(Object obj : list) {
 			System.out.println("Foreach [" + obj + "] => $" + reference);

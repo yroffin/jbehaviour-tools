@@ -19,8 +19,8 @@ package org.jbehaviour.reflexion;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
+import org.jbehaviour.annotation.Call;
 import org.jbehaviour.annotation.Given;
-import org.jbehaviour.annotation.Store;
 import org.jbehaviour.annotation.Then;
 import org.jbehaviour.annotation.When;
 import org.jbehaviour.exception.JBehaviourParsingError;
@@ -57,7 +57,7 @@ public interface IBehaviourReflexionBean {
 	 * @throws IOException
 	 * @throws JBehaviourParsingError
 	 */
-	void addStore(Store annotation, Method method) throws IOException, JBehaviourParsingError;
+	void addCall(Call annotation, Method method) throws IOException, JBehaviourParsingError;
 	/**
 	 * is this statement match this text
 	 * @param text
@@ -77,11 +77,11 @@ public interface IBehaviourReflexionBean {
 	 */
 	IBehaviourReflexionMethodBean matchThen(IKeywordStatement statement);
 	/**
-	 * find bean which math this store statement
+	 * find bean which math this call statement
 	 * @param parsedStatement
 	 * @return
 	 */
-	IBehaviourReflexionMethodBean matchStore(IKeywordStatement parsedStatement);
+	IBehaviourReflexionMethodBean matchCall(IKeywordStatement parsedStatement);
 	/**
 	 * alocate a new instance for this object
 	 * @return

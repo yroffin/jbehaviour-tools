@@ -14,15 +14,15 @@
  *   limitations under the License.
  */
 
-package org.jbehaviour.parser.model.impl;
+package org.jbehaviour.parser.template.impl;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jbehaviour.parser.model.IKeywordCall;
-import org.jbehaviour.parser.model.IKeywordCallElement;
+import org.jbehaviour.parser.template.IKeywordCall;
+import org.jbehaviour.parser.template.IKeywordCallElement;
 
 public class KeywordCall implements IKeywordCall {
 

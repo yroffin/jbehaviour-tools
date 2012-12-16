@@ -37,7 +37,16 @@ public interface IBehaviourLauncher {
 	 * @return
 	 * @throws JBehaviourRuntimeError
 	 */
-	public abstract boolean execute(KeywordScenario scenario)
+	public abstract boolean execute(IBehaviourScenario scenario)
+			throws JBehaviourRuntimeError;
+
+	/**
+	 * compile a parsed scenario
+	 * @param parsedScenario
+	 * @return
+	 * @throws JBehaviourRuntimeError
+	 */
+	public IBehaviourScenario compile(KeywordScenario parsedScenario)
 			throws JBehaviourRuntimeError;
 
 	/**

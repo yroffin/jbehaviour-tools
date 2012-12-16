@@ -18,8 +18,14 @@ package org.jbehaviour.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Stack;
 
 import org.jbehaviour.IBehaviourLauncher;
+import org.jbehaviour.IBehaviourScenario;
 import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
 import org.jbehaviour.parser.JBehaviourParser;
@@ -41,6 +47,10 @@ import org.slf4j.LoggerFactory;
 public class JBehaviourLauncher implements IBehaviourLauncher {
 	static Logger logger = LoggerFactory.getLogger(JBehaviourLauncher.class);
 	private JBehaviourEnv env;
+
+	private List<IBehaviourScenario> scenarios = new ArrayList<IBehaviourScenario>();
+	private Map<String,IBehaviourScenario> scenariosByName = new HashMap<String,IBehaviourScenario>();
+	private Stack<IBehaviourScenario> stack = new Stack<IBehaviourScenario>();
 
 	/**
 	 * constructor
@@ -188,38 +198,95 @@ public class JBehaviourLauncher implements IBehaviourLauncher {
 		/**
 		 * now scenario by scenario execute all of them
 		 */
-		for(KeywordScenario scenario : parsedStory.getScenarios()) {
-			return execute(scenario);
+		for(KeywordScenario parsedScenario : parsedStory.getScenarios()) {
+			String key = parsedScenario.getStatement();
+			if(scenariosByName.containsKey(key)) {
+				logger.error("Scenario statement must be unique : " + key);
+				throw new JBehaviourRuntimeError("Scenario statement must be unique : " + key);
+			} else {
+				IBehaviourScenario s = compile(parsedScenario);
+				scenariosByName.put(key, s);
+				scenarios.add(s);				
+			}
+		}
+		/**
+		 * fix calling stack
+		 */
+		for(IBehaviourScenario scenario : scenarios) {
+			scenario.setCallers(scenarios);
+		}
+		/**
+		 * execute all scenarios
+		 */
+		boolean result = true;
+		for(IBehaviourScenario key : scenarios) {
+			/**
+			 * only primary scenario can be executed
+			 * (called scenario are not directly run)
+			 */
+			if(key.getCallers().size() == 0) {
+				result = result & executeByStatement(key.getStatement());
+			}
 		}
 		
-		return true;
+		/**
+		 * global result
+		 */
+		return result;
 	}
 
 	@Override
-	public boolean execute(KeywordScenario scenario) throws JBehaviourRuntimeError {
-		IBehaviourReflexionContext stepToExecute = null;
-		for(IKeywordStatement step : scenario.getKeywords()) {
-			logger.info("Step runnning : " + step.getStatement());
+	public IBehaviourScenario compile(KeywordScenario parsedScenario) throws JBehaviourRuntimeError {
+		IBehaviourScenario scenario = new JBehaviourScenario(parsedScenario);
+		IBehaviourReflexionContext context = null;
+		for(IKeywordStatement step : parsedScenario.getKeywords()) {
+			logger.info("Compile : " + step.getStatement());
 			try {
-				stepToExecute = env.getRef().retrieve(scenario.getTextLikeMethod(),step.getType(),step.getStatement());
+				context = env.getRef().retrieve(parsedScenario.getTextLikeMethod(),step.getType(),step.getStatement());
 			} catch (JBehaviourParsingError e) {
 				e.printStackTrace();
-				return false;
+				throw new JBehaviourRuntimeError(e);
 			} catch (JBehaviourRuntimeError e) {
 				e.printStackTrace();
-				return false;
+				throw e;
 			}
 			/**
-			 * if found run it
+			 * context must be found
 			 */
-			if(stepToExecute != null) {
-				Object ret;
+			if(context == null) {
+				logger.error("Unable to find step " + step.getStatement());
+				throw new JBehaviourRuntimeError("Unable to find step " + step.getStatement());
+			} else {
+				scenario.add(context);
+			}
+		}
+		return scenario;
+	}
+
+	@Override
+	public boolean execute(IBehaviourScenario scenario) throws JBehaviourRuntimeError {
+		/**
+		 * push this call in the call stack
+		 */
+		stack.push(scenario);
+		try {
+			logger.info("Scenario running : " + scenario.getStatement() + " / " + stack.size() + " / " + scenario.getCallers());
+			if(logger.isDebugEnabled()) {
+				StringBuilder sLevel = new StringBuilder();
+				for(IBehaviourScenario item : stack) {
+					logger.info(sLevel.toString() + "[+] " + item.getStatement());
+					sLevel.append("    ");
+				}
+			}
+			for(IBehaviourReflexionContext step : scenario.getContexts()) {
+				logger.info("Step running : " + step.getStatement());
+				Object ret = null;
 				try {
 					/**
 					 * we have found this step, no we can execute
 					 * it
 					 */
-					ret = stepToExecute.execute(env);
+					ret = step.execute(env);
 				} catch (JBehaviourParsingError e) {
 					e.printStackTrace();
 					return false;
@@ -228,12 +295,12 @@ public class JBehaviourLauncher implements IBehaviourLauncher {
 					return false;
 				}
 				logger.info("Result is " + ret);
-				switch(stepToExecute.getType()) {
+				switch(step.getType()) {
 					case Given:
-					case Store:
+					case Call:
 					case When:
 						/**
-						 * Given, Store and When return value have
+						 * Given, Call and When return value have
 						 * no action on the execution
 						 */
 						break;
@@ -244,31 +311,21 @@ public class JBehaviourLauncher implements IBehaviourLauncher {
 						 * false break the scenario/story execution
 						 */
 						if(ret == null) {
-							throw new JBehaviourRuntimeError(stepToExecute.toString() + " : return on Then keyword cannot be null !!!");
+							throw new JBehaviourRuntimeError(step.toString() + " : return on Then keyword cannot be null !!!");
 						}
 						if((Boolean) ret == false) return (Boolean) ret;
 					default:
 						break;
 				}
-			} else {
-				/**
-				 * fatal error
-				 * step is not found in registry
-				 */
-				logger.error("Unable to find step " + step.getStatement());
-				return false;
 			}
+			return true;
+		} finally {
+			stack.pop();
 		}
-		return true;
 	}
 
 	@Override
 	public boolean executeByStatement(String name) throws JBehaviourRuntimeError {
-		for(KeywordScenario scenario : parsedStory.getScenarios()) {
-			if(scenario.getStatement().compareTo(name) == 0) {
-				return execute(scenario);
-			}
-		}
-		return false;
+		return execute(scenariosByName.get(name));
 	}
 }

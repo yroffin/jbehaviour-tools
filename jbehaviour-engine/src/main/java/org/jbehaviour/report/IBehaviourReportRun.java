@@ -31,7 +31,7 @@ public interface IBehaviourReportRun {
 	 * duration in millisecond
 	 * @return
 	 */
-	Long getDuration();
+	Long getTime();
 
 	/**
 	 * step name

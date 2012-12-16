@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.jbehaviour.annotation.Given;
-import org.jbehaviour.annotation.Store;
+import org.jbehaviour.annotation.Call;
 import org.jbehaviour.annotation.Then;
 import org.jbehaviour.annotation.When;
 import org.jbehaviour.exception.JBehaviourParsingError;
@@ -135,9 +135,9 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 		parse(IKeywordStatement.statement.Then, _annotation.value(), _method);
 	}
 
-	public JBehaviourReflexionMethod(Store _annotation, Method _method)
+	public JBehaviourReflexionMethod(Call _annotation, Method _method)
 			throws IOException, JBehaviourParsingError {
-		parse(IKeywordStatement.statement.Store, _annotation.value(), _method);
+		parse(IKeywordStatement.statement.Call, _annotation.value(), _method);
 	}
 
 	public boolean match(IKeywordStatement _parsedStatement) {

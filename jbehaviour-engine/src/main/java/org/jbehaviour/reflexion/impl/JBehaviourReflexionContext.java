@@ -42,6 +42,12 @@ public class JBehaviourReflexionContext implements IBehaviourReflexionContext {
 	private IBehaviourReflexionBean bean;
 	private IBehaviourReflexionMethodBean method;
 	private String scenarioMethodName;
+	private String statement;
+
+	@Override
+	public String getStatement() {
+		return statement;
+	}
 
 	public String getScenarioMethodName() {
 		return scenarioMethodName;
@@ -54,17 +60,19 @@ public class JBehaviourReflexionContext implements IBehaviourReflexionContext {
 	 * @param _bean
 	 * @param _method
 	 * @param _parsedStatement
+	 * @param _text 
 	 */
 	public JBehaviourReflexionContext(
 			String _scenarioMethodName, 
 			IBehaviourEnv _env,
 			IBehaviourReflexionBean _bean,
 			IBehaviourReflexionMethodBean _method,
-			IKeywordStatement _parsedStatement) {
+			IKeywordStatement _parsedStatement, String _text) {
 		scenarioMethodName = _scenarioMethodName;
 		parsedStatement = _parsedStatement;
 		bean = _bean;
 		method = _method;
+		statement = _text;
 	}
 
 	@Override

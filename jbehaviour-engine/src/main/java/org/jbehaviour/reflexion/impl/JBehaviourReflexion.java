@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.jbehaviour.annotation.Given;
-import org.jbehaviour.annotation.Store;
+import org.jbehaviour.annotation.Call;
 import org.jbehaviour.annotation.Then;
 import org.jbehaviour.annotation.When;
 import org.jbehaviour.exception.JBehaviourParsingError;
@@ -87,7 +87,7 @@ public class JBehaviourReflexion implements IBehaviourReflexion {
 		for(Method method : myKlass.getMethods()) {
 			for(Annotation a : method.getAnnotations()) {
 				if(a.annotationType() == Given.class) {
-					logger.debug("Class method: " + method);
+					logger.info("Given method : " + method);
 					try {
 						bean.addGiven((Given)a,method);
 					} catch (IOException e) {
@@ -95,7 +95,7 @@ public class JBehaviourReflexion implements IBehaviourReflexion {
 					}
 				}
 				if(a.annotationType() == When.class) {
-					logger.debug("Class method: " + method);
+					logger.info("When method : " + method);
 					try {
 						bean.addWhen((When)a,method);
 					} catch (IOException e) {
@@ -103,17 +103,17 @@ public class JBehaviourReflexion implements IBehaviourReflexion {
 					}
 				}
 				if(a.annotationType() == Then.class) {
-					logger.debug("Class method: " + method);
+					logger.info("Then method : " + method);
 					try {
 						bean.addThen((Then)a,method);
 					} catch (IOException e) {
 						throw new JBehaviourParsingError(e);
 					}
 				}
-				if(a.annotationType() == Store.class) {
-					logger.debug("Class method: " + method);
+				if(a.annotationType() == Call.class) {
+					logger.info("Call method: " + method);
 					try {
-						bean.addStore((Store)a,method);
+						bean.addCall((Call)a,method);
 					} catch (IOException e) {
 						throw new JBehaviourParsingError(e);
 					}
@@ -136,12 +136,12 @@ public class JBehaviourReflexion implements IBehaviourReflexion {
 		for(String key : beans.keySet()) {
 			IBehaviourReflexionBean bean = beans.get(key);
 			/**
-			 * store keywords
+			 * call keywords
 			 */
-			if(klass == IKeywordStatement.statement.Store) {
-				IBehaviourReflexionMethodBean method = bean.matchStore(parsedStatement);
+			if(klass == IKeywordStatement.statement.Call) {
+				IBehaviourReflexionMethodBean method = bean.matchCall(parsedStatement);
 				if(method != null) {
-					search = new JBehaviourReflexionContext(scenarioMethodName, env, bean, method, parsedStatement);
+					search = new JBehaviourReflexionContext(scenarioMethodName, env, bean, method, parsedStatement,text);
 				}
 			}
 			/**
@@ -150,7 +150,7 @@ public class JBehaviourReflexion implements IBehaviourReflexion {
 			if(klass == IKeywordStatement.statement.Given) {
 				IBehaviourReflexionMethodBean method = bean.matchGiven(parsedStatement);
 				if(method != null) {
-					search = new JBehaviourReflexionContext(scenarioMethodName, env, bean, method, parsedStatement);
+					search = new JBehaviourReflexionContext(scenarioMethodName, env, bean, method, parsedStatement,text);
 				}
 			}
 			/**
@@ -159,7 +159,7 @@ public class JBehaviourReflexion implements IBehaviourReflexion {
 			if(klass == IKeywordStatement.statement.When) {
 				IBehaviourReflexionMethodBean method = bean.matchWhen(parsedStatement);
 				if(method != null) {
-					search = new JBehaviourReflexionContext(scenarioMethodName, env,bean,method,parsedStatement);
+					search = new JBehaviourReflexionContext(scenarioMethodName, env,bean,method,parsedStatement,text);
 				}
 			}
 			/**
@@ -168,7 +168,7 @@ public class JBehaviourReflexion implements IBehaviourReflexion {
 			if(klass == IKeywordStatement.statement.Then) {
 				IBehaviourReflexionMethodBean method = bean.matchThen(parsedStatement);
 				if(method != null) {
-					search = new JBehaviourReflexionContext(scenarioMethodName, env, bean, method, parsedStatement);
+					search = new JBehaviourReflexionContext(scenarioMethodName, env, bean, method, parsedStatement,text);
 				}
 			}
 		}

@@ -10,7 +10,7 @@ Feature: Launch a story sample
   Register sample with 'org.jbehaviour.plugins.SampleSteps' plugin
 
   Scenario: Verify this sample
-    Any   some precondition with $argument
+    Given some precondition with $argument
     Given some precondition
       And some other precondition
      When some action by the actor

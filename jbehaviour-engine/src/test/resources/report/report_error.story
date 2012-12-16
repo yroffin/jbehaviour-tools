@@ -14,7 +14,7 @@ Feature: Launch a story sample for testing json object
 
   Scenario: Verify this sample
     Given print object $ref001.getField1()
-    Given wait for 100 millisecond
+    Given wait for 100 milliseconds
     Then  return 'false'
 
  

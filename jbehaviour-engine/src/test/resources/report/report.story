@@ -18,8 +18,8 @@ Feature: Launch a story sample for testing json object
     Given print object $ref001.getField3()
     Given print object $ref001
     Given print object $ref002
-    Given wait for 1 second
-    Given wait for 1500 millisecond
+    Given wait for 1 seconds
+    Given wait for 1500 milliseconds
     Then  return 'false'
     Then  throw 'unable to check this value'
 

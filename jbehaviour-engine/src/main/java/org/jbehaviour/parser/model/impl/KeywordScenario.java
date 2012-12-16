@@ -28,18 +28,23 @@ public class KeywordScenario extends KeywordStatement {
 		type = IKeywordStatement.statement.Scenario;
 	}
 	
-	List<IKeywordStatement> keywordGivens = new ArrayList<IKeywordStatement>();
-	List<IKeywordStatement> keywordWhens = new ArrayList<IKeywordStatement>();
-	List<IKeywordStatement> keywordThens = new ArrayList<IKeywordStatement>();
-	List<IKeywordStatement> keywordStores = new ArrayList<IKeywordStatement>();
-	List<IKeywordStatement> keywords = new ArrayList<IKeywordStatement>();
+	private List<IKeywordStatement> keywordGivens = new ArrayList<IKeywordStatement>();
+	private List<IKeywordStatement> keywordWhens = new ArrayList<IKeywordStatement>();
+	private List<IKeywordStatement> keywordThens = new ArrayList<IKeywordStatement>();
+	private List<IKeywordStatement> keywordCalls = new ArrayList<IKeywordStatement>();
+	private List<IKeywordStatement> keywords = new ArrayList<IKeywordStatement>();
+	private List<KeywordScenario>   callers;
 	
+	public List<KeywordScenario> getCallers() {
+		return callers;
+	}
+
 	public List<IKeywordStatement> getKeywords() {
 		return keywords;
 	}
 
-	public List<IKeywordStatement> getKeywordStores() {
-		return keywordStores;
+	public List<IKeywordStatement> getKeywordCalls() {
+		return keywordCalls;
 	}
 
 	public List<IKeywordStatement> getKeywordGivens() {
@@ -61,7 +66,7 @@ public class KeywordScenario extends KeywordStatement {
 		try {
 			return "KeywordScenario [keywordGivens=" + keywordGivens
 					+ ", keywordWhens=" + keywordWhens + ", keywordThens="
-					+ keywordThens + ", keywordStores=" + keywordStores
+					+ keywordThens + ", keywordCalls=" + keywordCalls
 					+ ", keywords=" + keywords + ", getStatement()="
 					+ getStatement() + ", getReference()=" + getReference() + "]";
 		} catch (JBehaviourParsingError e) {
@@ -88,10 +93,14 @@ public class KeywordScenario extends KeywordStatement {
 		keywords.add(element);
 		return element;
 	}
-	public IKeywordStatement addStoreStatement() {
-		IKeywordStatement element = new KeywordStore();
-		keywordStores.add(element);
+	public IKeywordStatement addCallStatement() {
+		IKeywordStatement element = new KeywordCaller();
+		keywordCalls.add(element);
 		keywords.add(element);
 		return element;
+	}
+
+	public void setCaller(List<KeywordScenario> findCaller) {
+		callers = findCaller;
 	}
 }

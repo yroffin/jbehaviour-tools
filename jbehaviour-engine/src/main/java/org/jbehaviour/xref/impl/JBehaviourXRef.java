@@ -127,7 +127,7 @@ public class JBehaviourXRef implements IBehaviourXRef {
 	public long getTime() {
 		long counter = 0;
 		for(IBehaviourReportRun step : runs) {
-			counter+=step.getDuration();
+			counter+=step.getTime();
 		}
 		return counter;
 	}

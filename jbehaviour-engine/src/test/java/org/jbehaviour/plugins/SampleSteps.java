@@ -77,4 +77,12 @@ public class SampleSteps {
 		logger.debug("preconditionPrm003: " + a + "*" + b + "=" + (a*b));
 		return a * b;
 	}
+	/**
+	 * with argment
+	 * @param argument
+	 */
+	@Given("some precondition with $argument")
+	public void precondition000(String argument) {
+		logger.debug("precondition000 overriden ... " + argument);
+	}
 }

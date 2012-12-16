@@ -28,12 +28,9 @@ WIKI
 TODO
 ====
 
-- transform getDuration in getTime
 - find report in classpath (with resource loader)
-- implement scenario as subroutine call
 - remove JBehaviour prefix on standard Steps
 - move all standard command/extention to plugins
-- implement 'run' for async command (synchronous)
 - transform wait for async in 'Then' with return code analysis
 
 LICENSE

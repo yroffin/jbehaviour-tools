@@ -209,10 +209,10 @@ public class JBehaviourParser extends AnotherStoryGrammerParser {
 	}
 
 	@Override
-	public void onStoreKeyword() {
-		super.onStoreKeyword();
-		if(logger.isDebugEnabled()) logger.debug("on scenario/store");
-		current = scenario.addStoreStatement();
+	public void onCallKeyword() {
+		super.onCallKeyword();
+		if(logger.isDebugEnabled()) logger.debug("on scenario/call");
+		current = scenario.addCallStatement();
 	}
 
 	/**

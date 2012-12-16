@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jbehaviour.annotation.Given;
-import org.jbehaviour.annotation.Store;
+import org.jbehaviour.annotation.Call;
 import org.jbehaviour.annotation.Then;
 import org.jbehaviour.annotation.When;
 import org.jbehaviour.exception.JBehaviourParsingError;
@@ -40,7 +40,7 @@ public class JBehaviourReflexionBean implements IBehaviourReflexionBean {
 	List<IBehaviourReflexionMethodBean> givens = new ArrayList<IBehaviourReflexionMethodBean>();
 	List<IBehaviourReflexionMethodBean> whens  = new ArrayList<IBehaviourReflexionMethodBean>();
 	List<IBehaviourReflexionMethodBean> thens  = new ArrayList<IBehaviourReflexionMethodBean>();
-	List<IBehaviourReflexionMethodBean> stores = new ArrayList<IBehaviourReflexionMethodBean>();
+	List<IBehaviourReflexionMethodBean> calls  = new ArrayList<IBehaviourReflexionMethodBean>();
 
 	protected String klass;
 	protected Class<?> myKlass;
@@ -69,10 +69,10 @@ public class JBehaviourReflexionBean implements IBehaviourReflexionBean {
 	}
 
 	@Override
-	public void addStore(Store annotation, Method method) throws IOException,
+	public void addCall(Call annotation, Method method) throws IOException,
 			JBehaviourParsingError {
 		JBehaviourReflexionMethod local = new JBehaviourReflexionMethod(annotation,method);
-		stores.add(local);
+		calls.add(local);
 		anys.add(local);
 	}
 
@@ -101,9 +101,9 @@ public class JBehaviourReflexionBean implements IBehaviourReflexionBean {
 	}
 
 	@Override
-	public IBehaviourReflexionMethodBean matchStore(
+	public IBehaviourReflexionMethodBean matchCall(
 			IKeywordStatement parsedStatement) {
-		for(IBehaviourReflexionMethodBean behaviour : stores) {
+		for(IBehaviourReflexionMethodBean behaviour : calls) {
 			if(behaviour.match(parsedStatement)) return behaviour;
 		}
 		return null;

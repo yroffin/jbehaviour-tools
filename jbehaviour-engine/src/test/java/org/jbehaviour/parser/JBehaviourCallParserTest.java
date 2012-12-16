@@ -21,7 +21,7 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 
 import org.jbehaviour.exception.JBehaviourParsingError;
-import org.jbehaviour.parser.model.IKeywordCall;
+import org.jbehaviour.parser.template.IKeywordCall;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;

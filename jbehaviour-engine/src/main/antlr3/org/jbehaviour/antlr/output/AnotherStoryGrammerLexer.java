@@ -54,7 +54,7 @@ public class AnotherStoryGrammerLexer extends Lexer {
     public static final int Reference=36;
     public static final int RightBrace=37;
     public static final int SCENARIO=38;
-    public static final int STORE=39;
+    public static final int CALL=39;
     public static final int STRING=40;
     public static final int String=41;
     public static final int THEN=42;

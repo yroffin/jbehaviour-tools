@@ -14,18 +14,17 @@
  *   limitations under the License.
  */
 
-package org.jbehaviour.parser.model.impl;
+package org.jbehaviour.annotation;
 
-import org.jbehaviour.parser.model.IKeywordStatement;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-public class KeywordStore extends KeywordStatement {
-	public KeywordStore() {
-		type = IKeywordStatement.statement.Store;
-	}
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface Call {
 
-	@Override
-	public String toString() {
-		return "KeywordStore [type=" + type + ", getStatement()="
-				+ getStatement() + "]";
-	}
+	String value();
+
 }

@@ -121,7 +121,7 @@ public class JBehaviourReportRun implements IBehaviourReportRun {
 	}
 
 	@Override
-	public Long getDuration() {
+	public Long getTime() {
 		return duration;
 	}
 

@@ -22,9 +22,9 @@ import org.slf4j.LoggerFactory;
 import org.antlr.runtime.RecognitionException;
 import org.jbehaviour.antlr.AnotherMethodGrammerParser;
 import org.jbehaviour.exception.JBehaviourParsingError;
-import org.jbehaviour.parser.model.IKeywordCall;
-import org.jbehaviour.parser.model.IKeywordCallElement;
-import org.jbehaviour.parser.model.impl.KeywordCall;
+import org.jbehaviour.parser.template.IKeywordCall;
+import org.jbehaviour.parser.template.IKeywordCallElement;
+import org.jbehaviour.parser.template.impl.KeywordCall;
 
 public class JBehaviourCallParser extends AnotherMethodGrammerParser {
 	Logger logger = LoggerFactory.getLogger(JBehaviourCallParser.class);

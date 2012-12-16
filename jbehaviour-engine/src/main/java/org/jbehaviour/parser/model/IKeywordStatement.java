@@ -42,7 +42,7 @@ public interface IKeywordStatement {
 		I,
 		Any,
 		Register, 
-		Store, 
+		Call, 
 		Declare,
 		Include,
 		Report

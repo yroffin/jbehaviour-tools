@@ -13,7 +13,7 @@
         </properties>
 #foreach ($testcase in $testsuite.getRuns())
 <!-- testcase $testcase -->
-#set($timeInTestCase = ($testcase.getDuration()/1000.))
+#set($timeInTestCase = ($testcase.getTime()/1000.))
         <testcase assertions="" classname="$key" name="$testcase.getTextLikeMethod()" status="" time="$timeInTestCase">
 #if ( $testcase.isSkipped() )
             <skipped/>

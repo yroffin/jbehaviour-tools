@@ -43,7 +43,7 @@ tokens {
 	WHEN='When';
 	THEN='Then';
 	AND='And';
-	STORE='Store';
+	CALL='Call';
 
 	TOK_FEATURE;
 	TOK_INORDERTO;
@@ -59,7 +59,7 @@ tokens {
 	TOK_WHEN;
 	TOK_THEN;
 	TOK_AND;
-	TOK_STORE;
+	TOK_CALL;
 	TOK_TEMPLATE;
 
 	STRING;
@@ -88,6 +88,7 @@ tokens {
 		none,
 		onGivenKeyword,
 		onWhenKeyword,
+		onCallKeyword,
 		onThenKeyword
 	};
 	Situation situation = Situation.none;
@@ -168,6 +169,9 @@ tokens {
     			case onWhenKeyword:
     				onWhenKeyword();
     				break;
+    			case onCallKeyword:
+    				onCallKeyword();
+    				break;
     		}
     	}
     	public void onGivenKeyword() {
@@ -182,8 +186,9 @@ tokens {
     		situation = Situation.onThenKeyword;
     		onDebug("onThenKeyword","");
     	}
-    	public void onStoreKeyword() {
-    		onDebug("onStoreKeyword","");
+    	public void onCallKeyword() {
+    		situation = Situation.onCallKeyword;
+    		onDebug("onCallKeyword","");
     	}
     	/**
     	 * implement any words analysis
@@ -268,9 +273,10 @@ scenario: scenarioKeyword anyDecl statementDecl
 
 statementDecl
 	: (
-	   ((giveDecl storeDecl?)((andDecl storeDecl?)*))
-	  |((whenDecl storeDecl?)((andDecl storeDecl?)*))
-	  |((thenDecl storeDecl?)((andDecl storeDecl?)*))
+	   ((giveDecl)((andDecl)*))
+	  |((whenDecl)((andDecl)*))
+	  |((thenDecl)((andDecl)*))
+	  |((callDecl)((andDecl)*))
 	  )+
 	;
 
@@ -306,9 +312,9 @@ andDecl
 	: andKeyword anyDecl
 	  -> ^(TOK_AND andKeyword anyDecl)
 	;
-storeDecl
-	: STORE {onStoreKeyword();} anyDecl
-	  -> ^(TOK_STORE STORE anyDecl)
+callDecl
+	: CALL {onCallKeyword();} anyDecl
+	  -> ^(TOK_CALL CALL anyDecl)
 	;
 anyDeclEndedByPlugin
 	: (

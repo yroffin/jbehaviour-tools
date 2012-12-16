@@ -11,7 +11,7 @@ Feature: Launch a story sample for testing scenario call
 
   Scenario: Verify this sample
     Given print object $ref001
-    Given foreach $ref001.getListInteger() as arg001 call 'Print each item'
+    Call  foreach $ref001.getListInteger() as arg001 call 'Print each item'
 
   Scenario: Print each item
     Given print object $arg001

@@ -27,6 +27,15 @@ public class SampleOverridenSteps extends SampleSteps {
 	 * basic steps
 	 */
 	@Override
+	@Given("some precondition with $argument")
+	public void precondition000(String argument) {
+		logger.debug("precondition000 overriden ... " + argument);
+		super.precondition000(argument);
+	}
+	/**
+	 * basic steps
+	 */
+	@Override
 	@Given("some precondition")
 	public void precondition001() {
 		logger.debug("precondition001 overriden ...");
