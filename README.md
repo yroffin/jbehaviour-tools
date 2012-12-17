@@ -21,11 +21,11 @@ and avoid to consider so much technical method for using testing tools :
 - selenium suite
 - and so on ...
 
-WIKI
+Wiki
 ====
 Cf: [wiki](jbehaviour-wiki/wiki/md/index.md)
 
-DEPLOY
+Deploy
 ======
 Artefacts are deployed on sonatype:
 - Snapshot artifacts into repository https://oss.sonatype.org/content/repositories/snapshots
@@ -34,7 +34,7 @@ Artefacts are deployed on sonatype:
 - Snapshot and release artifacts from group https://oss.sonatype.org/content/groups/public
 - Snapshot, release and staged artifacts from staging group https://oss.sonatype.org/content/groups/staging
 
-TODO
+Todo
 ====
 
 - find report in classpath (with resource loader)
@@ -42,7 +42,7 @@ TODO
 - move all standard command/extention to plugins
 - transform wait for async in 'Then' with return code analysis
 
-LICENSE
+License
 =======
 
 _Copyright 2012 Yannick Roffin_
