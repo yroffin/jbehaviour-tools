@@ -18,6 +18,7 @@ package org.jbehaviour.soapui;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class SystemSoapUiTest {
 			 * make the test only if soapui is setup on system
 			 */
 			if(result == 0) {
-				assertEquals(true,(new JBehaviourLauncher()).registerAndExecute("src/test/resources/soapui/windows.story"));
+				assertEquals(true,(new JBehaviourLauncher()).registerAndExecute(new File("src/test/resources/soapui/windows.story")));
 			}
 		}
 	}

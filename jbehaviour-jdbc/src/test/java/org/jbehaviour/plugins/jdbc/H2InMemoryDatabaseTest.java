@@ -64,7 +64,7 @@ public class H2InMemoryDatabaseTest extends TestCase {
 		/**
 		 * test code here
 		 */
-		boolean result = (new JBehaviourLauncher()).registerAndExecute("src/test/resources/jdbc.story");
+		boolean result = (new JBehaviourLauncher()).registerAndExecute(new File("src/test/resources/jdbc.story"));
 
 		server.stop();
 		assertEquals(result,true);

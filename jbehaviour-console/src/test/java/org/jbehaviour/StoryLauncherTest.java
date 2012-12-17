@@ -17,6 +17,7 @@
 
 package org.jbehaviour;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
@@ -44,6 +45,6 @@ public class StoryLauncherTest {
 
 	@Test
 	public void testExecuteSample() throws IOException, JBehaviourParsingError, ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException, JBehaviourRuntimeError {
-		(new JBehaviourLauncher()).registerAndExecute("story/binq.story");
+		(new JBehaviourLauncher()).registerAndExecute(new File("story/binq.story"));
 	}
 }

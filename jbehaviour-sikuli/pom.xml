@@ -8,7 +8,7 @@
   <artifactId>jbehaviour-sikuli</artifactId>
   <dependencies>
   	<dependency>
-  		<groupId>jbehaviour-tools</groupId>
+  		<groupId>org.jbehaviour-tools</groupId>
   		<artifactId>jbehaviour-engine</artifactId>
   		<version>0.0.1-SNAPSHOT</version>
   	</dependency>
