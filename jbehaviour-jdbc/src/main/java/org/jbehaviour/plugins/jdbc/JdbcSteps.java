@@ -38,11 +38,7 @@ public class JdbcSteps {
 	int columnLength = 16;
 	Connection conn = null;
 
-	public enum jdbcDatabaseType {
-		None,
-		H2
-	};
-	public jdbcDatabaseType type = jdbcDatabaseType.None;
+	JdbcDatabaseType type = JdbcDatabaseType.None;
 
 	@Given("column length to $length bytes")
 	public void setColumnLength(Integer len) {
@@ -60,7 +56,7 @@ public class JdbcSteps {
          * H2 database type
          */
         if("H2".compareTo(conn.getMetaData().getDatabaseProductName()) == 0) {
-        	type = jdbcDatabaseType.H2;
+        	type = JdbcDatabaseType.H2;
         }
 
         return conn;
