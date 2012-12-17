@@ -22,7 +22,7 @@
 				<executions>
 			          <execution>
 			            <id>make-assembly</id>
-			            <phase>package</phase>
+			            <phase>disable</phase>
 			            <goals>
 			              <goal>single</goal>
 			            </goals>
