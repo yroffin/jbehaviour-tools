@@ -38,7 +38,7 @@ public class JdbcSteps {
 	int columnLength = 16;
 	Connection conn = null;
 
-	enum databaseType {
+	public enum databaseType {
 		H2
 	};
 	databaseType type = null;
