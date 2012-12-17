@@ -3,3 +3,4 @@
 .idea
 /jbehaviour-jdbc/mem.*.db
 /jbehaviour-jdbc/target
+/jbehaviour-jdbc
