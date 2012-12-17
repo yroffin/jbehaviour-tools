@@ -30,6 +30,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class JdbcSteps {
+	private static final databaseType None = null;
+
 	static Logger logger = LoggerFactory.getLogger(JdbcSteps.class);
 
 	@EnvReference
@@ -39,9 +41,10 @@ public class JdbcSteps {
 	Connection conn = null;
 
 	public enum databaseType {
+		None,
 		H2
 	};
-	databaseType type = null;
+	databaseType type = None;
 
 	@Given("column length to $length bytes")
 	public void setColumnLength(Integer len) {
