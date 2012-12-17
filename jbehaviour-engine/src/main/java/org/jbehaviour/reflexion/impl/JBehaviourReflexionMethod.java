@@ -107,8 +107,17 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 		 * declared in annotation)
 		 */
 		Paranamer paranamer = new CachingParanamer();
-		parameterNames = paranamer.lookupParameterNames(methodToInvoke, false);
-		if (parameterNames.length == 0) {
+		try {
+			parameterNames = paranamer.lookupParameterNames(methodToInvoke, false);
+		} catch(java.lang.NoClassDefFoundError e) {
+			/**
+			 * TODO
+			 * explain this java.lang.NoClassDefFoundError !!!
+			 */
+			logger.warn(e.getMessage());
+			parameterNames = null;
+		}
+		if (parameterNames == null || parameterNames.length == 0) {
 			/**
 			 * use default order stored in annotation
 			 */
