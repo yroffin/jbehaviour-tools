@@ -25,6 +25,15 @@ WIKI
 ====
 Cf: [wiki](jbehaviour-wiki/wiki/md/index.md)
 
+DEPLOY
+======
+Artefacts are deployed on sonatype:
+- Snapshot artifacts into repository https://oss.sonatype.org/content/repositories/snapshots
+- Release artifacts into the staging repository https://oss.sonatype.org/service/local/staging/deploy/maven2
+- Promote staged artifacts into repository 'Releases'
+- Snapshot and release artifacts from group https://oss.sonatype.org/content/groups/public
+- Snapshot, release and staged artifacts from staging group https://oss.sonatype.org/content/groups/staging
+
 TODO
 ====
 
