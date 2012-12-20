@@ -3,11 +3,16 @@
   <parent>
     <groupId>com.github.yroffin</groupId>
     <artifactId>jbehaviour-tools</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
   </parent>
   <artifactId>jbehaviour-jdbc</artifactId>
   <description>Cf. http://www.h2database.com/html/cheatSheet.html</description>
   <dependencies>
+		<dependency>
+			<groupId>com.github.yroffin</groupId>
+			<artifactId>jbehaviour-engine</artifactId>
+			<version>0.0.1</version>
+		</dependency>
 	  <dependency>
 		<groupId>com.h2database</groupId>
 		<artifactId>h2</artifactId>
@@ -17,11 +22,6 @@
 			<groupId>org.yaml</groupId>
 			<artifactId>snakeyaml</artifactId>
 			<version>1.10</version>
-		</dependency>
-		<dependency>
-			<groupId>com.github.yroffin</groupId>
-			<artifactId>jbehaviour-engine</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
   </dependencies>
 </project>

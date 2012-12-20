@@ -3,14 +3,14 @@
   <parent>
     <groupId>com.github.yroffin</groupId>
     <artifactId>jbehaviour-tools</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
   </parent>
   <artifactId>jbehaviour-sikuli</artifactId>
   <dependencies>
   	<dependency>
   		<groupId>com.github.yroffin</groupId>
   		<artifactId>jbehaviour-engine</artifactId>
-  		<version>0.0.1-SNAPSHOT</version>
+  		<version>0.0.1</version>
   	</dependency>
   	<dependency>
   		<groupId>org.sikuli</groupId>

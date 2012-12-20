@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.github.yroffin</groupId>
     <artifactId>jbehaviour-tools</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
   </parent>
   <artifactId>jbehaviour-console</artifactId>
 	<build>
@@ -35,27 +35,27 @@
 		<dependency>
 			<groupId>com.github.yroffin</groupId>
 			<artifactId>jbehaviour-engine</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.yroffin</groupId>
 			<artifactId>jbehaviour-jdbc</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.yroffin</groupId>
 			<artifactId>jbehaviour-remote</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.yroffin</groupId>
 			<artifactId>jbehaviour-selenium</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.yroffin</groupId>
 			<artifactId>jbehaviour-sikuli</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.1</version>
 		</dependency>
 	</dependencies>
 </project>
