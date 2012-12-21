@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- xref $context.getXRef() -->
+<!-- xref -->
 <testsuites disabled="$context.getXRef().getDisabled()" errors="$context.getXRef().getErrors()" failures="$context.getXRef().getFailures()" name="$context.getXRef().getName()" tests="$context.getXRef().getTests()" time="$context.getXRef().getTime()">
 #foreach ($key in $context.getXRef().getRunsByScenario().keySet())
 #set($testsuite = $context.getXRef().getRunsByScenario().get($key))
-<!-- testsuite $testsuite -->
+<!-- testsuite -->
     <testsuite disabled="$testsuite.getDisabled()" errors="$testsuite.getErrors()" failures="$testsuite.getFailures()"
         package="$key" skipped="$testsuite.getSkipped()" tests="$testsuite.getTests()" time="$testsuite.getTime()" timestamp="">
         <properties>
@@ -12,7 +12,7 @@
 #end
         </properties>
 #foreach ($testcase in $testsuite.getRuns())
-<!-- testcase $testcase -->
+<!-- testcase -->
 #set($timeInTestCase = ($testcase.getTime()/1000.))
         <testcase assertions="" classname="$key" name="$testcase.getTextLikeMethod()" status="" time="$timeInTestCase">
 #if ( $testcase.isSkipped() )
