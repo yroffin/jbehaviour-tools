@@ -16,11 +16,17 @@
 
 package org.jbehaviour.xref;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.jbehaviour.report.IBehaviourReportRun;
 
 public interface IBehaviourXRefSuite {
+	/**
+	 * getTimeStamp
+	 * @return
+	 */
+	public String getTimeStamp();
 	/**
 	 * get all step disabled
 	 * @return
@@ -57,5 +63,31 @@ public interface IBehaviourXRefSuite {
 	 * @return
 	 */
 	public List<IBehaviourReportRun> getRuns();
+	/**
+	 * 
+	 * @return
+	 */
 	int getSkipped();
+	/**
+	 * runs analysis
+	 * @return
+	 */
+	public boolean hasStdout();
+	/**
+	 * runs analysis
+	 * @return
+	 */
+	public boolean hasStderr();
+	/**
+	 * runs stdout
+	 * @return
+	 * @throws IOException 
+	 */
+	public String getStdoutAsString() throws IOException;
+	/**
+	 * runs stderr
+	 * @return
+	 * @throws IOException 
+	 */
+	public String getStderrAsString() throws IOException;
 }

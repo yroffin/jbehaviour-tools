@@ -17,6 +17,7 @@
 package org.jbehaviour.xref;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +34,7 @@ public interface IBehaviourXRef {
 	 * @return
 	 */
 	public Map<String, IBehaviourXRefSuite> getRunsByScenario();
+
 	/**
 	 * stop counter for this run, and store in session
 	 * @param begin
@@ -95,5 +97,27 @@ public interface IBehaviourXRef {
 	 * retrieve the list of run
 	 * @return
 	 */
-	List<IBehaviourReportRun> getRuns();
+	public List<IBehaviourReportRun> getRuns();
+	/**
+	 * runs analysis
+	 * @return
+	 */
+	public boolean hasStdout();
+	/**
+	 * runs analysis
+	 * @return
+	 */
+	public boolean hasStderr();
+	/**
+	 * runs stdout
+	 * @return
+	 * @throws IOException 
+	 */
+	public String getStdoutAsString() throws IOException;
+	/**
+	 * runs stderr
+	 * @return
+	 * @throws IOException 
+	 */
+	public String getStderrAsString() throws IOException;
 }

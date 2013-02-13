@@ -17,6 +17,7 @@
 package org.jbehaviour.xref.impl;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +32,40 @@ public class JBehaviourXRef implements IBehaviourXRef {
 
 	List<IBehaviourReportRun> runs = new ArrayList<IBehaviourReportRun>();
 	
+	@Override
+	public boolean hasStdout() {
+		for(IBehaviourReportRun item : runs) {
+			if(item.hasStdout()) return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean hasStderr() {
+		for(IBehaviourReportRun item : runs) {
+			if(item.hasStderr()) return true;
+		}
+		return false;
+	}
+
+	@Override
+	public String getStdoutAsString() throws IOException {
+		StringBuilder sb = new StringBuilder();
+		for(IBehaviourReportRun item : runs) {
+			sb.append(item.getStdoutAsString());
+		}
+		return sb.toString();
+	}
+
+	@Override
+	public String getStderrAsString() throws IOException {
+		StringBuilder sb = new StringBuilder();
+		for(IBehaviourReportRun item : runs) {
+			sb.append(item.getStderrAsString());
+		}
+		return sb.toString();
+	}
+
 	@Override
 	public List<IBehaviourReportRun> getRuns() {
 		return runs;

@@ -6,7 +6,7 @@ Feature: Launch a story sample for testing json object
   Register system with 'org.jbehaviour.plugins.system.SystemSteps' plugin
   Declare ref001 as Json 'org.jbehaviour.plugins.ComplexJsonBean'
 {
-  "field1":"value1",
+  "field1":"value1 with é",
   "field2":"value2",
   "field3":1000
 }

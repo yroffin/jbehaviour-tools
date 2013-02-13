@@ -16,7 +16,10 @@
 
 package org.jbehaviour.xref.impl;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.jbehaviour.report.IBehaviourReportRun;
@@ -81,4 +84,41 @@ public class JBehaviourXRefSuite implements IBehaviourXRefSuite {
 		return runs;
 	}
 
+	@Override
+	public boolean hasStdout() {
+		for(IBehaviourReportRun item : runs) {
+			if(item.hasStdout()) return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean hasStderr() {
+		for(IBehaviourReportRun item : runs) {
+			if(item.hasStderr()) return true;
+		}
+		return false;
+	}
+
+	@Override
+	public String getStdoutAsString() throws IOException {
+		StringBuilder sb = new StringBuilder();
+		for(IBehaviourReportRun item : runs) {
+			sb.append(item.getStdoutAsString());
+		}
+		return sb.toString();
+	}
+
+	@Override
+	public String getStderrAsString() throws IOException {
+		StringBuilder sb = new StringBuilder();
+		for(IBehaviourReportRun item : runs) {
+			sb.append(item.getStderrAsString());
+		}
+		return sb.toString();
+	}
+	@Override
+	public String getTimeStamp() {
+		return (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")).format(new Date());
+	}
 }
