@@ -90,4 +90,16 @@ public interface IBehaviourXRefSuite {
 	 * @throws IOException 
 	 */
 	public String getStderrAsString() throws IOException;
+	/**
+	 * runs stdout
+	 * @return
+	 * @throws IOException 
+	 */
+	public String getStdoutAsHtml() throws IOException;
+	/**
+	 * runs stderr
+	 * @return
+	 * @throws IOException 
+	 */
+	public String getStderrAsHtml() throws IOException;
 }

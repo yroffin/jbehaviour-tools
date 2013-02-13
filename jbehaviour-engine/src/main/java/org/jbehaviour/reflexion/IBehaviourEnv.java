@@ -18,6 +18,7 @@ package org.jbehaviour.reflexion;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.jbehaviour.IBehaviourLauncher;
 import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
@@ -44,6 +45,9 @@ public interface IBehaviourEnv {
 		}
 		public String getValue() {
 			return value;
+		}
+		public String getHtml() {
+			return StringEscapeUtils.escapeHtml(value);
 		}
 	}
 	/**

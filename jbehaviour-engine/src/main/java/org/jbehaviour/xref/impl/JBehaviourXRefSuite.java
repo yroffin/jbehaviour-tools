@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.jbehaviour.report.IBehaviourReportRun;
 import org.jbehaviour.xref.IBehaviourXRefSuite;
 
@@ -120,5 +121,13 @@ public class JBehaviourXRefSuite implements IBehaviourXRefSuite {
 	@Override
 	public String getTimeStamp() {
 		return (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")).format(new Date());
+	}
+	@Override
+	public String getStdoutAsHtml() throws IOException {
+		return StringEscapeUtils.escapeHtml(getStdoutAsString());
+	}
+	@Override
+	public String getStderrAsHtml() throws IOException {
+		return StringEscapeUtils.escapeHtml(getStderrAsString());
 	}
 }

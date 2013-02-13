@@ -8,7 +8,7 @@
         package="$key" tests="$testsuite.getTests()" time="$testsuite.getTime()">
         <properties>
 #foreach ($property in $context.getEnv().getProperties())
-            <property name="$property.getKey()" value="$property.getValue()"/>
+            <property name="$property.getKey()" value="$property.getHtml()"/>
 #end
         </properties>
 #foreach ($testcase in $testsuite.getRuns())
@@ -30,11 +30,11 @@
         </testcase>
 #end
 #if ( $testsuite.hasStdout() )
-            <system-out>$testsuite.getStdoutAsString()
+            <system-out>$testsuite.getStdoutAsHtml()
 </system-out>
 #end
 #if ( $testsuite.hasStderr() )
-            <system-err>$testsuite.getStderrAsString()
+            <system-err>$testsuite.getStderrAsHtml()
 </system-err>
 #end
     </testsuite>
