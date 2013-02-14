@@ -12,6 +12,7 @@
 	<groupId>com.github.yroffin</groupId>
 	<artifactId>jbehaviour-tools</artifactId>
 	<version>0.0.2-SNAPSHOT</version>
+	<packaging>pom</packaging>
 	<modules>
 		<module>jbehaviour-engine</module>
 		<module>jbehaviour-selenium</module>
