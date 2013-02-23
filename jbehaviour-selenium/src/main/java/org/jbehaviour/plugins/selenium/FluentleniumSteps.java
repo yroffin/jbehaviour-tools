@@ -34,53 +34,68 @@ public class FluentleniumSteps extends FluentAdapter {
 	
 	@Given("launch the chrome navigator")
 	public void startChromeNavigator() {
-		logger.debug("Start chrome navigator with " + System.getProperty("webdriver.chrome.driver"));
+		logger.info("Start chrome navigator with " + System.getProperty("webdriver.chrome.driver"));
 		driver = new ChromeDriver();
 		this.initFluent(driver);
 	}
 
 	@Given("launch the ie navigator")
 	public void startIeNavigator() {
-		logger.debug("Start internet explorer navigator with " + System.getProperty("webdriver.chrome.driver"));
+		logger.info("Start internet explorer navigator with " + System.getProperty("webdriver.chrome.driver"));
 		driver = new InternetExplorerDriver();
 		this.initFluent(driver);
 	}
 
 	@Given("launch the html navigator")
 	public void startHtmlNavigator() {
-		logger.debug("Start html navigator");
+		logger.info("Start html navigator");
 		driver = new HtmlUnitDriver();
 		this.initFluent(driver);
 	}
 
 	@When("i goto to $parameter")
 	public void gotoUrl(String parameter) {
-		logger.debug("Goto url " + parameter);
-		logger.debug(goTo(parameter).pageSource()+"");
+		logger.info("Goto url " + parameter);
+		logger.info(goTo(parameter).pageSource()+"");
 	}
 	
 	@When("i fill $id with $value")
-	public void fillSomething(String id, String value) {
-		logger.debug("Fill " + id + " with " + value);
+	public String fillSomething(String id, String value) {
+		logger.info("Fill " + id + " with " + value);
 		fill(id).with(value);
+		return this.pageSource();
+	}
+
+	@When("i click on $value")
+	public String clickOn(String value) {
+		logger.info("Click on element " + value);
+		click(value);
+		return this.pageSource();
 	}
 
 	@When("i submit $value")
 	public String submitAValue(String value) {
-		logger.debug("Submit " + value);
+		logger.info("Submit " + value);
 		submit(value);
 		return this.pageSource();
 	}
 
 	@Then("Title must contain $value")
-	public boolean fillSomething(String value) {
-		logger.debug("Title must contain " + value + " : " + title());
-		return title().contains(value);
+	public boolean titleMustContain(String value) {
+		boolean result = title().contains(value);
+		logger.info("Title source must contain " + value + " : " + result);
+		return result;
 	}
 
-	@Then("Close internet browser")
-	public boolean closeIt() {
+	@Then("Body must contain $value")
+	public boolean bodyMustContain(String value) {
+		boolean result = pageSource().contains(value);
+		logger.info("Page source must contain " + value + " : " + result);
+		return result;
+	}
+
+	@Given("Close browser driver")
+	public void closeDriver() {
 		driver.close();
-		return true;
 	}
 }

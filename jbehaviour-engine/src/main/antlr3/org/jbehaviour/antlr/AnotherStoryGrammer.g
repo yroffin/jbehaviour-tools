@@ -222,8 +222,19 @@ tokens {
 // Alter code generation so catch-clauses get replace with 
 // this action. 
 @rulecatch { 
+catch (RecognitionException e) { 
+	/**
+	 * default rule catch
+	 */
+	e.printStackTrace();
+       	displayRecognitionError(tokenNames, e);
+} 
 catch (Exception e) { 
-//throw e; 
+	/**
+	 * default rule catch
+	 */
+	e.printStackTrace();
+	emitErrorMessage(e.getMessage());
 } 
 }
 
