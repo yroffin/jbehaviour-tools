@@ -327,10 +327,13 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 				logger.info("Templating for " + name + " with "
 						+ parsedStatement.get(position).getValue() + " as " + methodToInvoke.getParameterTypes()[index]);
 				try {
-					if (methodToInvoke.getParameterTypes()[index] == String.class) {
-						args[index] = env.asString(parsedStatement.get(position).getValue());
+					Object rawValue = parsedStatement.get(position).getValue();
+					Object asString = env.asString(parsedStatement.get(position).getValue());
+					Object asObject = env.asObject(parsedStatement.get(position).getValue());
+					if (rawValue.hashCode() == asObject.hashCode()) {
+						args[index] = asString;
 					} else {
-						args[index] = env.asObject(parsedStatement.get(position).getValue());
+						args[index] = asObject;
 					}
 				} catch (JBehaviourParsingError e) {
 					throw new JBehaviourRuntimeError(e);

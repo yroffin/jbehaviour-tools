@@ -227,7 +227,7 @@ public class JBehaviourParser extends AnotherStoryGrammerParser {
 			error = 0;
 			lexer.setError(0);
 			story = new FormalStory();
-			story();
+			story_return result = story();
 			if(lexer.getError()>0) throw new JBehaviourParsingError("This story has lexer errors");
 			if(error>0) throw new JBehaviourParsingError("This story has parsing errors");
 			return story;

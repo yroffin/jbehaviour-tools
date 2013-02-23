@@ -165,6 +165,8 @@ public class JBehaviourLauncher implements IBehaviourLauncher {
 				e.printStackTrace();
 				return false;
 			}
+
+			logger.info("Including "+includeStory.getScenarios().size()+" scenarios");
 			/**
 			 * add all register, declare ... of this story in current
 			 */
