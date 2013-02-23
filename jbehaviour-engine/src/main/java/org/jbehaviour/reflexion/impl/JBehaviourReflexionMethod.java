@@ -333,7 +333,11 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 					if (rawValue.hashCode() == asObject.hashCode()) {
 						args[index] = asString;
 					} else {
-						args[index] = asObject;
+						if (methodToInvoke.getParameterTypes()[index] == String.class) {
+							args[index] = asString;
+						} else {
+							args[index] = asObject;
+						}
 					}
 				} catch (JBehaviourParsingError e) {
 					throw new JBehaviourRuntimeError(e);

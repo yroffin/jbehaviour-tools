@@ -64,7 +64,7 @@ public class FluentleniumStepsTest {
 		search = env.retrieve("noname",IKeywordStatement.statement.When,"i goto to 'http://www.google.com'");
 		assertNotNull(search);
 		search.execute(env);
-		search = env.retrieve("noname",IKeywordStatement.statement.Then,"close internet browser");
+		search = env.retrieve("noname",IKeywordStatement.statement.Then,"close browser driver");
 		assertNotNull(search);
 		search.execute(env);
 	}
