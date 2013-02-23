@@ -42,6 +42,11 @@ Todo
 - move all standard command/extention to plugins
 - transform wait for async in 'Then' with return code analysis
 
+Release notes on 0.0.2-SNAPSHOT
+===============================
+plugin selenium :
+- adding pageSource search with Body must contain $value
+
 License
 =======
 
