@@ -17,6 +17,6 @@ Feature: Launch a web client and go to 'http://www.bing.com'
      When i submit '#sb_form_go'
      Then store last result in file $output
      Then Title must contain $fluentLenium
-     Then Close internet browser
+    Given Close browser driver
 
 
