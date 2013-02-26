@@ -22,6 +22,8 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jbehaviour.plugins.remote.IResourcesItem;
+
 import com.sshtools.j2ssh.SshClient;
 import com.sshtools.j2ssh.authentication.AuthenticationProtocolState;
 import com.sshtools.j2ssh.authentication.PasswordAuthenticationClient;
@@ -39,9 +41,9 @@ public abstract class SslFileSystemResource extends FileSystemResourceImpl {
 
 
 	@Override
-	public List<ResourcesItem> listdir(String directory) throws IOException {
+	public List<IResourcesItem> listdir(String directory) throws IOException {
 		System.err.println("Using abstract method listdir !!!");
-		List<ResourcesItem> res = new ArrayList<ResourcesItem>();
+		List<IResourcesItem> res = new ArrayList<IResourcesItem>();
 		return res;
 	}
 

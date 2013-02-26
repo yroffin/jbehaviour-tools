@@ -19,8 +19,6 @@ package org.jbehaviour.plugins.remote;
 import java.io.IOException;
 import java.util.List;
 
-import org.jbehaviour.plugins.remote.impl.ResourcesItem;
-
 public interface IFileSystemResource {
 	public void open() throws IOException;
 	public void close() throws IOException;
@@ -40,7 +38,7 @@ public interface IFileSystemResource {
 	 * @return
 	 * @throws IOException
 	 */
-	public List<ResourcesItem> listdir(String directory) throws IOException;
+	public List<IResourcesItem> listdir(String directory) throws IOException;
 	
 	/**
 	 * execute local or remote commande
