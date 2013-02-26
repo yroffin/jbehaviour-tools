@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- xref $context.getXRef() -->
 <testsuites xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.github.com/ygjb/XmlUnit/master/JUnit.xsd">
 #foreach ($key in $context.getXRef().getRunsByScenario().keySet())
 #set($testsuite = $context.getXRef().getRunsByScenario().get($key))
-<!-- testsuite $testsuite -->
     <testsuite id="$testsuite.hashCode()" name="default" timestamp="$testsuite.getTimeStamp()" hostname="localhost" errors="$testsuite.getErrors()" failures="$testsuite.getFailures()"
         package="$key" tests="$testsuite.getTests()" time="$testsuite.getTime()">
         <properties>
@@ -12,7 +10,6 @@
 #end
         </properties>
 #foreach ($testcase in $testsuite.getRuns())
-<!-- testcase $testcase -->
 #set($timeInTestCase = ($testcase.getTime()/1000.))
         <testcase classname="$key" name="$testcase.getTextLikeMethod()" time="$timeInTestCase">
 #if ( $testcase.isSkipped() )
