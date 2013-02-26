@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- xref -->
-<testsuites disabled="$context.getXRef().getDisabled()" errors="$context.getXRef().getErrors()" failures="$context.getXRef().getFailures()" name="$context.getXRef().getName()" tests="$context.getXRef().getTests()" time="$context.getXRef().getTime()">
+<!-- xref $context.getXRef() -->
+<testsuites xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.github.com/ygjb/XmlUnit/master/JUnit.xsd">
 #foreach ($key in $context.getXRef().getRunsByScenario().keySet())
 #set($testsuite = $context.getXRef().getRunsByScenario().get($key))
-<!-- testsuite -->
-    <testsuite disabled="$testsuite.getDisabled()" errors="$testsuite.getErrors()" failures="$testsuite.getFailures()"
-        package="$key" skipped="$testsuite.getSkipped()" tests="$testsuite.getTests()" time="$testsuite.getTime()" timestamp="">
+<!-- testsuite $testsuite -->
+    <testsuite id="$testsuite.hashCode()" name="default" timestamp="$testsuite.getTimeStamp()" hostname="localhost" errors="$testsuite.getErrors()" failures="$testsuite.getFailures()"
+        package="$key" tests="$testsuite.getTests()" time="$testsuite.getTime()">
         <properties>
 #foreach ($property in $context.getEnv().getProperties())
-            <property name="$property.getKey()" value="$property.getValue()"/>
+            <property name="$property.getKey()" value="$property.getHtml()"/>
 #end
         </properties>
 #foreach ($testcase in $testsuite.getRuns())
-<!-- testcase -->
+<!-- testcase $testcase -->
 #set($timeInTestCase = ($testcase.getTime()/1000.))
-        <testcase assertions="" classname="$key" name="$testcase.getTextLikeMethod()" status="" time="$timeInTestCase">
+        <testcase classname="$key" name="$testcase.getTextLikeMethod()" time="$timeInTestCase">
 #if ( $testcase.isSkipped() )
             <skipped/>
 #end
@@ -27,15 +27,15 @@
 #end
             </failure>
 #end
-#if ( $testcase.hasStdout() )
-            <system-out>$testcase.getStdoutAsString()
+        </testcase>
+#end
+#if ( $testsuite.hasStdout() )
+            <system-out>$testsuite.getStdoutAsHtml()
 </system-out>
 #end
-#if ( $testcase.hasStderr() )
-            <system-err>$testcase.getStderrAsString()
+#if ( $testsuite.hasStderr() )
+            <system-err>$testsuite.getStderrAsHtml()
 </system-err>
-#end
-        </testcase>
 #end
     </testsuite>
 #end
