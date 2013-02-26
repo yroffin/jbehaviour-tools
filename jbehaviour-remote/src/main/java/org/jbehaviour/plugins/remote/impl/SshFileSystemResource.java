@@ -73,14 +73,14 @@ public class SshFileSystemResource extends SslFileSystemResource {
 		int read;
 		while ((read = in.read(buffer)) > 0) {
 			String out = new String(buffer, 0, read);
-			res.add(out);
+			res.add("<stdout> " + out);
 		}
 
 		in = session.getStderrInputStream();
 		buffer = new byte[255];
 		while ((read = in.read(buffer)) > 0) {
 			String out = new String(buffer, 0, read);
-			res.add(out);
+			res.add("<stderr> " + out);
 		}
 	}
 
@@ -97,5 +97,11 @@ public class SshFileSystemResource extends SslFileSystemResource {
 			closeSession();
 		}
 		return res;
+	}
+
+	@Override
+	public String toString() {
+		return "SshFileSystemResource [session=" + session + ", url=" + url
+				+ "]";
 	}
 }

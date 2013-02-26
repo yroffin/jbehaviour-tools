@@ -18,24 +18,37 @@ package org.jbehaviour.plugins.remote;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.Formatter;
 import java.util.List;
 
 import org.jbehaviour.annotation.Given;
 import org.jbehaviour.annotation.Then;
 import org.jbehaviour.annotation.When;
-import org.jbehaviour.plugins.remote.impl.ResourcesItem;
 
 public class JBehaviourRemoteSteps {
+	
+	private StringBuilder sbFormat = new StringBuilder();
+	private Formatter formatter = null;
+	private int columnLength = 16;
+
+	public JBehaviourRemoteSteps() {
+		formatter = new Formatter(sbFormat);
+	}
+
 	/**
 	 * all external resources are managed by FileSystemResources
 	 * create a new one
 	 * @param url
 	 * @param resource
+	 * @return 
 	 * @throws MalformedURLException 
 	 */
     @Given("with remote create $type resource $url identified by $resource")
-    public void createNewResource(String type, String url, String resource) throws MalformedURLException {
-    	FileSystemResources.store(resource,type,url);
+    public IFileSystemResource createNewResource(String type, String url, String resource) throws MalformedURLException {
+    	if(url == null) {
+    		throw new MalformedURLException("Url cannot be null !!!");
+    	}
+    	return FileSystemResources.store(resource,type,url);
     }
     
     @When("with remote open resource '$resource'")
@@ -56,7 +69,76 @@ public class JBehaviourRemoteSteps {
     	return myResource.checkIfFileExist(file) == true;
     }
 
-    /**
+	/**
+	 * line formating
+	 * @param iCol
+	 * @param value
+	 * @return
+	 */
+	private String format(int iCol, String value) {
+		sbFormat.setLength(0);
+		if(iCol != 0) {
+			formatter.format("%-"+columnLength+"."+columnLength+"s |", value);
+		} else {
+			formatter.format("| %-"+columnLength+"."+columnLength+"s |", value);
+		}
+		return sbFormat.toString();
+	}
+	
+	/**
+	 * header formating
+	 * @param iCol
+	 * @param value
+	 * @return
+	 */
+	private String formatHeader(int iCol) {
+		sbFormat.setLength(0);
+		StringBuilder sb = new StringBuilder();
+		for(int i=0;i<columnLength;i++) sb.append('-');
+		if(iCol != 0) {
+			formatter.format("%-"+columnLength+"."+columnLength+"s-+", sb.toString());
+		} else {
+			formatter.format("+-%-"+columnLength+"."+columnLength+"s-+", sb.toString());
+		}
+		return sbFormat.toString();
+	}
+
+	private String toString(List<IResourcesItem> result) {
+		StringBuilder sb = new StringBuilder();
+		/**
+		 * compute header
+		 */
+		StringBuilder header = new StringBuilder();
+		int iColHeader=0;
+		for(;iColHeader<5;) {
+			header.append(formatHeader(iColHeader++));
+		}
+		header.append("\n");
+
+		sb.append("\nRow(s):" + result.size() + "\n");
+		sb.append(header);
+		int iCol=0;
+		sb.append(format(iCol++,"Name"));
+		sb.append(format(iCol++,"Long Name"));
+		sb.append(format(iCol++,"Size"));
+		sb.append(format(iCol++,"Can read"));
+		sb.append(format(iCol++,"Can write"));
+		sb.append("\n");
+		sb.append(header);
+		for(IResourcesItem line : result) {
+			int iColValue=0;
+			sb.append(format(iColValue++,line.getName()));
+			sb.append(format(iColValue++,line.getLongName()));
+			sb.append(format(iColValue++,line.getSize()+""));
+			sb.append(format(iColValue++,line.isCanRead()+""));
+			sb.append(format(iColValue++,line.isCanWrite()+""));
+			sb.append("\n");
+		}
+		sb.append(header);
+		return sb.toString();
+	}
+
+	/**
      * list remote dir
      * @param directory
      * @param resource
@@ -64,9 +146,11 @@ public class JBehaviourRemoteSteps {
      * @throws IOException
      */
     @Given("with remote list directory $directory on $resource")
-    public List<ResourcesItem> listDirectory(String directory, String resource) throws IOException {
+    public List<IResourcesItem> listDirectory(String directory, String resource) throws IOException {
     	IFileSystemResource myResource = FileSystemResources.get(resource);
-    	return myResource.listdir(directory);
+    	List<IResourcesItem> result = myResource.listdir(directory);
+    	System.out.println(toString(result));
+    	return result;
     }
 
     /**

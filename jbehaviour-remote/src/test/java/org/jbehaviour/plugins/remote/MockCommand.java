@@ -24,7 +24,7 @@ import org.apache.sshd.server.Command;
 import org.apache.sshd.server.Environment;
 import org.apache.sshd.server.ExitCallback;
 
-public class MockCommand implements Command {
+public class MockCommand implements Command, Runnable {
 
 	private ExitCallback callback;
 	private OutputStream err;
@@ -66,15 +66,28 @@ public class MockCommand implements Command {
 	}
 	@Override
 	public void start(Environment _env) throws IOException {
-		out.write(toByte("host fictif>\n"));
-		out.write(toByte("host fictif>a b\n"));
-		out.write(toByte("host fictif>a b c\n"));
-		out.flush();
-		in.close();
+		new Thread(this).start();
 	}
 
 	@Override
 	public void destroy() {
+	}
+
+	@Override
+	public void run() {
+		try {
+			System.err.println("Reading input");
+			in.read();
+			System.err.println("Writing output");
+			out.write(toByte("host fictif>\n"));
+			out.write(toByte("host fictif>a b\n"));
+			out.write(toByte("host fictif>a b c\n"));
+			out.flush();
+			System.err.println("Exiting ...");
+			callback.onExit(0, "Exiting ...");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -21,6 +21,8 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jbehaviour.plugins.remote.IResourcesItem;
+
 import com.sshtools.j2ssh.sftp.SftpFile;
 import com.sshtools.j2ssh.sftp.SftpSubsystemClient;
 
@@ -60,14 +62,22 @@ public class SftpFileSystemResource extends SslFileSystemResource {
 	public boolean checkIfFileExist(String filename) throws IOException {
 		if (openSession()) {
 			SftpFile local = session.openFile(filename, 0);
+			boolean exist = false;
+			try {
+				exist = local != null && 
+						local.getAttributes() != null && 
+						local.getAttributes().getPermissions() != null;
+			} catch(Exception e) {
+				exist = false;
+			}
 			closeSession();
-			return local != null;
+			return exist;
 		}
 		return false;
 	}
 
 	@Override
-	public List<ResourcesItem> listdir(String directory) throws IOException {
+	public List<IResourcesItem> listdir(String directory) throws IOException {
 		List<SftpFile> l = new ArrayList<SftpFile>();
 		if (openSession()) {
 			SftpFile result = session.openDirectory(directory);
@@ -75,11 +85,17 @@ public class SftpFileSystemResource extends SslFileSystemResource {
 			closeSession();
 		}
 		
-		List<ResourcesItem> res = new ArrayList<ResourcesItem>();
+		List<IResourcesItem> res = new ArrayList<IResourcesItem>();
 		for(SftpFile item : l) {
 			res.add(new ResourcesItem(item));
 		}
 		return res;
+	}
+
+	@Override
+	public String toString() {
+		return "SftpFileSystemResource [session=" + session + ", url=" + url
+				+ "]";
 	}
 
 }

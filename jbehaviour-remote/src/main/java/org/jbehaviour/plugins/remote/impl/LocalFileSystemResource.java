@@ -21,6 +21,8 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jbehaviour.plugins.remote.IResourcesItem;
+
 public class LocalFileSystemResource extends FileSystemResourceImpl {
 
 	public LocalFileSystemResource(String url) throws MalformedURLException {
@@ -34,8 +36,8 @@ public class LocalFileSystemResource extends FileSystemResourceImpl {
 	}
 
 	@Override
-	public List<ResourcesItem> listdir(String directory) {
-		List<ResourcesItem> res = new ArrayList<ResourcesItem>();
+	public List<IResourcesItem> listdir(String directory) {
+		List<IResourcesItem> res = new ArrayList<IResourcesItem>();
 		return res;
 	}
 
