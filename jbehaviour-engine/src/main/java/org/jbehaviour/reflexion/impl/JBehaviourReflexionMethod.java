@@ -34,6 +34,7 @@ import org.jbehaviour.annotation.Then;
 import org.jbehaviour.annotation.When;
 import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
+import org.jbehaviour.exception.JBehaviourStackTrace;
 import org.jbehaviour.parser.JBehaviourStatementParser;
 import org.jbehaviour.parser.model.IKeywordStatement;
 import org.jbehaviour.parser.model.IKeywordStatement.statement;
@@ -47,7 +48,8 @@ import com.thoughtworks.paranamer.CachingParanamer;
 import com.thoughtworks.paranamer.Paranamer;
 
 public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean {
-	Logger logger = LoggerFactory.getLogger(JBehaviourReflexionMethod.class);
+	protected Logger logger = LoggerFactory
+			.getLogger(JBehaviourReflexionMethod.class);
 
 	/**
 	 * method to invoke
@@ -57,9 +59,9 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 	 * original text (before parsing)
 	 */
 	private String text;
-	IKeywordStatement parsedStatement;
-	Map<String, Integer> parametersByName = new HashMap<String, Integer>();
-	Map<Integer, String> parametersByOrder = new HashMap<Integer, String>();
+	private IKeywordStatement parsedStatement;
+	private Map<String, Integer> parametersByName = new HashMap<String, Integer>();
+	private Map<Integer, String> parametersByOrder = new HashMap<Integer, String>();
 
 	private String[] parameterNames;
 
@@ -78,11 +80,11 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 	 * @throws IOException
 	 * @throws JBehaviourParsingError
 	 */
-	private void parse(statement _type, String _text, Method _method)
+	private void parse(statement type, String text, Method method)
 			throws IOException, JBehaviourParsingError {
-		type = _type;
-		methodToInvoke = _method;
-		text = _text;
+		this.type = type;
+		this.methodToInvoke = method;
+		this.text = text;
 		/**
 		 * parse the klass annotation value
 		 */
@@ -95,7 +97,7 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 				 */
 				String name = item.getValue()
 						.subSequence(1, item.getValue().length()).toString();
-				Integer position = new Integer(index++);
+				Integer position = Integer.valueOf(index++);
 				parametersByName.put(name, position);
 				parametersByOrder.put(position, name);
 			} else {
@@ -120,31 +122,32 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 		}
 	}
 
-	public JBehaviourReflexionMethod(Given _annotation, Method _method)
+	public JBehaviourReflexionMethod(Given annotation, Method method)
 			throws IOException, JBehaviourParsingError {
-		parse(IKeywordStatement.statement.Given, _annotation.value(), _method);
+		parse(IKeywordStatement.statement.Given, annotation.value(), method);
 	}
 
-	public JBehaviourReflexionMethod(When _annotation, Method _method)
+	public JBehaviourReflexionMethod(When annotation, Method method)
 			throws IOException, JBehaviourParsingError {
-		parse(IKeywordStatement.statement.When, _annotation.value(), _method);
+		parse(IKeywordStatement.statement.When, annotation.value(), method);
 	}
 
-	public JBehaviourReflexionMethod(Then _annotation, Method _method)
+	public JBehaviourReflexionMethod(Then annotation, Method method)
 			throws IOException, JBehaviourParsingError {
-		parse(IKeywordStatement.statement.Then, _annotation.value(), _method);
+		parse(IKeywordStatement.statement.Then, annotation.value(), method);
 	}
 
-	public JBehaviourReflexionMethod(Call _annotation, Method _method)
+	public JBehaviourReflexionMethod(Call annotation, Method method)
 			throws IOException, JBehaviourParsingError {
-		parse(IKeywordStatement.statement.Call, _annotation.value(), _method);
+		parse(IKeywordStatement.statement.Call, annotation.value(), method);
 	}
 
-	public boolean match(IKeywordStatement _parsedStatement) {
-		return parsedStatement.compareTo(_parsedStatement);
+	public boolean match(IKeywordStatement parsedStatement) {
+		return parsedStatement.compareTo(parsedStatement);
 	}
 
-	private Object invokeLocaly(Object object, Object[] args) throws Exception {
+	private Object invokeLocaly(Object object, Object[] args)
+			throws JBehaviourRuntimeError {
 		try {
 			return methodToInvoke.invoke(object, args);
 		} catch (IllegalAccessException e) {
@@ -153,8 +156,6 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 			throw new JBehaviourRuntimeError(e);
 		} catch (InvocationTargetException e) {
 			throw new JBehaviourRuntimeError(e);
-		} catch (Exception e) {
-			throw new Exception(e);
 		}
 	}
 
@@ -206,9 +207,10 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 		 * 
 		 * @param prefix
 		 * @param toDump
-		 * @throws JBehaviourRuntimeError 
+		 * @throws JBehaviourRuntimeError
 		 */
-		private void dump(String prefix, File toDump) throws JBehaviourRuntimeError {
+		private void dump(String prefix, File toDump)
+				throws JBehaviourRuntimeError {
 			try {
 				// Open the file that is the first
 				// command line parameter
@@ -225,14 +227,15 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 				// Close the input stream
 				in.close();
 			} catch (Exception e) {// Catch exception if any
-				e.printStackTrace();
+				JBehaviourStackTrace.printStackTrace(logger, e);
 				throw new JBehaviourRuntimeError(e);
 			}
 		}
 
 		/**
 		 * restore output
-		 * @throws JBehaviourRuntimeError 
+		 * 
+		 * @throws JBehaviourRuntimeError
 		 */
 		public void release() throws JBehaviourRuntimeError {
 			System.setOut(stdout);
@@ -243,8 +246,8 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 			/**
 			 * dump stdout and stderr for this execution to logger
 			 */
-			dump("STDOUT",fout);
-			dump("STDERR",ferr);
+			dump("STDOUT", fout);
+			dump("STDERR", ferr);
 		}
 
 		public File getFerr() {
@@ -255,6 +258,8 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 			return fout;
 		}
 	}
+
+	private static String FAIL = " fail";
 
 	public Object invoke(String pck, IBehaviourEnv env, Object object,
 			IKeywordStatement parsedStatement) throws JBehaviourParsingError,
@@ -269,9 +274,13 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 		/**
 		 * iterate on parameterNames
 		 */
-		if(logger.isDebugEnabled()) logger.debug("parameterNames: " + parameterNames.length);
+		if (logger.isDebugEnabled()) {
+			logger.debug("parameterNames: " + parameterNames.length);
+		}
 		for (String name : parameterNames) {
-			if(logger.isDebugEnabled()) logger.debug("name: " + name);
+			if (logger.isDebugEnabled()) {
+				logger.debug("name: " + name);
+			}
 			int position = parametersByName.get(name);
 
 			switch (parsedStatement.get(position).getType()) {
@@ -299,8 +308,10 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 				/**
 				 * this reference is an object, we must find it in env
 				 */
-				logger.debug("Lookup for " + name + " with "
-						+ parsedStatement.get(position).getValue());
+				if (logger.isDebugEnabled()) {
+					logger.debug("Lookup for " + name + " with "
+							+ parsedStatement.get(position).getValue());
+				}
 				/**
 				 * ignore first character : $, % ...
 				 */
@@ -311,7 +322,7 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 							+ name
 							+ " with id "
 							+ parsedStatement.get(position).getValue()
-									.substring(1) + " fail");
+									.substring(1) + FAIL);
 				} else {
 					logger.info("$"
 							+ parsedStatement.get(position).getValue()
@@ -320,16 +331,18 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 				break;
 			case Template:
 				/**
-				 * this template must be parsed
-				 * - as velocity template if target type is String
-				 * - as Object retrieve if target is not String
+				 * this template must be parsed - as velocity template if target
+				 * type is String - as Object retrieve if target is not String
 				 */
 				logger.info("Templating for " + name + " with "
-						+ parsedStatement.get(position).getValue() + " as " + methodToInvoke.getParameterTypes()[index]);
+						+ parsedStatement.get(position).getValue() + " as "
+						+ methodToInvoke.getParameterTypes()[index]);
 				try {
 					Object rawValue = parsedStatement.get(position).getValue();
-					Object asString = env.asString(parsedStatement.get(position).getValue());
-					Object asObject = env.asObject(parsedStatement.get(position).getValue());
+					Object asString = env.asString(parsedStatement
+							.get(position).getValue());
+					Object asObject = env.asObject(parsedStatement
+							.get(position).getValue());
 					if (rawValue.hashCode() == asObject.hashCode()) {
 						args[index] = asString;
 					} else {
@@ -347,7 +360,7 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 							+ name
 							+ " with id "
 							+ parsedStatement.get(position).getValue()
-									.substring(1) + " fail");
+									.substring(1) + FAIL);
 				}
 				break;
 			case Json:
@@ -364,12 +377,12 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 							+ name
 							+ " with id "
 							+ parsedStatement.get(position).getValue()
-									.substring(1) + " fail");
+									.substring(1) + FAIL);
 				}
 				break;
 			default:
 				logger.warn("Unknown type "
-						+ parsedStatement.get(position).getType() + " fail");
+						+ parsedStatement.get(position).getType() + FAIL);
 				break;
 			}
 			index++;
@@ -389,7 +402,7 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 				output = new SystemOut();
 				result = invokeLocaly(object, args);
 			} catch (Exception e) {
-				e.printStackTrace();
+				JBehaviourStackTrace.printStackTrace(logger, e);
 				logger.warn(e.getMessage());
 				excp = e;
 			}
