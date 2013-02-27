@@ -80,15 +80,15 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 	 * @throws IOException
 	 * @throws JBehaviourParsingError
 	 */
-	private void parse(statement type, String text, Method method)
+	private void parse(statement typeArg, String textArg, Method methodArg)
 			throws IOException, JBehaviourParsingError {
-		this.type = type;
-		this.methodToInvoke = method;
-		this.text = text;
+		this.type = typeArg;
+		this.methodToInvoke = methodArg;
+		this.text = textArg;
 		/**
 		 * parse the klass annotation value
 		 */
-		parsedStatement = (new JBehaviourStatementParser(text)).parse();
+		parsedStatement = (new JBehaviourStatementParser(this.text)).parse();
 		int index = 0;
 		for (IKeywordStatementElement item : parsedStatement.get()) {
 			if (item.getType() == IKeywordStatement.declareType.Reference) {
@@ -142,8 +142,8 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 		parse(IKeywordStatement.statement.Call, annotation.value(), method);
 	}
 
-	public boolean match(IKeywordStatement parsedStatement) {
-		return parsedStatement.compareTo(parsedStatement);
+	public boolean match(IKeywordStatement parsedStatementArg) {
+		return parsedStatement.compareTo(parsedStatementArg);
 	}
 
 	private Object invokeLocaly(Object object, Object[] args)

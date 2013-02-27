@@ -28,6 +28,7 @@ import org.jbehaviour.IBehaviourLauncher;
 import org.jbehaviour.IBehaviourScenario;
 import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
+import org.jbehaviour.exception.JBehaviourStackTrace;
 import org.jbehaviour.parser.JBehaviourParser;
 import org.jbehaviour.parser.model.FormalStory;
 import org.jbehaviour.parser.model.IKeywordStatement;
@@ -46,22 +47,25 @@ import org.slf4j.LoggerFactory;
  * this class implement the main of this system
  */
 public class JBehaviourLauncher implements IBehaviourLauncher {
-	static Logger logger = LoggerFactory.getLogger(JBehaviourLauncher.class);
+	static protected Logger logger = LoggerFactory
+			.getLogger(JBehaviourLauncher.class);
 	private IBehaviourEnv env;
 
 	private List<IBehaviourScenario> scenarios = new ArrayList<IBehaviourScenario>();
-	private Map<String,IBehaviourScenario> scenariosByName = new HashMap<String,IBehaviourScenario>();
+	private Map<String, IBehaviourScenario> scenariosByName = new HashMap<String, IBehaviourScenario>();
 	private Stack<IBehaviourScenario> stack = new Stack<IBehaviourScenario>();
 
 	/**
 	 * constructor
+	 * 
 	 * @throws JBehaviourParsingError
 	 */
 	public JBehaviourLauncher() throws JBehaviourParsingError {
-		env = new JBehaviourEnv(this,new JBehaviourReflexion(),new JBehaviourXRef());
+		env = new JBehaviourEnv(this, new JBehaviourReflexion(),
+				new JBehaviourXRef());
 	}
 
-	FormalStory parsedStory = null;
+	private FormalStory parsedStory = null;
 
 	@Override
 	public IBehaviourEnv getEnv() {
@@ -73,22 +77,14 @@ public class JBehaviourLauncher implements IBehaviourLauncher {
 		return parsedStory;
 	}
 
-	@Override
-	public boolean registerAndExecute(File story) throws JBehaviourParsingError, JBehaviourRuntimeError {
-		/**
-		 * story parser
-		 */
-		try {
-			parsedStory = (new JBehaviourParser(story)).parse();
-		} catch (JBehaviourParsingError e) {
-			e.printStackTrace();
-			return false;
-		}
-
-		/**
-		 * check for report configuration
-		 */
-		for(IKeywordStatement item : parsedStory.getFeature().getKeywordReports()) {
+	/**
+	 * check part
+	 * 
+	 * @throws JBehaviourParsingError
+	 */
+	private void registerAndExecuteCheck() throws JBehaviourParsingError {
+		for (IKeywordStatement item : parsedStory.getFeature()
+				.getKeywordReports()) {
 			KeywordReport report = (KeywordReport) item;
 			/**
 			 * check for class existence
@@ -96,147 +92,225 @@ public class JBehaviourLauncher implements IBehaviourLauncher {
 			try {
 				Class.forName(report.getKlass()).newInstance();
 			} catch (InstantiationException e) {
-				e.printStackTrace();
+				JBehaviourStackTrace.printStackTrace(logger, e);
 				throw new JBehaviourParsingError(e);
 			} catch (IllegalAccessException e) {
-				e.printStackTrace();
+				JBehaviourStackTrace.printStackTrace(logger, e);
 				throw new JBehaviourParsingError(e);
 			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
+				JBehaviourStackTrace.printStackTrace(logger, e);
 				throw new JBehaviourParsingError(e);
 			}
-			if(!(new File(report.getTemplate()).exists())) {
-				throw new JBehaviourParsingError("No template file " + report.getTemplate());
+			if (!(new File(report.getTemplate()).exists())) {
+				throw new JBehaviourParsingError("No template file "
+						+ report.getTemplate());
 			}
 		}
+	}
 
-		/**
-		 * read and execute it
-		 */
-		boolean result = registerAndExecuteStory(story, parsedStory);
-		
-		/**
-		 * dump xref
-		 * xref have collected all statistics elements during
-		 * story run
-		 */
+	/**
+	 * XRef par of register and execute process
+	 * 
+	 * @param story
+	 * @return
+	 * @throws JBehaviourParsingError
+	 */
+	private boolean registerAndExecuteXRef(File story)
+			throws JBehaviourParsingError {
 		env.getXRef().setName(story.getName());
-		for(IKeywordStatement item : parsedStory.getFeature().getKeywordReports()) {
+		for (IKeywordStatement item : parsedStory.getFeature()
+				.getKeywordReports()) {
 			KeywordReport report = (KeywordReport) item;
 			logger.info("Report: " + report.getKlass());
 			logger.info("Template: " + report.getTemplate());
 			logger.info("Output: " + report.getOutputFile());
 			try {
-				IBehaviourReport myReport = (IBehaviourReport) Class.forName(report.getKlass()).newInstance();
+				IBehaviourReport myReport = (IBehaviourReport) Class.forName(
+						report.getKlass()).newInstance();
 				myReport.init();
-				myReport.render(env.getRef(), new File(report.getTemplate()), new File(report.getOutputFile()));
+				myReport.render(env.getRef(), new File(report.getTemplate()),
+						new File(report.getOutputFile()));
 			} catch (InstantiationException e) {
-				e.printStackTrace();
+				JBehaviourStackTrace.printStackTrace(logger, e);
 				return false;
 			} catch (IllegalAccessException e) {
-				e.printStackTrace();
+				JBehaviourStackTrace.printStackTrace(logger, e);
 				return false;
 			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
+				JBehaviourStackTrace.printStackTrace(logger, e);
 				return false;
 			} catch (IOException e) {
-				e.printStackTrace();
+				JBehaviourStackTrace.printStackTrace(logger, e);
 				return false;
 			}
+		}
+		return true;
+	}
+
+	@Override
+	public boolean registerAndExecute(File story)
+			throws JBehaviourParsingError, JBehaviourRuntimeError {
+		/**
+		 * story parser
+		 */
+		try {
+			parsedStory = (new JBehaviourParser(story)).parse();
+		} catch (JBehaviourParsingError e) {
+			JBehaviourStackTrace.printStackTrace(logger, e);
+			return false;
+		}
+
+		/**
+		 * check for report configuration
+		 */
+		registerAndExecuteCheck();
+
+		/**
+		 * read and execute it
+		 */
+		boolean result = registerAndExecuteStory(story, parsedStory);
+
+		/**
+		 * dump xref xref have collected all statistics elements during story
+		 * run
+		 */
+		if (!registerAndExecuteXRef(story)) {
+			return false;
 		}
 
 		return result;
 	}
-	
-	@Override
-	public boolean registerAndExecuteStory(File story, FormalStory parsedStory) throws JBehaviourParsingError, JBehaviourRuntimeError {
-		/**
-		 * reflexion manager
-		 */
-		for(IKeywordStatement include : parsedStory.getFeature().getKeywordInclude()) {
+
+	/**
+	 * manage include
+	 * 
+	 * @return
+	 * @throws JBehaviourParsingError
+	 */
+	private boolean registerAndExecuteStoryInclude()
+			throws JBehaviourParsingError {
+		for (IKeywordStatement include : parsedStory.getFeature()
+				.getKeywordInclude()) {
 			/**
-			 * include all this object in current
-			 * transaction
+			 * include all this object in current transaction
 			 */
 			FormalStory includeStory = null;
 			try {
-				includeStory = (new JBehaviourParser(new File(include.getReference()))).parse();
+				includeStory = (new JBehaviourParser(new File(
+						include.getReference()))).parse();
 			} catch (JBehaviourParsingError e) {
-				e.printStackTrace();
+				JBehaviourStackTrace.printStackTrace(logger, e);
 				return false;
 			}
 
-			logger.info("Including "+includeStory.getScenarios().size()+" scenarios");
+			logger.info("Including " + includeStory.getScenarios().size()
+					+ " scenarios");
 			/**
 			 * add all register, declare ... of this story in current
 			 */
-			parsedStory.getFeature().includeRegister(includeStory.getFeature().getKeywordRegister());
-			parsedStory.getFeature().includeDeclare(includeStory.getFeature().getKeywordDeclare());
-			for(KeywordScenario scenario : includeStory.getScenarios()) {
+			parsedStory.getFeature().includeRegister(
+					includeStory.getFeature().getKeywordRegister());
+			parsedStory.getFeature().includeDeclare(
+					includeStory.getFeature().getKeywordDeclare());
+			for (KeywordScenario scenario : includeStory.getScenarios()) {
 				parsedStory.getScenarios().add(scenario);
 			}
 		}
-		for(IKeywordStatement register : parsedStory.getFeature().getKeywordRegister()) {
+		for (IKeywordStatement register : parsedStory.getFeature()
+				.getKeywordRegister()) {
 			try {
-				env.getRef().register(register.getReference(),register.getKlass());
+				env.getRef().register(register.getReference(),
+						register.getKlass());
 			} catch (JBehaviourParsingError e) {
-				e.printStackTrace();
+				JBehaviourStackTrace.printStackTrace(logger, e);
 				return false;
 			}
 		}
+		return true;
+	}
 
-		logger.info("Class registred: " + parsedStory.getFeature().getKeywordRegister().size());
+	/**
+	 * scan variable declaration
+	 * 
+	 * @throws JBehaviourParsingError
+	 * @throws JBehaviourRuntimeError
+	 */
+	private void registerAndExecuteStoryVariable()
+			throws JBehaviourParsingError, JBehaviourRuntimeError {
+		for (IKeywordStatement declare : parsedStory.getFeature()
+				.getKeywordDeclare()) {
+			switch (declare.getDeclareType()) {
+			case String:
+				env.getRef().declareString(declare.getReference(),
+						declare.extractLiteralAsString(3));
+				break;
+			case Json:
+				env.getRef().declareJson(declare.getReference(),
+						declare.extractLiteralAsString(3),
+						declare.get(4).getValue());
+				break;
+			default:
+				throw new JBehaviourRuntimeError("Type "
+						+ declare.getDeclareType() + " unknown");
+			}
+		}
+	}
+
+	@Override
+	public boolean registerAndExecuteStory(File story, FormalStory parsedStory)
+			throws JBehaviourParsingError, JBehaviourRuntimeError {
+		/**
+		 * manage includes declared in feature part
+		 */
+		if (!registerAndExecuteStoryInclude()) {
+			return false;
+		}
+
+		logger.info("Class registred: "
+				+ parsedStory.getFeature().getKeywordRegister().size());
 
 		/**
 		 * run variable declararion
 		 */
-		for(IKeywordStatement declare : parsedStory.getFeature().getKeywordDeclare()) {
-			switch(declare.getDeclareType()) {
-				case String:
-					env.getRef().declareString(declare.getReference(),declare.extractLiteralAsString(3));
-					break;
-				case Json:
-					env.getRef().declareJson(declare.getReference(),declare.extractLiteralAsString(3),declare.get(4).getValue());
-					break;
-				default:
-					throw new JBehaviourRuntimeError("Type " + declare.getDeclareType() + " unknown" );
-			}
-		}
+		registerAndExecuteStoryVariable();
 
 		/**
 		 * now scenario by scenario execute all of them
 		 */
-		for(KeywordScenario parsedScenario : parsedStory.getScenarios()) {
+		for (KeywordScenario parsedScenario : parsedStory.getScenarios()) {
 			String key = parsedScenario.getStatement();
-			if(scenariosByName.containsKey(key)) {
+			if (scenariosByName.containsKey(key)) {
 				logger.error("Scenario statement must be unique : " + key);
-				throw new JBehaviourRuntimeError("Scenario statement must be unique : " + key);
+				throw new JBehaviourRuntimeError(
+						"Scenario statement must be unique : " + key);
 			} else {
 				IBehaviourScenario s = compile(parsedScenario);
 				scenariosByName.put(key, s);
-				scenarios.add(s);				
+				scenarios.add(s);
 			}
 		}
+
 		/**
 		 * fix calling stack
 		 */
-		for(IBehaviourScenario scenario : scenarios) {
+		for (IBehaviourScenario scenario : scenarios) {
 			scenario.setCallers(scenarios);
 		}
+
 		/**
 		 * execute all scenarios
 		 */
 		boolean result = true;
-		for(IBehaviourScenario key : scenarios) {
+		for (IBehaviourScenario key : scenarios) {
 			/**
-			 * only primary scenario can be executed
-			 * (called scenario are not directly run)
+			 * only primary scenario can be executed (called scenario are not
+			 * directly run)
 			 */
-			if(key.getCallers().size() == 0) {
+			if (key.getCallers().size() == 0) {
 				result = result & executeByStatement(key.getStatement());
 			}
 		}
-		
+
 		/**
 		 * global result
 		 */
@@ -244,26 +318,30 @@ public class JBehaviourLauncher implements IBehaviourLauncher {
 	}
 
 	@Override
-	public IBehaviourScenario compile(KeywordScenario parsedScenario) throws JBehaviourRuntimeError {
+	public IBehaviourScenario compile(KeywordScenario parsedScenario)
+			throws JBehaviourRuntimeError {
 		IBehaviourScenario scenario = new JBehaviourScenario(parsedScenario);
 		IBehaviourReflexionContext context = null;
-		for(IKeywordStatement step : parsedScenario.getKeywords()) {
+		for (IKeywordStatement step : parsedScenario.getKeywords()) {
 			logger.info("Compile : " + step.getStatement());
 			try {
-				context = env.getRef().retrieve(parsedScenario.getTextLikeMethod(),step.getType(),step.getStatement());
+				context = env.getRef().retrieve(
+						parsedScenario.getTextLikeMethod(), step.getType(),
+						step.getStatement());
 			} catch (JBehaviourParsingError e) {
-				e.printStackTrace();
+				JBehaviourStackTrace.printStackTrace(logger, e);
 				throw new JBehaviourRuntimeError(e);
 			} catch (JBehaviourRuntimeError e) {
-				e.printStackTrace();
+				JBehaviourStackTrace.printStackTrace(logger, e);
 				throw e;
 			}
 			/**
 			 * context must be found
 			 */
-			if(context == null) {
+			if (context == null) {
 				logger.error("Unable to find step " + step.getStatement());
-				throw new JBehaviourRuntimeError("Unable to find step " + step.getStatement());
+				throw new JBehaviourRuntimeError("Unable to find step "
+						+ step.getStatement());
 			} else {
 				scenario.add(context);
 			}
@@ -272,58 +350,68 @@ public class JBehaviourLauncher implements IBehaviourLauncher {
 	}
 
 	@Override
-	public boolean execute(IBehaviourScenario scenario) throws JBehaviourRuntimeError {
+	public boolean execute(IBehaviourScenario scenario)
+			throws JBehaviourRuntimeError {
 		/**
 		 * push this call in the call stack
 		 */
 		stack.push(scenario);
 		try {
-			logger.info("Scenario running : " + scenario.getStatement() + " / " + stack.size() + " / " + scenario.getCallers());
-			if(logger.isDebugEnabled()) {
+			logger.info("Scenario running : " + scenario.getStatement() + " / "
+					+ stack.size() + " / " + scenario.getCallers());
+			if (logger.isDebugEnabled()) {
 				StringBuilder sLevel = new StringBuilder();
-				for(IBehaviourScenario item : stack) {
-					logger.info(sLevel.toString() + "[+] " + item.getStatement());
+				for (IBehaviourScenario item : stack) {
+					logger.info(sLevel.toString() + "[+] "
+							+ item.getStatement());
 					sLevel.append("    ");
 				}
 			}
-			for(IBehaviourReflexionContext step : scenario.getContexts()) {
+			for (IBehaviourReflexionContext step : scenario.getContexts()) {
 				logger.info("Step running : " + step.getStatement());
 				Object ret = null;
 				try {
 					/**
-					 * we have found this step, no we can execute
-					 * it
+					 * we have found this step, no we can execute it
 					 */
 					ret = step.execute(env);
 				} catch (JBehaviourParsingError e) {
-					e.printStackTrace();
+					JBehaviourStackTrace.printStackTrace(logger, e);
 					return false;
 				} catch (JBehaviourRuntimeError e) {
-					e.printStackTrace();
+					JBehaviourStackTrace.printStackTrace(logger, e);
 					return false;
 				}
 				logger.info("Result is " + ret);
-				switch(step.getType()) {
-					case Given:
-					case Call:
-					case When:
-						/**
-						 * Given, Call and When return value have
-						 * no action on the execution
-						 */
-						break;
-					case Then:
-						/**
-						 * Then statement are special statement, because
-						 * return must be analyzed and checked to continue
-						 * false break the scenario/story execution
-						 */
-						if(ret == null) {
-							throw new JBehaviourRuntimeError(step.toString() + " : return on Then keyword cannot be null !!!");
-						}
-						if((Boolean) ret == false) return (Boolean) ret;
-					default:
-						break;
+				switch (step.getType()) {
+				case Given:
+				case Call:
+				case When:
+					/**
+					 * Given, Call and When return value have no action on the
+					 * execution
+					 */
+					break;
+				case Then:
+					/**
+					 * Then statement are special statement, because return must
+					 * be analyzed and checked to continue false break the
+					 * scenario/story execution
+					 */
+					if (ret == null) {
+						throw new JBehaviourRuntimeError(
+								step.toString()
+										+ " : return on Then keyword cannot be null !!!");
+					}
+					
+					/**
+					 * false return abort the process
+					 */
+					if ((Boolean) ret == false) {
+						return (Boolean) ret;
+					}
+				default:
+					break;
 				}
 			}
 			return true;
@@ -333,7 +421,8 @@ public class JBehaviourLauncher implements IBehaviourLauncher {
 	}
 
 	@Override
-	public boolean executeByStatement(String name) throws JBehaviourRuntimeError {
+	public boolean executeByStatement(String name)
+			throws JBehaviourRuntimeError {
 		return execute(scenariosByName.get(name));
 	}
 }
