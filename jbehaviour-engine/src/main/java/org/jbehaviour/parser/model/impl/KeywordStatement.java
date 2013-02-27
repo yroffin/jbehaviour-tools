@@ -25,7 +25,7 @@ import org.jbehaviour.parser.model.IKeywordStatementElement;
 
 public class KeywordStatement implements IKeywordStatement {
 
-	statement type = statement.None;
+	protected statement type = statement.None;
 	
 	public String getStatement() {
 		StringBuilder sb = new StringBuilder();

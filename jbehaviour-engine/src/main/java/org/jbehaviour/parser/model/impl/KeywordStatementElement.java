@@ -21,48 +21,36 @@ import org.jbehaviour.parser.model.IKeywordStatementElement;
 import org.jbehaviour.parser.model.IKeywordStatement.declareType;
 
 class KeywordStatementElement implements IKeywordStatementElement {
-	declareType type;
-	String value;
+	private declareType type;
+	private String value;
 
 	KeywordStatementElement(declareType type, String value) {
 		setType(type);
 		setValue(value);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jbehaviour.parser.model.IKeywordStatementElement#getType()
-	 */
 	@Override
 	public declareType getType() {
 		return type;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jbehaviour.parser.model.IKeywordStatementElement#setType(org.jbehaviour.parser.model.IKeywordStatement.declareType)
-	 */
 	@Override
 	public void setType(declareType type) {
 		this.type = type;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jbehaviour.parser.model.IKeywordStatementElement#getValue()
-	 */
 	@Override
 	public String getValue() {
 		return value;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jbehaviour.parser.model.IKeywordStatementElement#setValue(java.lang.String)
-	 */
 	@Override
 	public void setValue(String value) {
 		this.value = value;
 	}
 
 	@Override
-	public boolean equals(IKeywordStatementElement iKeywordStatementElement) {
+	public boolean isLike(IKeywordStatementElement iKeywordStatementElement) {
 		return iKeywordStatementElement.getValue().toLowerCase().compareTo(value.toLowerCase()) == 0;
 	}
 

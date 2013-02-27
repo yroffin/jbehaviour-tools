@@ -62,7 +62,7 @@ public class JBehaviourReportRun implements IBehaviourReportRun {
 		duration = _duration;
 		name = _name;
 		object = _object;
-		args = _args;
+		args = _args.clone();
 		text = _text;
 		StringBuilder sb = new StringBuilder();
 		for(String item : _text.split(" ")) {

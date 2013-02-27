@@ -29,7 +29,7 @@ public interface IKeywordStatementElement {
 
 	public abstract void setValue(String value);
 
-	public boolean equals(IKeywordStatementElement iKeywordStatementElement);
+	public boolean isLike(IKeywordStatementElement iKeywordStatementElement);
 
 	/**
 	 * value manipulation

@@ -31,17 +31,17 @@ public class SystemAsyncThread extends Thread implements ISystemAsyncTread {
 	private ProcessBuilder pb;
 	private int result = -999999999;
 
-	BufferedWriter stdin = null;
-	InputStream stderr = null;
-	InputStream stdout = null;
+	private BufferedWriter stdin = null;
+	private InputStream stderr = null;
+	private InputStream stdout = null;
 	
-	int iStdout = 0;
-	int iStderr = 0;
-	StringBuilder sbStdout = new StringBuilder();
-	StringBuilder sbStderr = new StringBuilder();
+	private int iStdout = 0;
+	private int iStderr = 0;
+	private StringBuilder sbStdout = new StringBuilder();
+	private StringBuilder sbStderr = new StringBuilder();
 
-	List<String> stdoutAsList = new ArrayList<String>();
-	List<String> stderrAsList = new ArrayList<String>();
+	private List<String> stdoutAsList = new ArrayList<String>();
+	private List<String> stderrAsList = new ArrayList<String>();
 
 	public SystemAsyncThread(List<String> args) {
 		pb = new ProcessBuilder(args);

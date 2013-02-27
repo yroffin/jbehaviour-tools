@@ -25,7 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class KeywordFeature extends KeywordStatement {
-	static Logger logger = LoggerFactory.getLogger(KeywordFeature.class);
+	private static Logger logger = LoggerFactory.getLogger(KeywordFeature.class);
 
 	public KeywordFeature() {
 		type = IKeywordStatement.statement.Feature;

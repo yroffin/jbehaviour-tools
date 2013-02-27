@@ -26,7 +26,7 @@ import org.jbehaviour.parser.model.IKeywordStatement;
 import org.jbehaviour.parser.model.impl.KeywordAny;
 
 public class JBehaviourStatementParser extends AnotherStoryGrammerParser {
-	Logger logger = LoggerFactory.getLogger(JBehaviourStatementParser.class);
+	protected Logger logger = LoggerFactory.getLogger(JBehaviourStatementParser.class);
 
 	JBehahiourStoryLexer lexer;
 	
@@ -72,14 +72,18 @@ public class JBehaviourStatementParser extends AnotherStoryGrammerParser {
 
 	@Override
 	public void onDebug(String where, String value) {
-		if(logger.isDebugEnabled()) logger.debug(where + " [" + value + "]");
+		if(logger.isDebugEnabled()) {
+			logger.debug(where + " [" + value + "]");
+		}
 	}
 
 	@Override
 	public void onAnyNumeric(String value) {
 		super.onAnyNumeric(value);
 		if(current != null) {
-			if(logger.isDebugEnabled()) logger.debug("on "+current.getType()+" any integer: " + value);
+			if(logger.isDebugEnabled()) {
+				logger.debug("on "+current.getType()+" any integer: " + value);
+			}
 			current.someInteger(value);
 		} else {
 			logger.error("Internal error");
@@ -89,28 +93,36 @@ public class JBehaviourStatementParser extends AnotherStoryGrammerParser {
 	@Override
 	public void onAnyString(String value) {
 		super.onAnyString(value);
-		if(logger.isDebugEnabled()) logger.debug("on scenario/any string: " + value);
+		if(logger.isDebugEnabled()) {
+			logger.debug("on scenario/any string: " + value);
+		}
 		current.someString(value);
 	}
 
 	@Override
 	public void onAnyIdentifier(String value) {
 		super.onAnyIdentifier(value);
-		logger.debug("on scenario/any identifier: " + value);
+		if(logger.isDebugEnabled()) {
+			logger.debug("on scenario/any identifier: " + value);
+		}
 		current.someIdentifier(value);
 	}
 
 	@Override
 	public void onAnyReference(String value) {
 		super.onAnyReference(value);
-		logger.debug("on scenario/any reference: " + value);
+		if(logger.isDebugEnabled()) {
+			logger.debug("on scenario/any reference: " + value);
+		}
 		current.someReference(value);
 	}
 
 	@Override
 	public void onAnyTemplate(String value) {
 		super.onAnyTemplate(value);
-		logger.debug("on scenario/any template: " + value);
+		if(logger.isDebugEnabled()) {
+			logger.debug("on scenario/any template: " + value);
+		}
 		current.someTemplate(value);
 	}
 
@@ -118,7 +130,9 @@ public class JBehaviourStatementParser extends AnotherStoryGrammerParser {
 	public void onAnyJsonObject(String value) {
 		super.onAnyJsonObject(value);
 		if(current != null) {
-			if(logger.isDebugEnabled()) logger.debug("on "+current.getType()+" any json: " + value);
+			if(logger.isDebugEnabled()) {
+				logger.debug("on "+current.getType()+" any json: " + value);
+			}
 			current.someJson(value);
 		} else {
 			logger.error("Internal error");

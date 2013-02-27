@@ -77,14 +77,18 @@ public class JBehaviourParser extends AnotherStoryGrammerParser {
 
 	@Override
 	public void onDebug(String where, String value) {
-		if(logger.isDebugEnabled()) logger.debug(where + " [" + value + "]");
+		if(logger.isDebugEnabled()) {
+			logger.debug(where + " [" + value + "]");
+		}
 	}
 
 	@Override
 	public void onAnyString(String value) {
 		super.onAnyString(value);
 		if(current != null) {
-			if(logger.isDebugEnabled())logger.debug("on "+current.getType()+" any string: " + value);
+			if(logger.isDebugEnabled()) {
+				logger.debug("on "+current.getType()+" any string: " + value);
+			}
 			current.someString(value);
 		} else {
 			logger.error("Internal error");
@@ -95,7 +99,9 @@ public class JBehaviourParser extends AnotherStoryGrammerParser {
 	public void onAnyNumeric(String value) {
 		super.onAnyNumeric(value);
 		if(current != null) {
-			if(logger.isDebugEnabled()) logger.debug("on "+current.getType()+" any integer: " + value);
+			if(logger.isDebugEnabled()) {
+				logger.debug("on "+current.getType()+" any integer: " + value);
+			}
 			current.someInteger(value);
 		} else {
 			logger.error("Internal error");
@@ -106,7 +112,9 @@ public class JBehaviourParser extends AnotherStoryGrammerParser {
 	public void onAnyIdentifier(String value) {
 		super.onAnyIdentifier(value);
 		if(current != null) {
-			logger.debug("on "+current.getType()+" any identifier: " + value);
+			if(logger.isDebugEnabled()) {
+				logger.debug("on "+current.getType()+" any identifier: " + value);
+			}
 			current.someIdentifier(value);
 		} else {
 			logger.error("Internal error");
@@ -117,7 +125,9 @@ public class JBehaviourParser extends AnotherStoryGrammerParser {
 	public void onAnyReference(String value) {
 		super.onAnyReference(value);
 		if(current != null) {
-			if(logger.isDebugEnabled()) logger.debug("on "+current.getType()+" any reference: " + value);
+			if(logger.isDebugEnabled()) {
+				logger.debug("on "+current.getType()+" any reference: " + value);
+			}
 			current.someReference(value);
 		} else {
 			logger.error("Internal error");
@@ -128,7 +138,9 @@ public class JBehaviourParser extends AnotherStoryGrammerParser {
 	public void onAnyTemplate(String value) {
 		super.onAnyTemplate(value);
 		if(current != null) {
-			if(logger.isDebugEnabled()) logger.debug("on "+current.getType()+" any template: " + value);
+			if(logger.isDebugEnabled()) {
+				logger.debug("on "+current.getType()+" any template: " + value);
+			}
 			current.someTemplate(value);
 		} else {
 			logger.error("Internal error");
@@ -139,7 +151,9 @@ public class JBehaviourParser extends AnotherStoryGrammerParser {
 	public void onAnyJsonObject(String value) {
 		super.onAnyJsonObject(value);
 		if(current != null) {
-			if(logger.isDebugEnabled()) logger.debug("on "+current.getType()+" any json: " + value);
+			if(logger.isDebugEnabled()) {
+				logger.debug("on "+current.getType()+" any json: " + value);
+			}
 			current.someJson(value);
 		} else {
 			logger.error("Internal error");
@@ -149,42 +163,54 @@ public class JBehaviourParser extends AnotherStoryGrammerParser {
 	@Override
 	public void onFeatureKeyword() {
 		super.onFeatureRegisterKeyword();
-		if(logger.isDebugEnabled()) logger.debug("on feature");
+		if(logger.isDebugEnabled()) {
+			logger.debug("on feature");
+		}
 		current = story.getFeature();
 	}
 
 	@Override
 	public void onFeatureIncludeKeyword() {
 		super.onFeatureIncludeKeyword();
-		if(logger.isDebugEnabled()) logger.debug("on feature/include");
+		if(logger.isDebugEnabled()) {
+			logger.debug("on feature/include");
+		}
 		current = story.getFeature().addIncludeStatement();
 	}
 
 	@Override
 	public void onFeatureRegisterKeyword() {
 		super.onFeatureRegisterKeyword();
-		if(logger.isDebugEnabled()) logger.debug("on feature/register");
+		if(logger.isDebugEnabled()) {
+			logger.debug("on feature/register");
+		}
 		current = story.getFeature().addRegisterStatement();
 	}
 
 	@Override
 	public void onFeatureReportKeyword() {
 		super.onFeatureReportKeyword();
-		if(logger.isDebugEnabled()) logger.debug("on feature/report");
+		if(logger.isDebugEnabled()) {
+			logger.debug("on feature/report");
+		}
 		current = story.getFeature().addReportStatement();
 	}
 
 	@Override
 	public void onFeatureDeclareKeyword() {
 		super.onFeatureDeclareKeyword();
-		if(logger.isDebugEnabled()) logger.debug("on feature/declare");
+		if(logger.isDebugEnabled()) {
+			logger.debug("on feature/declare");
+		}
 		current = story.getFeature().addDeclareStatement();
 	}
 
 	@Override
 	public void onScenarioKeyword() {
 		super.onScenarioKeyword();
-		if(logger.isDebugEnabled()) logger.debug("on scenario");
+		if(logger.isDebugEnabled()) {
+			logger.debug("on scenario");
+		}
 		scenario = story.addScenario();
 		current = scenario;
 	}
@@ -192,28 +218,36 @@ public class JBehaviourParser extends AnotherStoryGrammerParser {
 	@Override
 	public void onGivenKeyword() {
 		super.onGivenKeyword();
-		if(logger.isDebugEnabled()) logger.debug("on scenario/given");
+		if(logger.isDebugEnabled()) {
+			logger.debug("on scenario/given");
+		}
 		current = scenario.addGivenStatement();
 	}
 
 	@Override
 	public void onWhenKeyword() {
 		super.onWhenKeyword();
-		if(logger.isDebugEnabled()) logger.debug("on scenario/when");
+		if(logger.isDebugEnabled()) {
+			logger.debug("on scenario/when");
+		}
 		current = scenario.addWhenStatement();
 	}
 
 	@Override
 	public void onThenKeyword() {
 		super.onThenKeyword();
-		if(logger.isDebugEnabled()) logger.debug("on scenario/then");
+		if(logger.isDebugEnabled()) {
+			logger.debug("on scenario/then");
+		}
 		current = scenario.addThenStatement();
 	}
 
 	@Override
 	public void onCallKeyword() {
 		super.onCallKeyword();
-		if(logger.isDebugEnabled()) logger.debug("on scenario/call");
+		if(logger.isDebugEnabled()) {
+			logger.debug("on scenario/call");
+		}
 		current = scenario.addCallStatement();
 	}
 
@@ -227,7 +261,7 @@ public class JBehaviourParser extends AnotherStoryGrammerParser {
 			error = 0;
 			lexer.setError(0);
 			story = new FormalStory();
-			story_return result = story();
+			story();
 			if(lexer.getError()>0) throw new JBehaviourParsingError("This story has lexer errors");
 			if(error>0) throw new JBehaviourParsingError("This story has parsing errors");
 			return story;

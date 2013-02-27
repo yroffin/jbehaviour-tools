@@ -34,7 +34,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class JBehaviourReflexionBean implements IBehaviourReflexionBean {
-	Logger logger = LoggerFactory.getLogger(JBehaviourReflexionBean.class);
+	protected Logger logger = LoggerFactory.getLogger(JBehaviourReflexionBean.class);
 
 	List<IBehaviourReflexionMethodBean> anys   = new ArrayList<IBehaviourReflexionMethodBean>();
 	List<IBehaviourReflexionMethodBean> givens = new ArrayList<IBehaviourReflexionMethodBean>();
