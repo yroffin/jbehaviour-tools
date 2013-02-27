@@ -24,12 +24,12 @@ import com.sshtools.j2ssh.sftp.SftpFile;
 
 public class ResourcesItem implements IResourcesItem {
 
-	String name;
-	String fullName;
-	String longName;
-	boolean canRead;
-	boolean canWrite;
-	long size;
+	private String name;
+	private String fullName;
+	private String longName;
+	private boolean canRead;
+	private boolean canWrite;
+	private long size;
 	
 	@Override
 	public String toString() {
@@ -43,12 +43,12 @@ public class ResourcesItem implements IResourcesItem {
 	 * @param l
 	 */
 	public ResourcesItem(SftpFile l) {
-		setName(l.getFilename());
-		setLongName(l.getLongname());
-		setCanRead(l.canRead());
-		setCanWrite(l.canWrite());
-		setSize(l.getAttributes().getSize().longValue());
-		setFullName(l.getAbsolutePath());
+		this.name = l.getFilename();
+		this.longName = l.getLongname();
+		this.canRead = l.canRead();
+		this.canWrite = l.canWrite();
+		this.size = l.getAttributes().getSize().longValue();
+		this.fullName = l.getAbsolutePath();
 	}
 
 	/**
@@ -56,12 +56,12 @@ public class ResourcesItem implements IResourcesItem {
 	 * @param l
 	 */
 	public ResourcesItem(File l) {
-		setName(l.getName());
-		setLongName(l.getAbsolutePath());
-		setCanRead(l.canRead());
-		setCanWrite(l.canWrite());
-		setSize(l.length());
-		setFullName(l.getAbsolutePath());
+		this.name = l.getName();
+		this.longName = l.getAbsolutePath();
+		this.canRead = l.canRead();
+		this.canWrite = l.canWrite();
+		this.size = l.length();
+		this.fullName = l.getAbsolutePath();
 	}
 
 	public String getFullName() {
@@ -118,7 +118,7 @@ public class ResourcesItem implements IResourcesItem {
 	}
 
 	@Override
-	public void setSize(long _size) {
-		this.size = _size;
+	public void setSize(long size) {
+		this.size = size;
 	}
 }

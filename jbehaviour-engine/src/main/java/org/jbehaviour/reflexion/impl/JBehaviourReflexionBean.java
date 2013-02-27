@@ -30,40 +30,43 @@ import org.jbehaviour.parser.model.IKeywordStatement;
 import org.jbehaviour.reflexion.IBehaviourEnv;
 import org.jbehaviour.reflexion.IBehaviourReflexionBean;
 import org.jbehaviour.reflexion.IBehaviourReflexionMethodBean;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class JBehaviourReflexionBean implements IBehaviourReflexionBean {
-	protected Logger logger = LoggerFactory.getLogger(JBehaviourReflexionBean.class);
 
-	List<IBehaviourReflexionMethodBean> anys   = new ArrayList<IBehaviourReflexionMethodBean>();
-	List<IBehaviourReflexionMethodBean> givens = new ArrayList<IBehaviourReflexionMethodBean>();
-	List<IBehaviourReflexionMethodBean> whens  = new ArrayList<IBehaviourReflexionMethodBean>();
-	List<IBehaviourReflexionMethodBean> thens  = new ArrayList<IBehaviourReflexionMethodBean>();
-	List<IBehaviourReflexionMethodBean> calls  = new ArrayList<IBehaviourReflexionMethodBean>();
+	private List<IBehaviourReflexionMethodBean> anys = new ArrayList<IBehaviourReflexionMethodBean>();
+	private List<IBehaviourReflexionMethodBean> givens = new ArrayList<IBehaviourReflexionMethodBean>();
+	private List<IBehaviourReflexionMethodBean> whens = new ArrayList<IBehaviourReflexionMethodBean>();
+	private List<IBehaviourReflexionMethodBean> thens = new ArrayList<IBehaviourReflexionMethodBean>();
+	private List<IBehaviourReflexionMethodBean> calls = new ArrayList<IBehaviourReflexionMethodBean>();
 
-	protected String klass;
-	protected Class<?> myKlass;
-	
-	public JBehaviourReflexionBean(String _klass, Class<?> _myKlass) {
-		klass = _klass;
-		myKlass = _myKlass;
+	private String klass;
+	private Class<?> myKlass;
+
+	public JBehaviourReflexionBean(String klass, Class<?> myKlass) {
+		this.klass = klass;
+		this.myKlass = myKlass;
 	}
-	
-	public void addGiven(Given annotation, Method method) throws IOException, JBehaviourParsingError {
-		JBehaviourReflexionMethod local = new JBehaviourReflexionMethod(annotation,method);
+
+	public void addGiven(Given annotation, Method method) throws IOException,
+			JBehaviourParsingError {
+		JBehaviourReflexionMethod local = new JBehaviourReflexionMethod(
+				annotation, method);
 		givens.add(local);
 		anys.add(local);
 	}
-	
-	public void addWhen(When annotation, Method method) throws IOException, JBehaviourParsingError {
-		JBehaviourReflexionMethod local = new JBehaviourReflexionMethod(annotation,method);
+
+	public void addWhen(When annotation, Method method) throws IOException,
+			JBehaviourParsingError {
+		JBehaviourReflexionMethod local = new JBehaviourReflexionMethod(
+				annotation, method);
 		whens.add(local);
 		anys.add(local);
 	}
-	
-	public void addThen(Then annotation, Method method) throws IOException, JBehaviourParsingError {
-		JBehaviourReflexionMethod local = new JBehaviourReflexionMethod(annotation,method);
+
+	public void addThen(Then annotation, Method method) throws IOException,
+			JBehaviourParsingError {
+		JBehaviourReflexionMethod local = new JBehaviourReflexionMethod(
+				annotation, method);
 		thens.add(local);
 		anys.add(local);
 	}
@@ -71,31 +74,41 @@ public class JBehaviourReflexionBean implements IBehaviourReflexionBean {
 	@Override
 	public void addCall(Call annotation, Method method) throws IOException,
 			JBehaviourParsingError {
-		JBehaviourReflexionMethod local = new JBehaviourReflexionMethod(annotation,method);
+		JBehaviourReflexionMethod local = new JBehaviourReflexionMethod(
+				annotation, method);
 		calls.add(local);
 		anys.add(local);
 	}
 
 	@Override
-	public IBehaviourReflexionMethodBean matchGiven(IKeywordStatement parsedStatement) {
-		for(IBehaviourReflexionMethodBean behaviour : givens) {
-			if(behaviour.match(parsedStatement)) return behaviour;
+	public IBehaviourReflexionMethodBean matchGiven(
+			IKeywordStatement parsedStatement) {
+		for (IBehaviourReflexionMethodBean behaviour : givens) {
+			if (behaviour.match(parsedStatement)) {
+				return behaviour;
+			}
 		}
 		return null;
 	}
 
 	@Override
-	public IBehaviourReflexionMethodBean matchWhen(IKeywordStatement parsedStatement) {
-		for(IBehaviourReflexionMethodBean behaviour : whens) {
-			if(behaviour.match(parsedStatement)) return behaviour;
+	public IBehaviourReflexionMethodBean matchWhen(
+			IKeywordStatement parsedStatement) {
+		for (IBehaviourReflexionMethodBean behaviour : whens) {
+			if (behaviour.match(parsedStatement)) {
+				return behaviour;
+			}
 		}
 		return null;
 	}
 
 	@Override
-	public IBehaviourReflexionMethodBean matchThen(IKeywordStatement parsedStatement) {
-		for(IBehaviourReflexionMethodBean behaviour : thens) {
-			if(behaviour.match(parsedStatement)) return behaviour;
+	public IBehaviourReflexionMethodBean matchThen(
+			IKeywordStatement parsedStatement) {
+		for (IBehaviourReflexionMethodBean behaviour : thens) {
+			if (behaviour.match(parsedStatement)) {
+				return behaviour;
+			}
 		}
 		return null;
 	}
@@ -103,13 +116,24 @@ public class JBehaviourReflexionBean implements IBehaviourReflexionBean {
 	@Override
 	public IBehaviourReflexionMethodBean matchCall(
 			IKeywordStatement parsedStatement) {
-		for(IBehaviourReflexionMethodBean behaviour : calls) {
-			if(behaviour.match(parsedStatement)) return behaviour;
+		for (IBehaviourReflexionMethodBean behaviour : calls) {
+			if (behaviour.match(parsedStatement)) {
+				return behaviour;
+			}
 		}
 		return null;
 	}
 
-	public Object getInstance(IBehaviourEnv env) throws InstantiationException, IllegalAccessException, ClassNotFoundException, JBehaviourParsingError {
+	public Object getInstance(IBehaviourEnv env) throws InstantiationException,
+			IllegalAccessException, ClassNotFoundException,
+			JBehaviourParsingError {
 		return env.getInstance(klass);
+	}
+
+	@Override
+	public String toString() {
+		return "JBehaviourReflexionBean [anys=" + anys + ", givens=" + givens
+				+ ", whens=" + whens + ", thens=" + thens + ", calls=" + calls
+				+ ", klass=" + klass + ", myKlass=" + myKlass + "]";
 	}
 }
