@@ -84,7 +84,7 @@ public class KeywordStatement implements IKeywordStatement {
 					matcher++;
 					break;
 				case Identifier:
-					if(item.equals(_parsedStatement.get(index))) matcher++;
+					if(item.isLike(_parsedStatement.get(index))) matcher++;
 					break;
 				default:
 					/**
