@@ -51,6 +51,11 @@ public class JBehaviourRemoteSteps {
     	return FileSystemResources.store(resource,type,url);
     }
     
+    /**
+     * open a remote resource
+     * @param resource
+     * @throws IOException
+     */
     @When("with remote open resource '$resource'")
     public void openResource(String resource) throws IOException {
     	IFileSystemResource myResource = FileSystemResources.get(resource);
@@ -103,6 +108,11 @@ public class JBehaviourRemoteSteps {
 		return sbFormat.toString();
 	}
 
+	/**
+	 * internal method to dump a list to stdout
+	 * @param result
+	 * @return
+	 */
 	private String toString(List<IResourcesItem> result) {
 		StringBuilder sb = new StringBuilder();
 		/**
@@ -164,5 +174,33 @@ public class JBehaviourRemoteSteps {
     public List<String> executeCommand(String command, String resource) throws IOException {
     	IFileSystemResource myResource = FileSystemResources.get(resource);
     	return myResource.execute(command);
+    }
+
+    /**
+     * put to remote
+     * @param input
+     * @param output
+     * @param resource
+     * @return
+     * @throws IOException
+     */
+    @When("with remote put $input to $output on $resource")
+    public List<IResourcesItem> putOnRemote(String input, String output, String resource) throws IOException {
+    	IFileSystemResource myResource = FileSystemResources.get(resource);
+    	return myResource.put(input, output);
+    }
+
+    /**
+     * get from remote
+     * @param input
+     * @param output
+     * @param resource
+     * @return
+     * @throws IOException
+     */
+    @When("with remote put $input to $output on $resource")
+    public List<IResourcesItem> getFromRemote(String input, String output, String resource) throws IOException {
+    	IFileSystemResource myResource = FileSystemResources.get(resource);
+    	return myResource.put(input, output);
     }
 }

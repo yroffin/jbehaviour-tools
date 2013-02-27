@@ -19,8 +19,11 @@ package org.jbehaviour.plugins.remote.impl;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.jbehaviour.plugins.remote.IFileSystemResource;
+import org.jbehaviour.plugins.remote.IResourcesItem;
 
 public abstract class FileSystemResourceImpl implements IFileSystemResource {
 
@@ -30,6 +33,7 @@ public abstract class FileSystemResourceImpl implements IFileSystemResource {
 		return url;
 	}
 
+	@Override
 	public void setUrl(String url) {
 		this.url = url;
 	}
@@ -78,13 +82,26 @@ public abstract class FileSystemResourceImpl implements IFileSystemResource {
 		return urlDecode.getFile();
 	}
 
+	@Override
 	public void open() throws IOException {
 	}
 
+	@Override
 	public void close() throws IOException {
 	}
 
+	@Override
 	public boolean checkIfFileExist(String filename) throws IOException {
 		return false;
 	}
+
+	@Override
+	public List<IResourcesItem> put(String local, String remote) throws IOException {
+		return new ArrayList<IResourcesItem>();
+	}
+
+	@Override
+	public List<IResourcesItem> get(String remote, String local) throws IOException {
+		return new ArrayList<IResourcesItem>();
+	}	
 }

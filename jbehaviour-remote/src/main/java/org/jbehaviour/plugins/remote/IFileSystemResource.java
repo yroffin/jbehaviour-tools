@@ -20,18 +20,32 @@ import java.io.IOException;
 import java.util.List;
 
 public interface IFileSystemResource {
+	/**
+	 * open this resource
+	 * @throws IOException
+	 */
 	public void open() throws IOException;
+	
+	/**
+	 * close this resource
+	 * @throws IOException
+	 */
 	public void close() throws IOException;
+	
+	/**
+	 * fix url
+	 * @param url
+	 */
 	public void setUrl(String url);
 	
 	/**
-	 * behaviour method
 	 * check if file exist on this resource
+	 * @param filename
 	 * @return
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public boolean checkIfFileExist(String filename) throws IOException;
-	
+
 	/**
 	 * list local or remote resources
 	 * @param directory
@@ -39,12 +53,30 @@ public interface IFileSystemResource {
 	 * @throws IOException
 	 */
 	public List<IResourcesItem> listdir(String directory) throws IOException;
-	
+
 	/**
 	 * execute local or remote commande
 	 * @param command
 	 * @return
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public List<String> execute(String command) throws IOException;
+	
+	/**
+	 * put on remote from input to output
+	 * @param local
+	 * @param remote
+	 * @return
+	 * @throws IOException 
+	 */
+	public List<IResourcesItem> put(String local, String remote) throws IOException;
+
+	/**
+	 * get from remote from input to output
+	 * @param local
+	 * @param remote
+	 * @return
+	 * @throws IOException 
+	 */
+	public List<IResourcesItem> get(String remote, String local) throws IOException;
 }

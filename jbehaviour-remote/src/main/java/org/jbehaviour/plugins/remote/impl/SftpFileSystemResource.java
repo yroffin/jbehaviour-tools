@@ -16,6 +16,7 @@
 
 package org.jbehaviour.plugins.remote.impl;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -23,12 +24,13 @@ import java.util.List;
 
 import org.jbehaviour.plugins.remote.IResourcesItem;
 
+import com.sshtools.j2ssh.ScpClient;
 import com.sshtools.j2ssh.sftp.SftpFile;
 import com.sshtools.j2ssh.sftp.SftpSubsystemClient;
 
 public class SftpFileSystemResource extends SslFileSystemResource {
 
-	SftpSubsystemClient session = null;
+	private SftpSubsystemClient session = null;
 
 	public SftpFileSystemResource(String url) throws MalformedURLException {
 		super(url);
@@ -88,6 +90,35 @@ public class SftpFileSystemResource extends SslFileSystemResource {
 		List<IResourcesItem> res = new ArrayList<IResourcesItem>();
 		for(SftpFile item : l) {
 			res.add(new ResourcesItem(item));
+		}
+		return res;
+	}
+
+	
+	@Override
+	public List<IResourcesItem> put(String local, String remote) throws IOException {
+		File localFile = new File(local);
+		if(!localFile.exists()) {
+			throw new IOException("File " + local + " does not exist !!!");
+		}
+		List<IResourcesItem> res = new ArrayList<IResourcesItem>();
+		ScpClient sftp = ssh.openScpClient();
+		if (sftp != null) {
+			sftp.put(localFile.getAbsolutePath(), remote, false);
+			res.add(new ResourcesItem(new File(local)));
+		}
+		return res;
+	}
+
+	@Override
+	public List<IResourcesItem> get(String remote, String local) throws IOException {
+		File localFile = new File(local);
+		List<IResourcesItem> res = new ArrayList<IResourcesItem>();
+		ScpClient sftp = ssh.openScpClient();
+		if (sftp != null) {
+			sftp.get(localFile.getAbsolutePath(), remote, false);
+			res.add(new ResourcesItem(new File(local)));
+			closeSession();
 		}
 		return res;
 	}

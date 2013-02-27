@@ -16,6 +16,8 @@
 
 package org.jbehaviour.plugins.remote.impl;
 
+import java.io.File;
+
 import org.jbehaviour.plugins.remote.IResourcesItem;
 
 import com.sshtools.j2ssh.sftp.SftpFile;
@@ -46,6 +48,19 @@ public class ResourcesItem implements IResourcesItem {
 		setCanRead(l.canRead());
 		setCanWrite(l.canWrite());
 		setSize(l.getAttributes().getSize().longValue());
+		setFullName(l.getAbsolutePath());
+	}
+
+	/**
+	 * create from file
+	 * @param l
+	 */
+	public ResourcesItem(File l) {
+		setName(l.getName());
+		setLongName(l.getAbsolutePath());
+		setCanRead(l.canRead());
+		setCanWrite(l.canWrite());
+		setSize(l.length());
 		setFullName(l.getAbsolutePath());
 	}
 
