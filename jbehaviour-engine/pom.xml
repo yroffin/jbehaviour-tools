@@ -7,6 +7,9 @@
 		<version>0.0.2-SNAPSHOT</version>
 	</parent>
 	<artifactId>jbehaviour-engine</artifactId>
+	<properties>
+		<sonar.exclusions>**/*Another*Grammer*</sonar.exclusions>
+	</properties>
 	<build>
 		<plugins>
 			<plugin>
