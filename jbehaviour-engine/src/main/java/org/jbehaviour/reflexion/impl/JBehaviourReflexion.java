@@ -31,6 +31,7 @@ import org.jbehaviour.exception.JBehaviourRuntimeError;
 import org.jbehaviour.parser.JBehaviourStatementParser;
 import org.jbehaviour.parser.model.IKeywordStatement;
 import org.jbehaviour.parser.model.IKeywordStatement.declareType;
+import org.jbehaviour.parser.model.IKeywordStatement.statement;
 import org.jbehaviour.reflexion.IBehaviourEnv;
 import org.jbehaviour.reflexion.IBehaviourReflexion;
 import org.jbehaviour.reflexion.IBehaviourReflexionBean;
@@ -47,7 +48,7 @@ public class JBehaviourReflexion implements IBehaviourReflexion {
 	Logger logger = LoggerFactory.getLogger(JBehaviourReflexion.class);
 
 	IBehaviourEnv env = null;
-	Map<String,IBehaviourReflexionBean> beans = new HashMap<String,IBehaviourReflexionBean>();
+	Map<String, IBehaviourReflexionBean> beans = new HashMap<String, IBehaviourReflexionBean>();
 
 	@Override
 	public IBehaviourEnv setEnv(IBehaviourEnv _env) {
@@ -63,140 +64,211 @@ public class JBehaviourReflexion implements IBehaviourReflexion {
 	public JBehaviourReflexion() throws JBehaviourParsingError {
 	}
 
-	public void register(String reference, String klass) throws JBehaviourParsingError {
+	private enum decode {
+		Given, When, Then, Call
+	}
+
+	/**
+	 * decode method type
+	 * @param a
+	 * @param method 
+	 * @return
+	 */
+	private decode methodSelector(Annotation a, Method method) {
+		decode swAnnotation = null;
+		if (a.annotationType() == Given.class) {
+			swAnnotation = decode.Given;
+		}
+		if (a.annotationType() == When.class) {
+			swAnnotation = decode.When;
+		}
+		if (a.annotationType() == Then.class) {
+			swAnnotation = decode.Then;
+		}
+		if (a.annotationType() == Call.class) {
+			swAnnotation = decode.Call;
+		}
+		logger.info(swAnnotation.toString() + " method : " + method);
+		return swAnnotation;
+	}
+
+	/**
+	 * browse for method with annotation
+	 * 
+	 * @param myKlass
+	 * @param bean
+	 * @throws JBehaviourParsingError
+	 */
+	private void methodBrowsing(Class<?> myKlass, IBehaviourReflexionBean bean)
+			throws JBehaviourParsingError {
+		for (Method method : myKlass.getMethods()) {
+			try {
+				for (Annotation a : method.getAnnotations()) {
+					switch (methodSelector(a, method)) {
+					case Given:
+						bean.addGiven((Given) a, method);
+						break;
+					case When:
+						bean.addWhen((When) a, method);
+						break;
+					case Then:
+						bean.addThen((Then) a, method);
+						break;
+					case Call:
+						bean.addCall((Call) a, method);
+						break;
+					}
+				}
+			} catch (IOException e) {
+				throw new JBehaviourParsingError(e);
+			}
+		}
+	}
+
+	public void register(String reference, String klass)
+			throws JBehaviourParsingError {
+		/**
+		 * class loading
+		 */
 		Class<?> myKlass = null;
 		try {
 			myKlass = Class.forName(klass);
 		} catch (ClassNotFoundException e) {
 			throw new JBehaviourParsingError(e);
 		}
-		logger.debug("Class reflexion: " + klass + "/" + myKlass);
 
-		IBehaviourReflexionBean bean = new JBehaviourReflexionBean(klass,myKlass);
+		if (logger.isDebugEnabled()) {
+			logger.debug("Class reflexion: " + klass + "/" + myKlass);
+		}
+
+		IBehaviourReflexionBean bean = new JBehaviourReflexionBean(klass,
+				myKlass);
 		beans.put(klass, bean);
 
 		/**
 		 * annotation browsing
 		 */
-		for(Annotation annotation : myKlass.getAnnotations()) {
-			logger.debug("Class annotation: " + annotation);
+		if (logger.isDebugEnabled()) {
+			for (Annotation annotation : myKlass.getAnnotations()) {
+				logger.debug("Class annotation: " + annotation);
+			}
 		}
+
 		/**
 		 * method browsing
 		 */
-		for(Method method : myKlass.getMethods()) {
-			for(Annotation a : method.getAnnotations()) {
-				if(a.annotationType() == Given.class) {
-					logger.info("Given method : " + method);
-					try {
-						bean.addGiven((Given)a,method);
-					} catch (IOException e) {
-						throw new JBehaviourParsingError(e);
-					}
-				}
-				if(a.annotationType() == When.class) {
-					logger.info("When method : " + method);
-					try {
-						bean.addWhen((When)a,method);
-					} catch (IOException e) {
-						throw new JBehaviourParsingError(e);
-					}
-				}
-				if(a.annotationType() == Then.class) {
-					logger.info("Then method : " + method);
-					try {
-						bean.addThen((Then)a,method);
-					} catch (IOException e) {
-						throw new JBehaviourParsingError(e);
-					}
-				}
-				if(a.annotationType() == Call.class) {
-					logger.info("Call method: " + method);
-					try {
-						bean.addCall((Call)a,method);
-					} catch (IOException e) {
-						throw new JBehaviourParsingError(e);
-					}
-				}
-			}
-		}
+		this.methodBrowsing(myKlass, bean);
 	}
 
-	public IBehaviourReflexionContext retrieve(String scenarioMethodName, IKeywordStatement.statement klass, String text) throws JBehaviourParsingError, JBehaviourRuntimeError {
-		/**
-		 * first, parse this text
-		 */
-		IKeywordStatement parsedStatement;
-		parsedStatement = (new JBehaviourStatementParser(text)).parse();
+	/**
+	 * find this context in registry
+	 * 
+	 * @param klass
+	 * @param parsedStatement
+	 * @param scenarioMethodName
+	 * @param text
+	 * @return
+	 */
+	private IBehaviourReflexionContext findInRegistry(statement klass,
+			IKeywordStatement parsedStatement, String scenarioMethodName,
+			String text) {
 		IBehaviourReflexionContext search = null;
-	
-		/**
-		 * then, find it in registry
-		 */
-		for(String key : beans.keySet()) {
+
+		for (String key : beans.keySet()) {
 			IBehaviourReflexionBean bean = beans.get(key);
 			/**
 			 * call keywords
 			 */
-			if(klass == IKeywordStatement.statement.Call) {
-				IBehaviourReflexionMethodBean method = bean.matchCall(parsedStatement);
-				if(method != null) {
-					search = new JBehaviourReflexionContext(scenarioMethodName, env, bean, method, parsedStatement,text);
+			if (klass == IKeywordStatement.statement.Call) {
+				IBehaviourReflexionMethodBean method = bean
+						.matchCall(parsedStatement);
+				if (method != null) {
+					search = new JBehaviourReflexionContext(scenarioMethodName,
+							env, bean, method, parsedStatement, text);
 				}
 			}
 			/**
 			 * given keywords
 			 */
-			if(klass == IKeywordStatement.statement.Given) {
-				IBehaviourReflexionMethodBean method = bean.matchGiven(parsedStatement);
-				if(method != null) {
-					search = new JBehaviourReflexionContext(scenarioMethodName, env, bean, method, parsedStatement,text);
+			if (klass == IKeywordStatement.statement.Given) {
+				IBehaviourReflexionMethodBean method = bean
+						.matchGiven(parsedStatement);
+				if (method != null) {
+					search = new JBehaviourReflexionContext(scenarioMethodName,
+							env, bean, method, parsedStatement, text);
 				}
 			}
 			/**
 			 * when keywords
 			 */
-			if(klass == IKeywordStatement.statement.When) {
-				IBehaviourReflexionMethodBean method = bean.matchWhen(parsedStatement);
-				if(method != null) {
-					search = new JBehaviourReflexionContext(scenarioMethodName, env,bean,method,parsedStatement,text);
+			if (klass == IKeywordStatement.statement.When) {
+				IBehaviourReflexionMethodBean method = bean
+						.matchWhen(parsedStatement);
+				if (method != null) {
+					search = new JBehaviourReflexionContext(scenarioMethodName,
+							env, bean, method, parsedStatement, text);
 				}
 			}
 			/**
 			 * then keywords
 			 */
-			if(klass == IKeywordStatement.statement.Then) {
-				IBehaviourReflexionMethodBean method = bean.matchThen(parsedStatement);
-				if(method != null) {
-					search = new JBehaviourReflexionContext(scenarioMethodName, env, bean, method, parsedStatement,text);
+			if (klass == IKeywordStatement.statement.Then) {
+				IBehaviourReflexionMethodBean method = bean
+						.matchThen(parsedStatement);
+				if (method != null) {
+					search = new JBehaviourReflexionContext(scenarioMethodName,
+							env, bean, method, parsedStatement, text);
 				}
 			}
 		}
-		
-		if(search == null) {
+		return search;
+	}
+
+	@Override
+	public IBehaviourReflexionContext retrieve(String scenarioMethodName,
+			IKeywordStatement.statement klass, String text)
+			throws JBehaviourParsingError, JBehaviourRuntimeError {
+		/**
+		 * first, parse this text then, find it in registry
+		 */
+		IKeywordStatement parsedStatement;
+		parsedStatement = (new JBehaviourStatementParser(text)).parse();
+
+		IBehaviourReflexionContext search = this.findInRegistry(klass,
+				parsedStatement, scenarioMethodName, text);
+		if (search == null) {
 			logger.error("No match for this text: " + parsedStatement);
-			throw new JBehaviourRuntimeError("No match for this text: " + parsedStatement);
+			throw new JBehaviourRuntimeError("No match for this text: "
+					+ parsedStatement);
 		} else {
 			return search;
 		}
 	}
 
+	/**
+	 * declare a new String, Json reference
+	 * 
+	 * @param reference
+	 * @param type
+	 * @param statement
+	 */
 	public void declare(String reference, declareType type, String statement) {
-		if(type == declareType.String) {
-			env.store(reference, statement);		
+		if (type == declareType.String) {
+			env.store(reference, statement);
 		}
-		if(type == declareType.Json) {
-			env.store(reference, statement);		
+		if (type == declareType.Json) {
+			env.store(reference, statement);
 		}
 	}
 
 	@Override
 	public void declareString(String reference, String value) {
-		env.store(reference, value);		
+		env.store(reference, value);
 	}
 
 	@Override
-	public void declareJson(String reference, String klass, String json) throws JBehaviourRuntimeError {
+	public void declareJson(String reference, String klass, String json)
+			throws JBehaviourRuntimeError {
 		env.store(reference, env.jsonToObject(klass, json));
 	}
 

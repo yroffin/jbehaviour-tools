@@ -59,7 +59,7 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 	 * original text (before parsing)
 	 */
 	private String text;
-	private IKeywordStatement parsedStatement;
+	private IKeywordStatement parsedStatementLocal;
 	private Map<String, Integer> parametersByName = new HashMap<String, Integer>();
 	private Map<Integer, String> parametersByOrder = new HashMap<Integer, String>();
 
@@ -88,9 +88,9 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 		/**
 		 * parse the klass annotation value
 		 */
-		parsedStatement = (new JBehaviourStatementParser(this.text)).parse();
+		parsedStatementLocal = (new JBehaviourStatementParser(this.text)).parse();
 		int index = 0;
-		for (IKeywordStatementElement item : parsedStatement.get()) {
+		for (IKeywordStatementElement item : parsedStatementLocal.get()) {
 			if (item.getType() == IKeywordStatement.declareType.Reference) {
 				/**
 				 * Suppression the variable indicator ($,% ...)
@@ -142,8 +142,8 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 		parse(IKeywordStatement.statement.Call, annotation.value(), method);
 	}
 
-	public boolean match(IKeywordStatement parsedStatementArg) {
-		return parsedStatement.compareTo(parsedStatementArg);
+	public boolean match(IKeywordStatement parsedStatement) {
+		return parsedStatementLocal.compareTo(parsedStatement);
 	}
 
 	private Object invokeLocaly(Object object, Object[] args)
@@ -261,6 +261,158 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 
 	private static String FAIL = " fail";
 
+	/**
+	 * store argument as Integer
+	 * 
+	 * @param args
+	 * @param index
+	 * @param position
+	 * @throws JBehaviourParsingError
+	 */
+	private void storeArgAsInteger(Object[] args, int index, int position,
+			IKeywordStatement parsedStatement) throws JBehaviourParsingError {
+		if (methodToInvoke.getParameterTypes()[index] == Integer.class
+				|| methodToInvoke.getParameterTypes()[index] == int.class) {
+			/**
+			 * Integer statement to Integer
+			 */
+			args[index] = parsedStatement.extractLiteralAsInteger(position);
+		}
+	}
+
+	/**
+	 * store as Identifier or String
+	 * 
+	 * @param args
+	 * @param index
+	 * @param position
+	 * @throws JBehaviourParsingError
+	 */
+	private void storeArgAsIdentifierOrString(Object[] args, int index,
+			int position, IKeywordStatement parsedStatement)
+			throws JBehaviourParsingError {
+		if (methodToInvoke.getParameterTypes()[index] == String.class) {
+			/**
+			 * String or identifier statement to String
+			 */
+			args[index] = parsedStatement.extractLiteralAsString(position);
+		}
+	}
+
+	/**
+	 * as reference
+	 * 
+	 * @param args
+	 * @param index
+	 * @param position
+	 * @param name
+	 * @param env
+	 * @throws JBehaviourParsingError
+	 */
+	private void storeArgAsReference(Object[] args, int index, int position,
+			String name, IBehaviourEnv env, IKeywordStatement parsedStatement)
+			throws JBehaviourParsingError {
+		/**
+		 * this reference is an object, we must find it in env
+		 */
+		if (logger.isDebugEnabled()) {
+			logger.debug("Lookup for " + name + " with "
+					+ parsedStatement.get(position).getValue());
+		}
+		/**
+		 * ignore first character : $, % ...
+		 */
+		args[index] = env.getObject(parsedStatement.get(position).getValue()
+				.substring(1));
+		if (args[index] == null) {
+			logger.warn("Lookup for " + name + " with id "
+					+ parsedStatement.get(position).getValue().substring(1)
+					+ FAIL);
+		} else {
+			logger.info("$"
+					+ parsedStatement.get(position).getValue().substring(1)
+					+ " = " + args[index]);
+		}
+	}
+
+	/**
+	 * as template
+	 * 
+	 * @param args
+	 * @param index
+	 * @param position
+	 * @param name
+	 * @param env
+	 * @throws JBehaviourParsingError
+	 * @throws JBehaviourRuntimeError
+	 */
+	private void storeArgAsTemplate(Object[] args, int index, int position,
+			String name, IBehaviourEnv env, IKeywordStatement parsedStatement,
+			Method methodToInvoke) throws JBehaviourParsingError,
+			JBehaviourRuntimeError {
+		/**
+		 * this template must be parsed - as velocity template if target type is
+		 * String - as Object retrieve if target is not String
+		 */
+		logger.info("Templating for " + name + " with "
+				+ parsedStatement.get(position).getValue() + " as "
+				+ methodToInvoke.getParameterTypes()[index]);
+		try {
+			Object rawValue = parsedStatement.get(position).getValue();
+			Object asString = env.asString(parsedStatement.get(position)
+					.getValue());
+			Object asObject = env.asObject(parsedStatement.get(position)
+					.getValue());
+			if (rawValue.hashCode() == asObject.hashCode()) {
+				args[index] = asString;
+			} else {
+				if (methodToInvoke.getParameterTypes()[index] == String.class) {
+					args[index] = asString;
+				} else {
+					args[index] = asObject;
+				}
+			}
+		} catch (JBehaviourParsingError e) {
+			throw new JBehaviourRuntimeError(e);
+		}
+		if (args[index] == null) {
+			logger.warn("Templating for " + name + " with id "
+					+ parsedStatement.get(position).getValue().substring(1)
+					+ FAIL);
+		}
+	}
+
+	/**
+	 * as json
+	 * 
+	 * @param args
+	 * @param index
+	 * @param position
+	 * @param name
+	 * @param env
+	 * @param parsedStatementArg
+	 * @throws JBehaviourParsingError
+	 * @throws JBehaviourRuntimeError
+	 */
+	private void storeArgAsJson(Object[] args, int index, int position,
+			String name, IBehaviourEnv env, IKeywordStatement parsedStatement,
+			Method methodToInvoke) throws JBehaviourRuntimeError {
+		/**
+		 * this json string must be parsed
+		 */
+		logger.info("Json to object transformation for " + name + " with "
+				+ parsedStatement.get(position).getValue());
+		args[index] = env.jsonToObject(
+				methodToInvoke.getParameterTypes()[index].getCanonicalName(),
+				parsedStatement.get(position).getValue());
+		if (args[index] == null) {
+			logger.warn("Json to object transformation for " + name
+					+ " with id "
+					+ parsedStatement.get(position).getValue().substring(1)
+					+ FAIL);
+		}
+	}
+
 	public Object invoke(String pck, IBehaviourEnv env, Object object,
 			IKeywordStatement parsedStatement) throws JBehaviourParsingError,
 			JBehaviourRuntimeError {
@@ -277,6 +429,10 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 		if (logger.isDebugEnabled()) {
 			logger.debug("parameterNames: " + parameterNames.length);
 		}
+
+		/**
+		 * parameters analysis
+		 */
 		for (String name : parameterNames) {
 			if (logger.isDebugEnabled()) {
 				logger.debug("name: " + name);
@@ -285,100 +441,24 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 
 			switch (parsedStatement.get(position).getType()) {
 			case Integer:
-				if (methodToInvoke.getParameterTypes()[index] == Integer.class
-						|| methodToInvoke.getParameterTypes()[index] == int.class) {
-					/**
-					 * Integer statement to Integer
-					 */
-					args[index] = parsedStatement
-							.extractLiteralAsInteger(position);
-				}
+				this.storeArgAsInteger(args, index, position, parsedStatement);
 				break;
 			case Identifier:
 			case String:
-				if (methodToInvoke.getParameterTypes()[index] == String.class) {
-					/**
-					 * String or identifier statement to String
-					 */
-					args[index] = parsedStatement
-							.extractLiteralAsString(position);
-				}
+				storeArgAsIdentifierOrString(args, index, position,
+						parsedStatement);
 				break;
 			case Reference:
-				/**
-				 * this reference is an object, we must find it in env
-				 */
-				if (logger.isDebugEnabled()) {
-					logger.debug("Lookup for " + name + " with "
-							+ parsedStatement.get(position).getValue());
-				}
-				/**
-				 * ignore first character : $, % ...
-				 */
-				args[index] = env.getObject(parsedStatement.get(position)
-						.getValue().substring(1));
-				if (args[index] == null) {
-					logger.warn("Lookup for "
-							+ name
-							+ " with id "
-							+ parsedStatement.get(position).getValue()
-									.substring(1) + FAIL);
-				} else {
-					logger.info("$"
-							+ parsedStatement.get(position).getValue()
-									.substring(1) + " = " + args[index]);
-				}
+				storeArgAsReference(args, index, position, name, env,
+						parsedStatement);
 				break;
 			case Template:
-				/**
-				 * this template must be parsed - as velocity template if target
-				 * type is String - as Object retrieve if target is not String
-				 */
-				logger.info("Templating for " + name + " with "
-						+ parsedStatement.get(position).getValue() + " as "
-						+ methodToInvoke.getParameterTypes()[index]);
-				try {
-					Object rawValue = parsedStatement.get(position).getValue();
-					Object asString = env.asString(parsedStatement
-							.get(position).getValue());
-					Object asObject = env.asObject(parsedStatement
-							.get(position).getValue());
-					if (rawValue.hashCode() == asObject.hashCode()) {
-						args[index] = asString;
-					} else {
-						if (methodToInvoke.getParameterTypes()[index] == String.class) {
-							args[index] = asString;
-						} else {
-							args[index] = asObject;
-						}
-					}
-				} catch (JBehaviourParsingError e) {
-					throw new JBehaviourRuntimeError(e);
-				}
-				if (args[index] == null) {
-					logger.warn("Templating for "
-							+ name
-							+ " with id "
-							+ parsedStatement.get(position).getValue()
-									.substring(1) + FAIL);
-				}
+				storeArgAsTemplate(args, index, position, name, env,
+						parsedStatement, methodToInvoke);
 				break;
 			case Json:
-				/**
-				 * this json string must be parsed
-				 */
-				logger.info("Json to object transformation for " + name
-						+ " with " + parsedStatement.get(position).getValue());
-				args[index] = env.jsonToObject(methodToInvoke
-						.getParameterTypes()[index].getCanonicalName(),
-						parsedStatement.get(position).getValue());
-				if (args[index] == null) {
-					logger.warn("Json to object transformation for "
-							+ name
-							+ " with id "
-							+ parsedStatement.get(position).getValue()
-									.substring(1) + FAIL);
-				}
+				storeArgAsJson(args, index, position, name, env,
+						parsedStatement, methodToInvoke);
 				break;
 			default:
 				logger.warn("Unknown type "

@@ -30,7 +30,7 @@ public class ResourcesItem implements IResourcesItem {
 	private boolean canRead;
 	private boolean canWrite;
 	private long size;
-	
+
 	@Override
 	public String toString() {
 		return "ResourcesItem [name=" + name + ", fullName=" + fullName
@@ -40,6 +40,7 @@ public class ResourcesItem implements IResourcesItem {
 
 	/**
 	 * create from SftpFile
+	 * 
 	 * @param l
 	 */
 	public ResourcesItem(SftpFile l) {
@@ -53,6 +54,7 @@ public class ResourcesItem implements IResourcesItem {
 
 	/**
 	 * create from file
+	 * 
 	 * @param l
 	 */
 	public ResourcesItem(File l) {

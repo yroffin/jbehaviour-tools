@@ -349,6 +349,55 @@ public class JBehaviourLauncher implements IBehaviourLauncher {
 		return scenario;
 	}
 
+	private boolean handleStep(IBehaviourReflexionContext step) throws JBehaviourRuntimeError {
+		logger.info("Step running : " + step.getStatement());
+		Object ret = null;
+		try {
+			/**
+			 * we have found this step, no we can execute it
+			 */
+			ret = step.execute(env);
+		} catch (JBehaviourParsingError e) {
+			JBehaviourStackTrace.printStackTrace(logger, e);
+			return false;
+		} catch (JBehaviourRuntimeError e) {
+			JBehaviourStackTrace.printStackTrace(logger, e);
+			return false;
+		}
+		logger.info("Result is " + ret);
+		switch (step.getType()) {
+		case Given:
+		case Call:
+		case When:
+			/**
+			 * Given, Call and When return value have no action on the
+			 * execution
+			 */
+			break;
+		case Then:
+			/**
+			 * Then statement are special statement, because return must
+			 * be analyzed and checked to continue false break the
+			 * scenario/story execution
+			 */
+			if (ret == null) {
+				throw new JBehaviourRuntimeError(
+						step.toString()
+								+ " : return on Then keyword cannot be null !!!");
+			}
+
+			/**
+			 * false return abort the process
+			 */
+			if ((Boolean) ret == false) {
+				return false;
+			}
+		default:
+			break;
+		}
+		return true;
+	}
+
 	@Override
 	public boolean execute(IBehaviourScenario scenario)
 			throws JBehaviourRuntimeError {
@@ -367,51 +416,12 @@ public class JBehaviourLauncher implements IBehaviourLauncher {
 					sLevel.append("    ");
 				}
 			}
+			/**
+			 * iterate on all step, and abort if any errors (or Then return false)
+			 */
 			for (IBehaviourReflexionContext step : scenario.getContexts()) {
-				logger.info("Step running : " + step.getStatement());
-				Object ret = null;
-				try {
-					/**
-					 * we have found this step, no we can execute it
-					 */
-					ret = step.execute(env);
-				} catch (JBehaviourParsingError e) {
-					JBehaviourStackTrace.printStackTrace(logger, e);
+				if(!handleStep(step)) {
 					return false;
-				} catch (JBehaviourRuntimeError e) {
-					JBehaviourStackTrace.printStackTrace(logger, e);
-					return false;
-				}
-				logger.info("Result is " + ret);
-				switch (step.getType()) {
-				case Given:
-				case Call:
-				case When:
-					/**
-					 * Given, Call and When return value have no action on the
-					 * execution
-					 */
-					break;
-				case Then:
-					/**
-					 * Then statement are special statement, because return must
-					 * be analyzed and checked to continue false break the
-					 * scenario/story execution
-					 */
-					if (ret == null) {
-						throw new JBehaviourRuntimeError(
-								step.toString()
-										+ " : return on Then keyword cannot be null !!!");
-					}
-					
-					/**
-					 * false return abort the process
-					 */
-					if ((Boolean) ret == false) {
-						return (Boolean) ret;
-					}
-				default:
-					break;
 				}
 			}
 			return true;
