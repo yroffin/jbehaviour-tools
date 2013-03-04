@@ -75,6 +75,10 @@ public class JBehaviourVelocityReport implements IBehaviourReport {
 	@Override
 	public void render(IBehaviourReflexion ctx, File template, File output) throws IOException {
 		logger.info("Render [" + template.getAbsolutePath() + "] to [" + output.getAbsolutePath() + "]");
+		/**
+		 * auto creation of output dir
+		 */
+		(new File(output.getAbsolutePath())).mkdir();
 		FileWriter fw = new FileWriter(output);
 		fw.write(render(ctx,slurp(template)));
 		fw.close();
