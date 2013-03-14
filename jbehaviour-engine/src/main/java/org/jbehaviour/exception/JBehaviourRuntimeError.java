@@ -64,4 +64,8 @@ public class JBehaviourRuntimeError extends Exception {
 		super(e);
 	}
 
+	public JBehaviourRuntimeError(Throwable e) {
+		super(e);
+	}
+
 }

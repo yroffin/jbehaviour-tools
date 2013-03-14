@@ -10,4 +10,10 @@ public class JBehaviourStackTrace {
 		}
 	}
 
+	public static void printStackTrace(Logger logger, Throwable e) {
+		for(StackTraceElement element : e.getStackTrace()) {
+			logger.warn(element.toString());
+		}
+	}
+
 }
