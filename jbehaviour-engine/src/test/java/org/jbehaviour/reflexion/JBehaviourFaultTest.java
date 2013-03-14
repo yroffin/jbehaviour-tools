@@ -44,6 +44,6 @@ public class JBehaviourFaultTest {
 
 	@Test
 	public void testFaultThrow() throws JBehaviourParsingError, JBehaviourRuntimeError  {
-		assertEquals(true,(new JBehaviourLauncher()).registerAndExecute(new File("src/test/resources/fault/fault.story")));
+		assertEquals(false,(new JBehaviourLauncher()).registerAndExecute(new File("src/test/resources/fault/fault.story")));
 	}
 }
