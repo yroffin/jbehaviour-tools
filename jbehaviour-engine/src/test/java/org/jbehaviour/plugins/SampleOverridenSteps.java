@@ -22,7 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SampleOverridenSteps extends SampleSteps {
-	protected Logger logger = LoggerFactory.getLogger(SampleOverridenSteps.class);
+	private Logger logger = LoggerFactory.getLogger(SampleOverridenSteps.class);
 	/**
 	 * basic steps
 	 */

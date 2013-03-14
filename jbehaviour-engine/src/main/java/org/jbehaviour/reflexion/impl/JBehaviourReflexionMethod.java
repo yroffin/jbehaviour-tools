@@ -48,7 +48,7 @@ import com.thoughtworks.paranamer.CachingParanamer;
 import com.thoughtworks.paranamer.Paranamer;
 
 public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean {
-	protected Logger logger = LoggerFactory
+	private Logger logger = LoggerFactory
 			.getLogger(JBehaviourReflexionMethod.class);
 
 	/**

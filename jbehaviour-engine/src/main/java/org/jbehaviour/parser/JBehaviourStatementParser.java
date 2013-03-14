@@ -26,7 +26,7 @@ import org.jbehaviour.parser.model.IKeywordStatement;
 import org.jbehaviour.parser.model.impl.KeywordAny;
 
 public class JBehaviourStatementParser extends AnotherStoryGrammerParser {
-	protected Logger logger = LoggerFactory.getLogger(JBehaviourStatementParser.class);
+	private Logger logger = LoggerFactory.getLogger(JBehaviourStatementParser.class);
 
 	JBehahiourStoryLexer lexer;
 	

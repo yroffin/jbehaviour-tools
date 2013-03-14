@@ -30,13 +30,13 @@ public class KeywordCall implements IKeywordCall {
 	private IKeywordCallElement current;
 	private String identifier;
 	
-	public KeywordCall(String _name) {
-		identifier = _name.substring(1);
+	public KeywordCall(String name) {
+		identifier = name.substring(1);
 	}
 
 	@Override
-	public IKeywordCallElement someIdentifier(String _value) {
-		current = new KeywordCallElement(_value);
+	public IKeywordCallElement someIdentifier(String value) {
+		current = new KeywordCallElement(value);
 		identifiers.add(current);
 		return current;
 	}

@@ -23,9 +23,9 @@ public abstract class WikiToken implements IWikiToken {
 	protected IWikiToken.types type;
 	protected String value;
 	private IWikiToken owner;
-	public WikiToken(IWikiToken _owner, String _value) {
-		owner = _owner;
-		value = _value;
+	public WikiToken(IWikiToken owner, String value) {
+		this.owner = owner;
+		this.value = value;
 	}
 	public String getValue() {
 		return value;

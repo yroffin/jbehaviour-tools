@@ -40,6 +40,7 @@ public class JBehaviourReportRun implements IBehaviourReportRun {
 
 	/**
 	 * create this run report
+	 * 
 	 * @param _pck
 	 * @param _klass
 	 * @param _duration
@@ -47,27 +48,30 @@ public class JBehaviourReportRun implements IBehaviourReportRun {
 	 * @param _object
 	 * @param _args
 	 * @param _text
-	 * @param _excp 
-	 * @param _result 
-	 * @param _result 
-	 * @param stderr 
+	 * @param _excp
+	 * @param _result
+	 * @param _result
+	 * @param stderr
 	 */
-	public JBehaviourReportRun(String _pck, String _klass, Long _duration, String _name, Object _object, Object[] _args, String _text, File _stdout, File _stderr, Object _result, Exception _excp) {
-		stdout = _stdout;
-		stderr = _stderr;
-		result = _result;
-		excp = _excp;
-		pck = _pck;
-		klass = _klass;
-		duration = _duration;
-		name = _name;
-		object = _object;
-		args = _args.clone();
-		text = _text;
+	public JBehaviourReportRun(String pck, String klass, Long duration,
+			String name, Object object, Object[] args, String text,
+			File stdout, File stderr, Object result, Exception excp) {
+		this.stdout = stdout;
+		this.stderr = stderr;
+		this.result = result;
+		this.excp = excp;
+		this.pck = pck;
+		this.klass = klass;
+		this.duration = duration;
+		this.name = name;
+		this.object = object;
+		this.args = args.clone();
+		this.text = text;
+
 		StringBuilder sb = new StringBuilder();
-		for(String item : _text.split(" ")) {
+		for (String item : text.split(" ")) {
 			String value = item.replace("$", "").toLowerCase();
-			if(sb.length() > 0) {
+			if (sb.length() > 0) {
 				sb.append(value.substring(0, 1).toUpperCase());
 			} else {
 				sb.append(value.substring(0, 1).toLowerCase());
@@ -77,18 +81,15 @@ public class JBehaviourReportRun implements IBehaviourReportRun {
 		textLikeMethod = sb.toString();
 	}
 
-	
 	@Override
 	public File getStdout() {
 		return stdout;
 	}
 
-
 	@Override
 	public File getStderr() {
 		return stderr;
 	}
-
 
 	@Override
 	public Object getResult() {
@@ -176,20 +177,21 @@ public class JBehaviourReportRun implements IBehaviourReportRun {
 
 	/**
 	 * all bytes to string
+	 * 
 	 * @param file
 	 * @return
 	 * @throws IOException
 	 */
 	private String slurp(File file) throws IOException {
-        FileReader in = new FileReader(file);
-        StringBuffer sb = new StringBuffer();
-        int ch;
-        while ((ch = in.read()) != -1) {
-            sb.append((char) ch);
-        }
-        in.close();
-        return sb.toString();
-    }
+		FileReader in = new FileReader(file);
+		StringBuffer sb = new StringBuffer();
+		int ch;
+		while ((ch = in.read()) != -1) {
+			sb.append((char) ch);
+		}
+		in.close();
+		return sb.toString();
+	}
 
 	@Override
 	public String getStdoutAsString() throws IOException {

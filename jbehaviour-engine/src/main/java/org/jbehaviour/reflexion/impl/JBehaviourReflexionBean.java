@@ -34,7 +34,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class JBehaviourReflexionBean implements IBehaviourReflexionBean {
-	protected Logger logger = LoggerFactory.getLogger(JBehaviourReflexionBean.class);
+	private Logger logger = LoggerFactory.getLogger(JBehaviourReflexionBean.class);
 
 	List<IBehaviourReflexionMethodBean> anys   = new ArrayList<IBehaviourReflexionMethodBean>();
 	List<IBehaviourReflexionMethodBean> givens = new ArrayList<IBehaviourReflexionMethodBean>();
@@ -45,9 +45,9 @@ public class JBehaviourReflexionBean implements IBehaviourReflexionBean {
 	protected String klass;
 	protected Class<?> myKlass;
 	
-	public JBehaviourReflexionBean(String _klass, Class<?> _myKlass) {
-		klass = _klass;
-		myKlass = _myKlass;
+	public JBehaviourReflexionBean(String klass, Class<?> myKlass) {
+		this.klass = klass;
+		this.myKlass = myKlass;
 	}
 	
 	public void addGiven(Given annotation, Method method) throws IOException, JBehaviourParsingError {

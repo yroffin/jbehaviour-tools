@@ -63,16 +63,16 @@ public class JBehaviourReflexionContext implements IBehaviourReflexionContext {
 	 * @param _text 
 	 */
 	public JBehaviourReflexionContext(
-			String _scenarioMethodName, 
-			IBehaviourEnv _env,
-			IBehaviourReflexionBean _bean,
-			IBehaviourReflexionMethodBean _method,
-			IKeywordStatement _parsedStatement, String _text) {
-		scenarioMethodName = _scenarioMethodName;
-		parsedStatement = _parsedStatement;
-		bean = _bean;
-		method = _method;
-		statement = _text;
+			String scenarioMethodName, 
+			IBehaviourEnv env,
+			IBehaviourReflexionBean bean,
+			IBehaviourReflexionMethodBean method,
+			IKeywordStatement parsedStatement, String text) {
+		this.scenarioMethodName = scenarioMethodName;
+		this.parsedStatement = parsedStatement;
+		this.bean = bean;
+		this.method = method;
+		this.statement = text;
 	}
 
 	@Override

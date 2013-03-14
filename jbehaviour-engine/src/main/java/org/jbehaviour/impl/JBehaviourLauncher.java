@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
  * this class implement the main of this system
  */
 public class JBehaviourLauncher implements IBehaviourLauncher {
-	static protected Logger logger = LoggerFactory
+	static private Logger logger = LoggerFactory
 			.getLogger(JBehaviourLauncher.class);
 	private IBehaviourEnv env;
 

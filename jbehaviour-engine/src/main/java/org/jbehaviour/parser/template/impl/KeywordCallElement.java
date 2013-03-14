@@ -27,8 +27,8 @@ public class KeywordCallElement implements IKeywordCallElement {
 	private String value;
 	private boolean isMethod = false;
 	
-	public KeywordCallElement(String _value) {
-		value = _value;
+	public KeywordCallElement(String value) {
+		this.value = value;
 	}
 
 	@Override
