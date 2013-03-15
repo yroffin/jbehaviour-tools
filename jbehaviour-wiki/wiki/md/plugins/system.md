@@ -47,7 +47,11 @@ Waiting for completion can be call whenever you want in your story, this behavio
 when you want to start daemon tools (ex: soapui webservice server mocking) and then waiting for it's completion.
 
 Send some return (CR) to this async command is also possible:
+
+	...
 	Given send return to async command $windowsCmdTest
+	...
+
 Send a Carriage Return to async processus identified by '$windowsCmdTest'
 
 3. Setting environnement
