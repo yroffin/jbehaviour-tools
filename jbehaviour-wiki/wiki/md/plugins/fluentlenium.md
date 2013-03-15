@@ -14,6 +14,8 @@ This step implements:
 2.Framework declaration
 -----------------------
 
+Framework vision
+
   ...
   @Given("launch the chrome navigator")
   ...
