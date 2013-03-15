@@ -11,65 +11,61 @@ This step implements:
 - describe table
 - select from entities and store result
 
+Jdbc driver must be in classpath.
+
 2. Jdbc connect
 ---------------
 
-	@Given("column length to $length bytes")
-	public void setColumnLength(Integer len) {
-		columnLength = len;
-	}
+This method handle the jdbc connection configuration :
+- $driver  : jdbc driver
+- $url     : url
+- $user    : user
+- $passwrd : password
+- $reference to identified and then using this jdbc connection
 
+Framework vision
+	...
 	@Given("connect with $driver and url $url $user $passwrd as $reference")
-	public Connection connectJdbc(String driver, String url, String user, String pass,
-			String reference) throws SQLException, ClassNotFoundException {
-		Class.forName(driver);
-        conn = DriverManager.getConnection(url,user,pass);
-        logger.info(conn.toString());
-        
-        /**
-         * H2 database type
-         */
-        if("H2".compareTo(conn.getMetaData().getDatabaseProductName()) == 0) {
-        	type = JdbcDatabaseType.H2;
-        }
+	public Connection ...
+	...
 
-        return conn;
-	}
+Story sample
+	Given connect with 'org.h2.Driver' and url 'jdbc:h2:mem' 'sa' '' as 'connexion01'
 
-	IBehaviourResultSet lastResult = null;
 
+3. Printing and describing table
+--------------------------------
+
+Framework vision
+	...
+	@Given("column length to $length bytes")
+	...
 	@Given("desc $table")
-	public IBehaviourResultSet descTable(String table) throws SQLException {
-		Statement stmt = conn.createStatement();
-		switch(type) {
-			case H2:
-				lastResult = new JBehaviourResultSet(columnLength,stmt.executeQuery("SHOW COLUMNS FROM " + table));
-			break;
-			default:
-				lastResult = new JBehaviourResultSet(columnLength,stmt.executeQuery("DESCRIBE " + table));
-			break;
-		}
-		stmt.close();
-        return lastResult;
-	}
+	public IBehaviourResultSet ...
+	...
 
+Story sample
+		Given column length to 20 bytes
+		Given desc 'TEST1'
+
+4. Query and test result
+------------------------
+
+Framework vision
 	@When("query $value as $reference")
-	public IBehaviourResultSet query(String value, String reference) throws SQLException, ClassNotFoundException {
-		Statement stmt = conn.createStatement();
-		lastResult = new JBehaviourResultSet(columnLength,stmt.executeQuery(value));
-		stmt.close();
-        return (IBehaviourResultSet) env.store(reference, lastResult);
-	}
-
+	public IBehaviourResultSet ...
+	...
 	@Then("$reference have $nb lines")
-	public boolean verifyNumberLine(IBehaviourResultSet reference, int value) throws SQLException, ClassNotFoundException {
-		return reference.getRows() == value;
-	}
+	public boolean ...
+	...
+
+Story sample
+	When  query 'SELECT * FROM TEST4' as select4
+	Then  $select1 have 4 lines
 
 
-
-2. Sample
----------
+5. Global sample
+----------------
 
 	Feature: Launch all test from jdbc feature
 		In order to test this feature
