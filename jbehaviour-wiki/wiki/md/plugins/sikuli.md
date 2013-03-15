@@ -6,6 +6,25 @@ Sikuli Extention
 
 This step is stored in maven module : jbehaviour-sikuli
 
+2. Asynchronous command call
+----------------------------
+
+
+Framework vision ...
+
+	...
+	@Given("with sikuli type $character on $image")
+	...
+	@Given("with sikuli type return")
+	...
+	@Given("with sikuli click on $image")
+	...
+	@Given("with sikuli doubleclick on $image")
+	...
+	@Given("with sikuli capture desktop to $filename in $format format")
+	...
+
+
 2. Sample
 ---------
 
