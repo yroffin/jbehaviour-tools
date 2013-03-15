@@ -12,6 +12,7 @@ This step implements:
 - remote command with ssh
 
 TODO : FTP (but nowadays FTP is often forbiden so ...)
+TODO : explain get/put method
 
 2. Sample
 ---------
