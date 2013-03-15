@@ -15,8 +15,39 @@ TODO : FTP (but nowadays FTP is often forbiden so ...)
 
 TODO : explain get/put method
 
-2. Sample
----------
+3. Connexion
+------------
+
+Framework vision
+	...
+	@Given("with remote create $type resource $url identified by $resource")
+	...
+	@When("with remote open resource '$resource'")
+	...
+
+4. remote access SFTP
+---------------------
+
+Framework vision
+	@Then("with remote check if $file exist on $resource")
+	...
+	@Given("with remote list directory $directory on $resource")
+	...
+	@When("with remote put $input to $output on $resource")
+	...
+	@When("with remote put $input to $output on $resource")
+	...
+
+5. remote access SSH
+--------------------
+
+Framework vision
+	@Given("with remote execute command $command on $resource")
+	...
+
+
+6. Global sample
+----------------
 
 	Feature: Launch some tests with remote
 		In order to test this feature
