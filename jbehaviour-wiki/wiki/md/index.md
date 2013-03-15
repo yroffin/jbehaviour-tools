@@ -27,8 +27,8 @@ and avoid to consider so much technical method for using testing tools :
 General
 =======
 
-[Default usage](usage/usage.md)
-[Design](usage/design.md)
+[Default usage](usage/usage.md)<br/>
+[Design](usage/design.md)<br/>
 
 Extention
 =========
