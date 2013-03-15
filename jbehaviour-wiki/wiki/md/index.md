@@ -24,7 +24,11 @@ and avoid to consider so much technical method for using testing tools :
 - selenium suite
 - and so on ...
 
+General
+=======
+
 [Default usage](usage/usage.md)
+[Design](usage/design.md)
 
 Extention
 =========
