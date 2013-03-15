@@ -44,6 +44,12 @@ Todo
 
 Release notes on 0.0.2-SNAPSHOT
 ===============================
+
+plugin system :
+- improve exception catch feature
+- dump all stderr, stdout to logs
+- correction on junit.vm template
+
 plugin selenium :
 - adding pageSource search with Body must contain $value
 
