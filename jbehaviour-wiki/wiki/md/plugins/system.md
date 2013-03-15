@@ -88,17 +88,27 @@ Framework vision ...
 	@Given("print object $value")
 		...
 	}
+	@Given("store last result as $reference")
+	public Object storeReference(String reference) {
+		...
+	}
 	@Then("store last result in file $filename")
 		...
 	}
 	...
 
-And in story it could be used as ...
+And in story it could be used as ...<br/>
 
 	...
 	Given print object 'ID'
+	Given store last result as REF
 	Then store last result in file 'C:\\temp\last_result.txt'
 	...
+
+This sample :
+- print object in session (story session) identified by ID
+- store last result (last return of the last mehod called) in a reference REF
+- dump last result content to one file
 
 5. Waiting for second and millisecond
 -------------------------------------
