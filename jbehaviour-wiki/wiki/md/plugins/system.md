@@ -105,10 +105,10 @@ And in story it could be used as ...<br/>
 	Then store last result in file 'C:\\temp\last_result.txt'
 	...
 
-This sample :
-- print object in session (story session) identified by ID
-- store last result (last return of the last mehod called) in a reference REF
-- dump last result content to one file
+This sample :<br/>
+- print object in session (story session) identified by ID<br/>
+- store last result (last return of the last mehod called) in a reference REF<br/>
+- dump last result content to one file<br/>
 
 5. Waiting for second and millisecond
 -------------------------------------
@@ -138,8 +138,8 @@ And in story it could be used as ...
 6. Storing object in session
 ----------------------------
 
-This extention permit to store and lod object/string from session (all the story session).
-Main order is 'store last result as $reference', then you can re-use this reference in story.
+This extention permit to store and lod object/string from session (all the story session).<br/>
+Main order is 'store last result as $reference', then you can re-use this reference in story.<br/>
 
 Framework vision ...
 
@@ -151,19 +151,19 @@ Framework vision ...
 	}
 	...
 
-And in story it could be used as ...
+And in story it could be used as ...<br/>
 
 	...
 	Given store last result as 'myReference'
 	Given make something with $myReference
 	...
 
-Notice that $myReference will be passed as a plain object during method call ...
+Notice that $myReference will be passed as a plain object during method call ...<br/>
 
 7. Iterate on object
 --------------------
 
-This extention permit to iterate on object such as list.
+This extention permit to iterate on object such as list.<br/>
 
 Framework vision ...
 
@@ -195,3 +195,5 @@ And in story it could be used as ...
 	Scenario: Print each item
 		Given print object $arg001
 
+In this case each scenario 'Print each item' is called with a reference $arg001 based on iteration<br/>
+on list $ref001.getListInteger()
