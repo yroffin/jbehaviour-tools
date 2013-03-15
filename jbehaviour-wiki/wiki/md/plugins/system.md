@@ -27,6 +27,9 @@ Framework vision ...
 	@Given("start $command with $args as $reference") {
 		...
 	}
+	@Given("send return to async command $reference") {
+		...
+	}
 	@Given("wait for async command $reference") {
 		...
 	}
@@ -36,11 +39,16 @@ And in story it could be used as ...
 
 	...
 	Given start 'cmd.exe' with '/C echo storyTest' as windowsCmdTest
+	Given send return to async command $windowsCmdTest
 	Given wait for async command $windowsCmdTest
 	...
 
 Waiting for completion can be call whenever you want in your story, this behaviour is needed for example
 when you want to start daemon tools (ex: soapui webservice server mocking) and then waiting for it's completion.
+
+Send some return (CR) to this async command is also possible:
+	Given send return to async command $windowsCmdTest
+Send a Carriage Return to async processus identified by '$windowsCmdTest'
 
 3. Setting environnement
 ------------------------
