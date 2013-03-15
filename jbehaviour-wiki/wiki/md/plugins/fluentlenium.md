@@ -11,25 +11,50 @@ This module is based on [selenium](http://http://seleniumhq.org) and [fluentleni
 This step implements:
 - TODO ...
 
-2. Sample
----------
+2.Framework declaration
+-----------------------
 
->Feature: Launch a web client and go to 'http://www.bing.com'<br/>
->  In order to test this feature<br/>
->  As an explicit system actor<br/>
->  I want to verify this behaviour<br/>
->  Register system       with "org.jbehaviour.plugins.system.SystemSteps" plugin<br/>
->  Register fluentlenium with 'org.jbehaviour.plugins.selenium.FluentleniumSteps' plugin<br/>
->  Declare urlBinq as String 'http://www.bing.com'<br/>
->  Declare chromeDriver as String 'C:\\tmp\\chromedriver.exe'<br/>
->  Declare fluentLenium as String 'FluentLenium'<br/>
->  Declare output as String 'target/output.txt'<br/>
+  ...
+  @Given("launch the chrome navigator")
+  ...
+  @Given("launch the ie navigator")
+  ...
+  @Given("launch the html navigator")
+  ...
+  @When("i goto to $parameter")
+  ...
+  @When("i fill $id with $value")
+  ...
+  @When("i click on $value")
+  ...
+  @When("i submit $value")
+  ...
+  @Then("Title must contain $value")
+  ...
+  @Then("Body must contain $value")
+  ...
+  @Given("Close browser driver")
+  ...
 
->   Scenario: Verify we can go to 'http://www.bing.com'<br/>
->    Given set property 'webdriver.chrome.driver' to $chromeDriver<br/>
->    Given launch the html navigator<br/>
->     When i goto to $urlBinq<br/>
->     When i fill '#sb_form_q' with $fluentLenium<br/>
->     When i submit '#sb_form_go'<br/>
->     Store in file $output<br/>
->     Then Title must contain $fluentLenium<br/>
+3. Global sample
+----------------
+
+  Feature: Launch a web client and go to 'http://www.bing.com'
+    In order to test this feature
+    As an explicit system actor
+    I want to verify this behaviour
+    Register system       with "org.jbehaviour.plugins.system.SystemSteps" plugin
+    Register fluentlenium with 'org.jbehaviour.plugins.selenium.FluentleniumSteps' plugin
+    Declare urlBinq as String 'http://www.bing.com'
+    Declare chromeDriver as String 'C:\\tmp\\chromedriver.exe'
+    Declare fluentLenium as String 'FluentLenium'
+    Declare output as String 'target/output.txt'
+  
+  Scenario: Verify we can go to 'http://www.bing.com'<br/>
+    Given set property 'webdriver.chrome.driver' to $chromeDriver
+    Given launch the html navigator
+    When i goto to $urlBinq
+    When i fill '#sb_form_q' with $fluentLenium
+    When i submit '#sb_form_go'
+    Store in file $output
+    Then Title must contain $fluentLenium
