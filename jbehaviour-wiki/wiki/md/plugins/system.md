@@ -6,7 +6,7 @@ System Extention
 
 This step is stored in maven module : jbehaviour-engine (core)
 
-A standard step object exist, call SystemSteps ... it can be resistered like this in story feature part
+A standard step object exist, called SystemSteps ... it can be resistered like this in story feature part
 
 	...
 	Register sample with 'org.jbehaviour.plugins.system.SystemSteps' plugin
