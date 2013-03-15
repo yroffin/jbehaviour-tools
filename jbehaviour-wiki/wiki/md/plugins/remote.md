@@ -19,6 +19,7 @@ TODO : explain get/put method
 ------------
 
 Framework vision
+
 	...
 	@Given("with remote create $type resource $url identified by $resource")
 	...
@@ -29,6 +30,7 @@ Framework vision
 ---------------------
 
 Framework vision
+	
 	@Then("with remote check if $file exist on $resource")
 	...
 	@Given("with remote list directory $directory on $resource")
@@ -42,6 +44,7 @@ Framework vision
 --------------------
 
 Framework vision
+	
 	@Given("with remote execute command $command on $resource")
 	...
 
