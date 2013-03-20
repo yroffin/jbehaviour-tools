@@ -27,12 +27,10 @@
         </testcase>
 #end
 #if ( $testsuite.hasStdout() )
-            <system-out>$testsuite.getStdoutAsHtml()
-</system-out>
+            <system-out></system-out>
 #end
 #if ( $testsuite.hasStderr() )
-            <system-err>$testsuite.getStderrAsHtml()
-</system-err>
+            <system-err></system-err>
 #end
     </testsuite>
 #end
