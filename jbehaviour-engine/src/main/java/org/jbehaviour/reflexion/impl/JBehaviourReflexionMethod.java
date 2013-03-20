@@ -502,6 +502,7 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 		 * any exception must be thrown to the caller as an exception throw
 		 */
 		if (excp != null) {
+			JBehaviourStackTrace.printStackTrace(logger, excp);
 			throw new JBehaviourRuntimeError(excp);
 		}
 

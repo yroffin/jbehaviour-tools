@@ -9,6 +9,7 @@ public class JBehaviourStackTrace {
 			logger.warn("Exception is null");
 			return;
 		}
+		logger.warn("[Exception]: " + e);
 		for(StackTraceElement element : e.getStackTrace()) {
 			logger.warn(element.toString());
 		}
@@ -19,6 +20,7 @@ public class JBehaviourStackTrace {
 			logger.warn("Throwable is null");
 			return;
 		}
+		logger.warn("[Throwable]: " + e);
 		for(StackTraceElement element : e.getStackTrace()) {
 			logger.warn(element.toString());
 		}

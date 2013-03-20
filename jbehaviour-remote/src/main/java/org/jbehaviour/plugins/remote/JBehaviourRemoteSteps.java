@@ -24,6 +24,7 @@ import java.util.List;
 import org.jbehaviour.annotation.Given;
 import org.jbehaviour.annotation.Then;
 import org.jbehaviour.annotation.When;
+import org.jbehaviour.plugins.remote.IFileSystemResource.ConsoleStream;
 
 public class JBehaviourRemoteSteps {
 	
@@ -171,7 +172,7 @@ public class JBehaviourRemoteSteps {
      * @throws IOException
      */
     @Given("with remote execute command $command on $resource")
-    public List<String> executeCommand(String command, String resource) throws IOException {
+    public ConsoleStream executeCommand(String command, String resource) throws IOException {
     	IFileSystemResource myResource = FileSystemResources.get(resource);
     	return myResource.execute(command);
     }

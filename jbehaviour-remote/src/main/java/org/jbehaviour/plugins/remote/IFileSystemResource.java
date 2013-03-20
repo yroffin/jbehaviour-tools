@@ -17,29 +17,34 @@
 package org.jbehaviour.plugins.remote;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public interface IFileSystemResource {
 	/**
 	 * open this resource
+	 * 
 	 * @throws IOException
 	 */
 	public void open() throws IOException;
-	
+
 	/**
 	 * close this resource
+	 * 
 	 * @throws IOException
 	 */
 	public void close() throws IOException;
-	
+
 	/**
 	 * fix url
+	 * 
 	 * @param url
 	 */
 	public void setUrl(String url);
-	
+
 	/**
 	 * check if file exist on this resource
+	 * 
 	 * @param filename
 	 * @return
 	 * @throws IOException
@@ -48,35 +53,75 @@ public interface IFileSystemResource {
 
 	/**
 	 * list local or remote resources
+	 * 
 	 * @param directory
 	 * @return
 	 * @throws IOException
 	 */
 	public List<IResourcesItem> listdir(String directory) throws IOException;
 
+	public class ConsoleStream {
+		List<String> stdout;
+		List<String> stderr;
+		int result;
+
+		public ConsoleStream() {
+			stdout = new ArrayList<String>();
+			stderr = new ArrayList<String>();
+			result = 0;
+		}
+
+		public List<String> getStdout() {
+			return stdout;
+		}
+
+		public List<String> getStderr() {
+			return stderr;
+		}
+
+		public int getResult() {
+			return result;
+		}
+
+		public void setResult(int result) {
+			this.result = result;
+		}
+
+		@Override
+		public String toString() {
+			return "ConsoleStream [stdout=" + stdout + ", stderr=" + stderr
+					+ ", result=" + result + "]";
+		}
+	}
+
 	/**
 	 * execute local or remote commande
+	 * 
 	 * @param command
 	 * @return
 	 * @throws IOException
 	 */
-	public List<String> execute(String command) throws IOException;
-	
+	public ConsoleStream execute(String command) throws IOException;
+
 	/**
 	 * put on remote from input to output
+	 * 
 	 * @param local
 	 * @param remote
 	 * @return
-	 * @throws IOException 
+	 * @throws IOException
 	 */
-	public List<IResourcesItem> put(String local, String remote) throws IOException;
+	public List<IResourcesItem> put(String local, String remote)
+			throws IOException;
 
 	/**
 	 * get from remote from input to output
+	 * 
 	 * @param local
 	 * @param remote
 	 * @return
-	 * @throws IOException 
+	 * @throws IOException
 	 */
-	public List<IResourcesItem> get(String remote, String local) throws IOException;
+	public List<IResourcesItem> get(String remote, String local)
+			throws IOException;
 }

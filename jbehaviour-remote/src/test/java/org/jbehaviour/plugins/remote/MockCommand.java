@@ -59,11 +59,12 @@ public class MockCommand implements Command, Runnable {
 
 	byte[] toByte(String value) {
 		byte[] r = new byte[value.length()];
-		for(int i = 0;i<value.length();i++) {
+		for (int i = 0; i < value.length(); i++) {
 			r[i] = (byte) value.charAt(i);
 		}
 		return r;
 	}
+
 	@Override
 	public void start(Environment _env) throws IOException {
 		new Thread(this).start();
@@ -77,13 +78,13 @@ public class MockCommand implements Command, Runnable {
 	public void run() {
 		try {
 			System.err.println("Reading input");
-			in.read();
+			while(in.available() > 0) in.read();
 			System.err.println("Writing output");
-			out.write(toByte("host fictif>\n"));
-			out.write(toByte("host fictif>a b\n"));
-			out.write(toByte("host fictif>a b c\n"));
-			out.flush();
 			System.err.println("Exiting ...");
+            out.write(0);
+            out.write("Exiting ...".getBytes());
+            out.write('\n');
+            out.flush();
 			callback.onExit(0, "Exiting ...");
 		} catch (IOException e) {
 			e.printStackTrace();

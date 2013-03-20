@@ -42,7 +42,7 @@ public class LocalFileSystemResource extends FileSystemResourceImpl {
 	}
 
 	@Override
-	public List<String> execute(String command) {
+	public ConsoleStream execute(String command) {
 		// TODO Auto-generated method stub
 		return null;
 	}

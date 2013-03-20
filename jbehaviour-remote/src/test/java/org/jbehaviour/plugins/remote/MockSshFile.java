@@ -156,4 +156,9 @@ public class MockSshFile implements SshFile {
 	@Override
 	public void handleClose() throws IOException {
 	}
+
+	@Override
+	public String toString() {
+		return "MockSshFile [localfile=" + localfile + ", root=" + root + "]";
+	}
 }

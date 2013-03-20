@@ -48,10 +48,8 @@ public abstract class SslFileSystemResource extends FileSystemResourceImpl {
 	}
 
 	@Override
-	public List<String> execute(String command) throws IOException {
-		System.err.println("Using abstract method !!!");
-		List<String> res = new ArrayList<String>();
-		return res;
+	public ConsoleStream execute(String command) throws IOException {
+		throw new IOException("Using abstract method !!!");
 	}
 
 	@Override

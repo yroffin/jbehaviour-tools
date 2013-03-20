@@ -35,6 +35,7 @@ import org.apache.sshd.server.keyprovider.PEMGeneratorHostKeyProvider;
 import org.apache.sshd.server.keyprovider.SimpleGeneratorHostKeyProvider;
 import org.apache.sshd.server.session.ServerSession;
 import org.apache.sshd.server.sftp.SftpSubsystem;
+import org.apache.sshd.server.shell.ProcessShellFactory;
 
 public class MockSftpServer {
 
@@ -71,7 +72,7 @@ public class MockSftpServer {
 			}
 		});
 
-		sshd.setCommandFactory(new ScpCommandFactory());
+		sshd.setCommandFactory(new ScpCommandFactory(new MockDelegate()));
 
 		List<NamedFactory<Command>> namedFactoryList = new ArrayList<NamedFactory<Command>>();
 		namedFactoryList.add(new SftpSubsystem.Factory());

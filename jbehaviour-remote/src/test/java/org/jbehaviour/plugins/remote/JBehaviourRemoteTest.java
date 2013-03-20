@@ -61,4 +61,9 @@ public class JBehaviourRemoteTest {
 	public void testRemoteSample() throws JBehaviourParsingError, JBehaviourRuntimeError {
 		assertEquals(true,(new JBehaviourLauncher()).registerAndExecute(new File("src/test/resources/files/remote.story")));
 	}
+
+	@Test
+	public void testSsh() throws JBehaviourParsingError, JBehaviourRuntimeError {
+		assertTrue((new JBehaviourLauncher()).registerAndExecute(new File("src/test/resources/files/ssh.story")));
+	}
 }
