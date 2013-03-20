@@ -1,0 +1,8 @@
+STDOUT
+------
+$testsuite.getStdout()
+
+STDERR
+------
+$testsuite.getStderr()
+
