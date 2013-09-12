@@ -141,14 +141,12 @@ public class SshFileSystemResource extends SslFileSystemResource {
 						}
 					}
 				} catch (InvalidStateException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			} else {
-				throw new IOException("toto");
+				throw new IOException("Error, while executing command : " + command);
 			}
 
 			closeSession();

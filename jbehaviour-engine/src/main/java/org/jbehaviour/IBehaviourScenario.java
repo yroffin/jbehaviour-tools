@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.jbehaviour.reflexion.IBehaviourReflexionContext;
 
-public interface IBehaviourScenario {
+public interface IBehaviourScenario extends Comparable<IBehaviourScenario> {
 	/**
 	 * add a new compiled context to this scenario
 	 * @param context

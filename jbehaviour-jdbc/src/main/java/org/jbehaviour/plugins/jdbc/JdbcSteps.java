@@ -50,13 +50,22 @@ public class JdbcSteps {
 			String reference) throws SQLException, ClassNotFoundException {
 		Class.forName(driver);
         conn = DriverManager.getConnection(url,user,pass);
-        logger.info(conn.toString());
+
+        logger.info("Connection string: " + conn.toString());
+        logger.info("Product name: " + conn.getMetaData().getDatabaseProductName());
         
         /**
          * H2 database type
          */
         if("H2".compareTo(conn.getMetaData().getDatabaseProductName()) == 0) {
         	type = JdbcDatabaseType.H2;
+        }
+
+        /**
+         * PostgreSQL database type
+         */
+        if("PostgreSQL".compareTo(conn.getMetaData().getDatabaseProductName()) == 0) {
+        	type = JdbcDatabaseType.POSTGRESQL;
         }
 
         return conn;
@@ -70,6 +79,9 @@ public class JdbcSteps {
 		switch(type) {
 			case H2:
 				lastResult = new JBehaviourResultSet(columnLength,stmt.executeQuery("SHOW COLUMNS FROM " + table));
+			break;
+			case POSTGRESQL:
+				lastResult = new JBehaviourResultSet(columnLength,stmt.executeQuery("SELECT attname FROM pg_attribute,pg_class WHERE attrelid=pg_class.oid AND relname='"+table+"' AND attstattarget <> 0"));
 			break;
 			default:
 				lastResult = new JBehaviourResultSet(columnLength,stmt.executeQuery("DESCRIBE " + table));

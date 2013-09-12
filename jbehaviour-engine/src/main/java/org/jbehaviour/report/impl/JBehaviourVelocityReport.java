@@ -25,6 +25,7 @@ import java.io.Writer;
 
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
+import org.jbehaviour.reflexion.IBehaviourEnvProperty;
 import org.jbehaviour.reflexion.IBehaviourReflexion;
 import org.jbehaviour.report.IBehaviourReport;
 import org.slf4j.Logger;
@@ -50,6 +51,15 @@ public class JBehaviourVelocityReport implements IBehaviourReport {
 	 */
 	public String render(IBehaviourReflexion ctx, String template) {
 		context.put("context", ctx);
+		
+		/**
+		 * dump all properties (shortcut)
+		 */
+		for(IBehaviourEnvProperty item : ctx.getEnv().getRawProperties()) {
+			if(item.getKey().compareTo("context")==0) continue;
+			context.put(item.getKey(), item.getValue());
+		}
+
 		writer  = new StringWriter();
 		Velocity.evaluate(context, writer, "", template);
 		return writer.toString();

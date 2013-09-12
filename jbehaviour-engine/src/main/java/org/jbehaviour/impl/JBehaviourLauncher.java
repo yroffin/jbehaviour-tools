@@ -19,6 +19,7 @@ package org.jbehaviour.impl;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -168,14 +169,18 @@ public class JBehaviourLauncher implements IBehaviourLauncher {
 		/**
 		 * read and execute it
 		 */
-		boolean result = registerAndExecuteStory(story, parsedStory);
-
-		/**
-		 * dump xref xref have collected all statistics elements during story
-		 * run
-		 */
-		if (!registerAndExecuteXRef(story)) {
-			return false;
+		boolean result = false;
+		
+		try {
+			result = registerAndExecuteStory(story, parsedStory);
+		} finally {
+			/**
+			 * dump xref xref have collected all statistics elements during story
+			 * run
+			 */
+			if (!registerAndExecuteXRef(story)) {
+				return false;
+			}
 		}
 
 		return result;
@@ -295,6 +300,14 @@ public class JBehaviourLauncher implements IBehaviourLauncher {
 		 */
 		for (IBehaviourScenario scenario : scenarios) {
 			scenario.setCallers(scenarios);
+		}
+		
+		/**
+		 * re-order Scenario by name
+		 */
+		Collections.sort(scenarios);
+		for (IBehaviourScenario scenario : scenarios) {
+			logger.info("Order : " + scenario.getStatement());
 		}
 
 		/**

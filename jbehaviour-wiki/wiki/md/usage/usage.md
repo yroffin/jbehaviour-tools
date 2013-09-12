@@ -71,7 +71,7 @@ Class register consist to declare a class path associated to one global unique i
 	Register sample with 'org.jbehaviour.plugins.SampleSteps' plugin
 	...
 
-This declaration declare an internal global id 'sample' for the class [org.jbehaviour.plugins.SampleSteps](https://github.com/yroffin/jbehaviour-tools/blob/0.0.2-SNAPSHOT/jbehaviour-engine/src/test/java/org/jbehaviour/plugins/SampleSteps.java)
+This declaration declare an internal global id 'sample' for the class [org.jbehaviour.plugins.SampleSteps](https://github.com/yroffin/jbehaviour-tools/blob/1.0.0.0.0/jbehaviour-engine/src/test/java/org/jbehaviour/plugins/SampleSteps.java)
 this class must be in classpath.
 
 **Notice that** override is working, so default extention can be overriden (SystemSteps etc ...).

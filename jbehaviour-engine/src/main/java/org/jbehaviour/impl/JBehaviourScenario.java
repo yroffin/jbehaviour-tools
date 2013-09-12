@@ -49,6 +49,11 @@ public class JBehaviourScenario implements IBehaviourScenario {
 	}
 
 	@Override
+	public int compareTo(IBehaviourScenario o) {
+		return getStatement().compareTo(o.getStatement());
+	}
+
+	@Override
 	public String toString() {
 		return "JBehaviourScenario [getStatement()=" + getStatement() + "]";
 	}

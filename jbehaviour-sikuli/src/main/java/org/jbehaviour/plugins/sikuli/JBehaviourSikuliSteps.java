@@ -90,4 +90,11 @@ public class JBehaviourSikuliSteps {
 		File outputfile = new File(filename);
 	    ImageIO.write(toSave, format, outputfile);
 	}
+
+	@Given("with sikuli capture desktop to $dir in $filename in $format format")
+	public void withSikuliCaptureScreen(String dir, String filename, String format) throws IOException {
+		BufferedImage toSave = s.capture();
+		File outputfile = new File(dir + '/' + filename + '.' + format);
+	    ImageIO.write(toSave, format, outputfile);
+	}
 }

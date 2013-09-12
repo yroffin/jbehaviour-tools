@@ -18,7 +18,6 @@ package org.jbehaviour.reflexion;
 
 import java.util.List;
 
-import org.apache.commons.lang.StringEscapeUtils;
 import org.jbehaviour.IBehaviourLauncher;
 import org.jbehaviour.exception.JBehaviourParsingError;
 import org.jbehaviour.exception.JBehaviourRuntimeError;
@@ -29,31 +28,6 @@ import org.jbehaviour.xref.IBehaviourXRef;
  * global repository of this system
  */
 public interface IBehaviourEnv {
-	/**
-	 * public class to implement a custom property system
-	 */
-	public class JBehaviourEnvProperty {
-		private String key;
-		private String value;
-
-		public JBehaviourEnvProperty(String key, String value) {
-			this.key = key;
-			this.value = value;
-		}
-
-		public String getKey() {
-			return key;
-		}
-
-		public String getValue() {
-			return value;
-		}
-
-		public String getHtml() {
-			return StringEscapeUtils.escapeHtml(value);
-		}
-	}
-
 	/**
 	 * read object from repository
 	 * 
@@ -117,7 +91,7 @@ public interface IBehaviourEnv {
 	 * 
 	 * @return
 	 */
-	public List<JBehaviourEnvProperty> getProperties();
+	public List<IBehaviourEnvProperty> getProperties();
 
 	/**
 	 * read reference as string
@@ -173,4 +147,11 @@ public interface IBehaviourEnv {
 	 */
 	public IBehaviourReflexionContext retrieve(String reference, statement s,
 			String text) throws JBehaviourParsingError, JBehaviourRuntimeError;
+
+	/**
+	 * retrieve all property of this system
+	 * 
+	 * @return
+	 */
+	List<IBehaviourEnvProperty> getRawProperties();
 }

@@ -96,7 +96,7 @@ public class JBehaviourXRef implements IBehaviourXRef {
 			Exception excp) {
 		Long current = System.currentTimeMillis();
 		Long duration = current - begin;
-		runs.add(new JBehaviourReportRun(pck,klass,duration,name,object,args,text, stdout, stderr, result, excp));
+		runs.add(new JBehaviourReportRun(runs.size(),pck,klass,duration,name,object,args,text, stdout, stderr, result, excp));
 		return duration;
 	}
 

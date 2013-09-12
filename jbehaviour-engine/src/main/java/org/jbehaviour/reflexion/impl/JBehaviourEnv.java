@@ -38,6 +38,7 @@ import org.jbehaviour.parser.JBehaviourCallParser;
 import org.jbehaviour.parser.model.IKeywordStatement.statement;
 import org.jbehaviour.parser.template.IKeywordCall;
 import org.jbehaviour.reflexion.IBehaviourEnv;
+import org.jbehaviour.reflexion.IBehaviourEnvProperty;
 import org.jbehaviour.reflexion.IBehaviourReflexion;
 import org.jbehaviour.reflexion.IBehaviourReflexionContext;
 import org.jbehaviour.xref.IBehaviourXRef;
@@ -72,8 +73,8 @@ public class JBehaviourEnv implements IBehaviourEnv {
 	}
 
 	@Override
-	public List<JBehaviourEnvProperty> getProperties() {
-		List<JBehaviourEnvProperty> properties = new ArrayList<JBehaviourEnvProperty>();
+	public List<IBehaviourEnvProperty> getProperties() {
+		List<IBehaviourEnvProperty> properties = new ArrayList<IBehaviourEnvProperty>();
 		for(Entry<Object, Object> key : System.getProperties().entrySet()) {
 			properties.add(
 					new JBehaviourEnvProperty(
@@ -91,6 +92,22 @@ public class JBehaviourEnv implements IBehaviourEnv {
 		for(String key : declare.keySet()) {
 			properties.add(new JBehaviourEnvProperty(key,declare.get(key).toString().replace("\"", "'")));
 		}
+		return properties;
+	}
+
+	@Override
+	public List<IBehaviourEnvProperty> getRawProperties() {
+		List<IBehaviourEnvProperty> properties = new ArrayList<IBehaviourEnvProperty>();
+
+		for(String key : registry.keySet()) {
+			Object value = registry.get(key);
+			if(value != null) {
+				properties.add(new JBehaviourEnvProperty(key,value));
+			} else {
+				properties.add(new JBehaviourEnvProperty(key,null));
+			}
+		}
+
 		return properties;
 	}
 
@@ -123,6 +140,18 @@ public class JBehaviourEnv implements IBehaviourEnv {
 		context.put(key, value);
 	}
 
+	private static List<Field> getAllFields(List<Field> fields, Class<?> type) {
+		for (Field field : type.getDeclaredFields()) {
+			fields.add(field);
+		}
+
+		if (type.getSuperclass() != null) {
+			fields = getAllFields(fields, type.getSuperclass());
+		}
+
+		return fields;
+	}
+
 	@Override
 	public Object getInstance(String key) throws InstantiationException, IllegalAccessException, ClassNotFoundException, JBehaviourParsingError {
 		if(declare.containsKey(key)) {
@@ -135,7 +164,7 @@ public class JBehaviourEnv implements IBehaviourEnv {
 		/**
 		 * Env field injection
 		 */
-		for(Field field : myKlass.getDeclaredFields()) {
+		for(Field field : getAllFields(new ArrayList<Field>(), myKlass)) {
 			for(Annotation a : field.getAnnotations()) {
 				if(a.annotationType() == EnvReference.class) {
 					logger.debug("Field env detected: " + field);

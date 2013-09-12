@@ -139,4 +139,8 @@ public interface IBehaviourReportRun {
 	 */
 	String getStderrAsString() throws IOException;
 
+	String getCallAsString();
+
+	int getCall();
+
 }

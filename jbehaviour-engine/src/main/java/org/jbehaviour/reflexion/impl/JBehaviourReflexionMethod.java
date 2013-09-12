@@ -157,6 +157,9 @@ public class JBehaviourReflexionMethod implements IBehaviourReflexionMethodBean 
 		} catch (InvocationTargetException e) {
 			JBehaviourStackTrace.printStackTrace(logger, e.getTargetException());
 			throw new JBehaviourRuntimeError(e);
+		} catch (Exception e) {
+			JBehaviourStackTrace.printStackTrace(logger, e.getCause());
+			throw new JBehaviourRuntimeError(e);
 		}
 	}
 

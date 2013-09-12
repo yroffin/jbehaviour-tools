@@ -19,6 +19,7 @@ package org.jbehaviour.report.impl;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Arrays;
 
 import org.jbehaviour.report.IBehaviourReportRun;
@@ -37,9 +38,21 @@ public class JBehaviourReportRun implements IBehaviourReportRun {
 	private Exception excp;
 	private File stdout;
 	private File stderr;
+	private int call;
+
+	@Override
+	public int getCall() {
+		return call;
+	}
+
+	@Override
+	public String getCallAsString() {
+		return org.apache.commons.lang.StringUtils.leftPad(call+"", 8, '0') + "_" + textLikeMethod;
+	}
 
 	/**
 	 * create this run report
+	 * @param call 
 	 * 
 	 * @param _pck
 	 * @param _klass
@@ -53,9 +66,10 @@ public class JBehaviourReportRun implements IBehaviourReportRun {
 	 * @param _result
 	 * @param stderr
 	 */
-	public JBehaviourReportRun(String pck, String klass, Long duration,
+	public JBehaviourReportRun(int call, String pck, String klass, Long duration,
 			String name, Object object, Object[] args, String text,
 			File stdout, File stderr, Object result, Exception excp) {
+		this.call = call;
 		this.stdout = stdout;
 		this.stderr = stderr;
 		this.result = result;
@@ -187,7 +201,8 @@ public class JBehaviourReportRun implements IBehaviourReportRun {
 		StringBuffer sb = new StringBuffer();
 		int ch;
 		while ((ch = in.read()) != -1) {
-			sb.append((char) ch);
+			if(ch > 31 && ch < 128) sb.append((char) ch);
+			if(ch == 10) sb.append((char) ch);
 		}
 		in.close();
 		return sb.toString();
