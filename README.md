@@ -21,6 +21,8 @@ and avoid to consider so much technical method for using testing tools :
 - selenium suite
 - and so on ...
 
+To build a new version : mvn versions:set -DnewVersion=0.0.2
+
 Wiki
 ====
 Cf: [wiki](jbehaviour-wiki/wiki/md/index.md)
